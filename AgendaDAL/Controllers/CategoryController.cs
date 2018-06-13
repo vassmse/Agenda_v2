@@ -55,7 +55,6 @@ namespace AgendaDAL.Controllers
             {
                 Service.AddItem(item);
                 return Ok();
-
             }
             return BadRequest();
         }

@@ -23,37 +23,62 @@ namespace AgendaDAL.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<TaskDto> Get()
+        public IActionResult Get()
         {
-            return Service.GetAllItem();
+            var items = Service.GetAllItem();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            return NotFound();
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public TaskDto Get(int id)
+        public IActionResult Get(int id)
         {
-            return Service.GetItem(id);
+            var item = Service.GetItem(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            return NotFound();
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]TaskDto item)
+        public IActionResult Post([FromBody]TaskDto item)
         {
-            Service.AddItem(item);
+            if (item != null)
+            {
+                Service.AddItem(item);
+                return Ok();
+            }
+            return BadRequest();
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]TaskDto category)
+        public IActionResult Put(int id, [FromBody]TaskDto item)
         {
-            Service.UpdateItem(category);
+            if (item != null)
+            {
+                Service.UpdateItem(item);
+                return Ok();
+            }
+            return BadRequest();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete([FromBody] TaskDto category)
+        public IActionResult Delete([FromBody] TaskDto item)
         {
-            Service.DeleteItem(category);
+            if (item != null)
+            {
+                Service.DeleteItem(item);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
