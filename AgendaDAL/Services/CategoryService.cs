@@ -19,9 +19,9 @@ namespace AgendaDAL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
             mapper = new Mapper(config);
 
-            AddInitialItems();            
+            AddInitialItems();
         }
-        
+
         public void AddItem(CategoryDto item)
         {
             DbContext.Categories.Add(mapper.Map<Category>(item));
@@ -36,7 +36,7 @@ namespace AgendaDAL.Services
         }
 
         public List<CategoryDto> GetAllItem()
-        {            
+        {
             return mapper.Map<List<Category>, List<CategoryDto>>(DbContext.Categories.ToList());
         }
 
