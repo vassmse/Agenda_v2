@@ -1,4 +1,4 @@
-﻿using AgendaDAL.Dtos;
+﻿using AgendaBLL.Models;
 using AgendaDAL.Models;
 using AutoMapper;
 using System;

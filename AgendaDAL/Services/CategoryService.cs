@@ -1,4 +1,4 @@
-﻿using AgendaDAL.Dtos;
+﻿using AgendaBLL.Models;
 using AgendaDAL.Models;
 using AutoMapper;
 using System;
@@ -59,9 +59,9 @@ namespace AgendaDAL.Services
         {
             if (DbContext.Categories.Count() == 0)
             {
-                AddItem(new CategoryDto { Name = "Iskola", CategoryType = 1, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Munka", CategoryType = 1, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Bevásárlás", CategoryType = 1, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Iskola", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Munka", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Bevásárlás", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
 
             }
         }
