@@ -11,18 +11,20 @@ namespace AgendaDAL.Services
     public class CategoryService : IService<CategoryDto>
     {
         private AgendaDbContext DbContext { get; set; }
+        private IMapper mapper { get; set; }
 
         public CategoryService(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
-            Mapper.Initialize(cfg => cfg.CreateMap<Category, CategoryDto>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
+            mapper = new Mapper(config);
 
             AddInitialItems();            
         }
         
         public void AddItem(CategoryDto item)
         {
-            DbContext.Categories.Add(Mapper.Map<Category>(item));
+            DbContext.Categories.Add(mapper.Map<Category>(item));
             DbContext.SaveChanges();
         }
 
@@ -35,12 +37,12 @@ namespace AgendaDAL.Services
 
         public List<CategoryDto> GetAllItem()
         {            
-            return Mapper.Map<List<Category>, List<CategoryDto>>(DbContext.Categories.ToList());
+            return mapper.Map<List<Category>, List<CategoryDto>>(DbContext.Categories.ToList());
         }
 
         public CategoryDto GetItem(int id)
         {
-            return Mapper.Map<CategoryDto>(DbContext.Categories.FirstOrDefault(t => t.CategoryId == id));
+            return mapper.Map<CategoryDto>(DbContext.Categories.FirstOrDefault(t => t.CategoryId == id));
         }
 
         public void UpdateItem(CategoryDto item)

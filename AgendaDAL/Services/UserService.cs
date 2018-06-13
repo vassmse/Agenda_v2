@@ -12,16 +12,19 @@ namespace AgendaDAL.Services
     {
         private AgendaDbContext DbContext { get; set; }
 
+        private IMapper mapper { get; set; }
+
         public UserService(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
-            Mapper.Initialize(cfg => cfg.CreateMap<Models.User, UserDto>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
+            mapper = new Mapper(config);
             AddInitialItems();
         }
 
         public void AddItem(UserDto item)
         {
-            DbContext.Users.Add(Mapper.Map<Models.User>(item));
+            DbContext.Users.Add(mapper.Map<User>(item));
             DbContext.SaveChanges();
         }
 
@@ -34,12 +37,12 @@ namespace AgendaDAL.Services
 
         public List<UserDto> GetAllItem()
         {
-            return Mapper.Map<List<User>, List<UserDto>>(DbContext.Users.ToList());
+            return mapper.Map<List<User>, List<UserDto>>(DbContext.Users.ToList());
         }
 
         public UserDto GetItem(int id)
         {
-            return Mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.UserId == id));
+            return mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.UserId == id));
         }
 
         public void UpdateItem(UserDto item)

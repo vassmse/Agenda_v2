@@ -12,16 +12,19 @@ namespace AgendaDAL.Services
     {
         private AgendaDbContext DbContext { get; set; }
 
+        private IMapper mapper { get; set; }
+
         public TaskService(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
-            Mapper.Initialize(cfg => cfg.CreateMap<Models.Task, TaskDto>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
+            mapper = new Mapper(config);
             AddInitialItems();
         }
 
         public void AddItem(TaskDto item)
         {
-            DbContext.Tasks.Add(Mapper.Map<Models.Task>(item));
+            DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
             DbContext.SaveChanges();
         }
 
@@ -34,12 +37,12 @@ namespace AgendaDAL.Services
 
         public List<TaskDto> GetAllItem()
         {
-            return Mapper.Map<List<Models.Task>, List<TaskDto>>(DbContext.Tasks.ToList());
+            return mapper.Map<List<Models.Task>, List<TaskDto>>(DbContext.Tasks.ToList());
         }
 
         public TaskDto GetItem(int id)
         {
-            return Mapper.Map<TaskDto>(DbContext.Tasks.FirstOrDefault(t => t.TaskId == id));
+            return mapper.Map<TaskDto>(DbContext.Tasks.FirstOrDefault(t => t.TaskId == id));
         }
 
         public void UpdateItem(TaskDto item)
