@@ -29,16 +29,16 @@ namespace AgendaPL.Models
                 SymbolIcon icon = new SymbolIcon();
                 switch (category.CategoryType)
                 {
-                    case StateTypes.Checklist:
+                    case CategoryTypes.Checklist:
                         icon = new SymbolIcon(Symbol.AllApps);
                         break;
-                    case StateTypes.Kanban3:
+                    case CategoryTypes.Kanban3:
                         icon = new SymbolIcon(Symbol.DockBottom);
                         break;
-                    case StateTypes.Kanban5:
+                    case CategoryTypes.Kanban5:
                         icon = new SymbolIcon(Symbol.SelectAll);
                         break;
-                    case StateTypes.MultiChecklist:
+                    case CategoryTypes.MultiChecklist:
                         icon = new SymbolIcon(Symbol.Bookmarks);
                         break;
                 }
@@ -54,16 +54,16 @@ namespace AgendaPL.Models
             SymbolIcon icon = new SymbolIcon();
             switch (category.CategoryType)
             {
-                case StateTypes.Checklist:
+                case CategoryTypes.Checklist:
                     icon = new SymbolIcon(Symbol.AllApps);
                     break;
-                case StateTypes.Kanban3:
+                case CategoryTypes.Kanban3:
                     icon = new SymbolIcon(Symbol.DockBottom);
                     break;
-                case StateTypes.Kanban5:
+                case CategoryTypes.Kanban5:
                     icon = new SymbolIcon(Symbol.SelectAll);
                     break;
-                case StateTypes.MultiChecklist:
+                case CategoryTypes.MultiChecklist:
                     icon = new SymbolIcon(Symbol.Bookmarks);
                     break;
             }

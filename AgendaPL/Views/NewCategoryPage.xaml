@@ -11,7 +11,7 @@
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBox x:Name="CategoryName" Header= "Name" Text="{x:Bind ViewModel.NewCategory.Name, Mode=TwoWay}" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" />
 
-        <!--<ComboBox x:Name="selectType" PlaceholderText="Select type" Margin="0,24,0,0" SelectedItem="{x:Bind ViewModel.NewCategory.CategoryType, Mode=TwoWay}" />-->
+        <ComboBox x:Name="TypeComboBox" ItemsSource="{x:Bind ViewModel.NewCategory.CategoryTypeValues}" PlaceholderText="Select type" Margin="0,24,0,0" SelectedItem="{x:Bind ViewModel.NewCategory.CategoryType, Mode=TwoWay}" />
 
         <StackPanel Orientation="Horizontal">
             <Button Content="Save" Margin="0,24" Command="{x:Bind ViewModel.AddCategoryCommand}"/>

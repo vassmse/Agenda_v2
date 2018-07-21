@@ -31,16 +31,8 @@ namespace AgendaBLL.Models
             }
         }
 
-        private StateTypes categoryType;
-        public StateTypes CategoryType
-        {
-            get { return categoryType; }
-            set
-            {
-                categoryType = value;
-                NotifyPropertyChanged(nameof(CategoryType));
-            }
-        }
+        public CategoryTypes CategoryType { get; set; }
+
 
         private ObservableCollection<TaskDto> tasks;
 
@@ -66,10 +58,13 @@ namespace AgendaBLL.Models
             }
         }
 
+        public Array CategoryTypeValues { get; set; }
+
 
         public CategoryDto()
         {
             Tasks = new ObservableCollection<TaskDto>();
+            CategoryTypeValues = Enum.GetValues(typeof(CategoryTypes));
         }
 
         public override string ToString()
@@ -84,7 +79,7 @@ namespace AgendaBLL.Models
         }
     }
 
-    public enum StateTypes
+    public enum CategoryTypes
     {
         Checklist,
         MultiChecklist,

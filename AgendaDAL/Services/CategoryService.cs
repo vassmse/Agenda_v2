@@ -59,9 +59,9 @@ namespace AgendaDAL.Services
         {
             if (DbContext.Categories.Count() == 0)
             {
-                AddItem(new CategoryDto { Name = "Iskola", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Munka", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Bevásárlás", CategoryType = StateTypes.Checklist, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Iskola", CategoryType = CategoryTypes.Checklist, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Munka", CategoryType = CategoryTypes.Checklist, ParentUserId = 1 });
+                AddItem(new CategoryDto { Name = "Bevásárlás", CategoryType = CategoryTypes.Checklist, ParentUserId = 1 });
 
             }
         }

@@ -31,9 +31,6 @@ namespace AgendaPL.Views
         {
             InitializeComponent();
             ViewModel = vm.MainPage;
-
-            var categoryTypes = Enum.GetValues(typeof(StateTypes)).Cast<StateTypes>();
-            //selectType.ItemsSource = categoryTypes.ToList();
         }
     }
 }

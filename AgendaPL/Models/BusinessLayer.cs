@@ -28,9 +28,9 @@ namespace AgendaPL.Models
 
         public void AddCategory(CategoryDto category)
         {
-            int id = ViewModel.Categories.Last().CategoryId++;
-            var newCategory = new CategoryDto { CategoryId = id, Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
+            var newCategory = new CategoryDto {Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
             ViewModel.Categories.Add(newCategory);
+            RestClient.AddCategory(category);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);
             ViewModel.NewCategory.Name = String.Empty;
         }
