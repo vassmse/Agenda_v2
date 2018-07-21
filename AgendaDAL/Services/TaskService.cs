@@ -17,15 +17,23 @@ namespace AgendaDAL.Services
         public TaskService(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Task, TaskDto>());
             mapper = new Mapper(config);
             AddInitialItems();
         }
 
         public void AddItem(TaskDto item)
         {
-            DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
-            DbContext.SaveChanges();
+            try
+            {
+                DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
+                DbContext.SaveChanges();
+            }
+            catch (Exception e) 
+            {
+
+                throw;
+            }
         }
 
         public void DeleteItem(TaskDto item)

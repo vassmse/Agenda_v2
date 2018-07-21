@@ -64,6 +64,17 @@ namespace AgendaBLL.Models
             }
         }
 
+        private DateTime createdDate;
+        public DateTime CreatedDate
+        {
+            get { return createdDate; }
+            set
+            {
+                createdDate = value;
+                NotifyPropertyChanged(nameof(CreatedDate));
+            }
+        }
+
         private DateTime scheduledDate;
         public DateTime ScheduledDate
         {
