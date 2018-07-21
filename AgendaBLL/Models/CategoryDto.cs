@@ -72,6 +72,11 @@ namespace AgendaBLL.Models
             Tasks = new ObservableCollection<TaskDto>();
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

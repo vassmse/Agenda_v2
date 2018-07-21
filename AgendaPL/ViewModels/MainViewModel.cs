@@ -6,20 +6,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using System.Resources;
+using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight.Command;
 
 namespace AgendaPL.ViewModels
 {
-    public class MainViewModel: ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
-        public List<CategoryDto> Categories { get; set; }
+        #region RelayCommand properties
 
-        private AgendaRestClient RestClient { get; set; }
+        public RelayCommand AddCategoryCommand { get; private set; }
+
+        #endregion
+
+        public ObservableCollection<CategoryDto> Categories { get; set; }
+
+        private BusinessLayer businessLayer { get; set; }
+
+        public NavigationViewMenuItems NavigationViewItems { get; set; }
+
+        public CategoryDto NewCategory { get; set; }
+
 
         public MainViewModel()
         {
-            RestClient = new AgendaRestClient();
+            businessLayer = new BusinessLayer(this);
+            NewCategory = new CategoryDto();
+            Categories = businessLayer.GetAllCategories();
+            NavigationViewItems = new NavigationViewMenuItems(Categories);
 
-            Categories = RestClient.GetAllCategories();
+            #region RelayCommands
+
+            AddCategoryCommand = new RelayCommand(AddCategoryAction);
+
+            #endregion
+
         }
+
+        #region Commands
+
+        private void AddCategoryAction()
+        {
+            businessLayer.AddCategory(NewCategory);
+        }
+
+        #endregion
+
     }
 }

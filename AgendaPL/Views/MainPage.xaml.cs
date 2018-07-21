@@ -1,4 +1,5 @@
 ﻿using AgendaPL.ViewModels;
+using AgendaPL.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,13 +24,47 @@ namespace AgendaPL
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        ViewModelLocator vm = new ViewModelLocator();
         public MainViewModel ViewModel { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel();
-            DataContext = ViewModel;
+            ViewModel = vm.MainPage;
         }
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+            NavView_Navigate(item);
+        }
+
+        private void NavView_Navigate(NavigationViewItem item)
+        {
+            if (item != null)
+            {
+                switch (item.Tag)
+                {
+                    case "today":
+                        ContentFrame.Navigate(typeof(DailyReportPage));
+                        NavView.Header = "Mai nap";
+                        break;
+                    case "week":
+                        ContentFrame.Navigate(typeof(WeeklyReportPage));
+                        NavView.Header = "Heti jelentés";
+                        break;
+                    case "addnew":
+                        ContentFrame.Navigate(typeof(NewCategoryPage));
+                        NavView.Header = "Add new category";
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+        }
+
+
     }
 }
