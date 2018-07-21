@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgendaPL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace AgendaPL
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public MainViewModel ViewModel { get; set; }
+
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ViewModel = new MainViewModel();
+            DataContext = ViewModel;
         }
     }
 }

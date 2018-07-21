@@ -24,16 +24,9 @@ namespace AgendaDAL.Services
 
         public void AddItem(TaskDto item)
         {
-            try
-            {
-                DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
-                DbContext.SaveChanges();
-            }
-            catch (Exception e) 
-            {
+            DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
+            DbContext.SaveChanges();
 
-                throw;
-            }
         }
 
         public void DeleteItem(TaskDto item)
@@ -67,9 +60,9 @@ namespace AgendaDAL.Services
         {
             if (DbContext.Tasks.Count() == 0)
             {
-                AddItem(new TaskDto { Name = "Alma", Description = "1 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId=1 });
-                AddItem(new TaskDto { Name = "Banán", Description = "2 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId=1 });
-                AddItem(new TaskDto { Name = "Mangó", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId=1 });
+                AddItem(new TaskDto { Name = "Alma", Description = "1 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Banán", Description = "2 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Mangó", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
 
             }
         }

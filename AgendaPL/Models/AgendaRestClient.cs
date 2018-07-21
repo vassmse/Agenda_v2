@@ -15,7 +15,7 @@ namespace AgendaPL.Models
 
         public AgendaRestClient()
         {
-            Client = new RestClient("http://localhost:60226/api/");
+            Client = new RestClient("http://localhost:60225/api/");
         }
 
         #region Category CRUD
