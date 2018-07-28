@@ -1,4 +1,5 @@
-﻿using AgendaPL.ViewModels;
+﻿using AgendaCON.Models;
+using AgendaPL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +31,12 @@ namespace AgendaPL.Views
         {
             InitializeComponent();
             ViewModel = vm.MainPage;
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var selectedTask = e.ClickedItem as TaskDto;
+            ViewModel.SelectedTaskAction(selectedTask.TaskId);
         }
     }
 }

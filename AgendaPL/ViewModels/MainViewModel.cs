@@ -20,6 +20,9 @@ namespace AgendaPL.ViewModels
 
         public RelayCommand AddCategoryCommand { get; private set; }
 
+        public RelayCommand<int> TaskSelectedCommand { get; private set; }
+
+
         #endregion
 
         public CategoryCollection CategoryCollection { get; set; }
@@ -41,6 +44,32 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        private TaskDto selectedTask;
+
+        public TaskDto SelectedTask
+        {
+            get { return selectedTask; }
+            set
+            {
+                selectedTask = value;
+                RaisePropertyChanged(nameof(SelectedTask));
+            }
+        }
+
+
+        private bool isPanelActive;
+
+        public bool IsPanelActive
+        {
+            get { return isPanelActive; }
+            set
+            {
+                isPanelActive = value;
+                RaisePropertyChanged(nameof(IsPanelActive));
+            }
+        }
+
+
 
 
         public MainViewModel()
@@ -51,11 +80,13 @@ namespace AgendaPL.ViewModels
             CategoryCollection.Categories = businessLayer.GetAllCategories();
             NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
             SelectedCategory = new CategoryDto();
-            
+            SelectedTask = new TaskDto();
+
 
             #region RelayCommands
 
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
+
 
             #endregion
 
@@ -66,6 +97,17 @@ namespace AgendaPL.ViewModels
         private void AddCategoryAction()
         {
             businessLayer.AddCategory(NewCategory);
+        }
+
+        public void SelectedTaskAction(int taskId)
+        {
+            if (SelectedTask.TaskId == taskId)
+                IsPanelActive = !IsPanelActive;
+            else
+            {
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == taskId).FirstOrDefault();                
+                IsPanelActive = true;
+            }
         }
 
         #endregion

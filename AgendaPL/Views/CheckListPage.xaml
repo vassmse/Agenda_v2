@@ -14,15 +14,15 @@
         <converters:StringFormatConverter x:Key="StringFormatConverter" />
     </Page.Resources>
 
-    <SplitView IsPaneOpen="True"
-               DisplayMode="Inline"
+    <SplitView DisplayMode="Inline"
                OpenPaneLength="256"
                CompactPaneLength="48"
+               IsPaneOpen="{x:Bind ViewModel.IsPanelActive, Mode=TwoWay}"
                PanePlacement="Right">
         <SplitView.Content>
             <ScrollViewer>
-                <StackPanel Orientation="Vertical">
-                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks}">
+                <StackPanel Orientation="Vertical" Margin="0 0 20 0">
+                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:TaskDto">
                                 <Grid>
