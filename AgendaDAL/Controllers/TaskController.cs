@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AgendaBLL.Models;
+using AgendaCON.Models;
 using AgendaDAL.Models;
 using AgendaDAL.Services;
 using Microsoft.AspNetCore.Mvc;

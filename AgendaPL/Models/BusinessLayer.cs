@@ -1,4 +1,4 @@
-﻿using AgendaBLL.Models;
+﻿using AgendaCON.Models;
 using AgendaPL.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,18 @@ namespace AgendaPL.Models
             try
             {
                 var categories = RestClient.GetAllCategories();
+
+                foreach (var category in categories)
+                {
+                    foreach (var task in GetAllTasks())
+                    {
+                        if (category.CategoryId == task.ParentCategoryId)
+                        {
+                            category.Tasks.Add(task);
+                        }
+                    }
+                }
+
                 return new ObservableCollection<CategoryDto>(categories);
             }
             catch (Exception)
@@ -36,10 +48,23 @@ namespace AgendaPL.Models
         public void AddCategory(CategoryDto category)
         {
             var newCategory = new CategoryDto {Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
-            ViewModel.Categories.Add(newCategory);
+            ViewModel.CategoryCollection.Categories.Add(newCategory);
             RestClient.AddCategory(category);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);
             ViewModel.NewCategory.Name = String.Empty;
+        }
+
+        public ObservableCollection<TaskDto> GetAllTasks()
+        {
+            try
+            {
+                var tasks = RestClient.GetAllTasks();
+                return new ObservableCollection<TaskDto>(tasks);
+            }
+            catch (Exception)
+            {
+                return new ObservableCollection<TaskDto>();
+            }
         }
     }
 }

@@ -12,7 +12,8 @@
         <NavigationView x:Name="NavView"
                         MenuItemsSource="{x:Bind ViewModel.NavigationViewItems.MenuItems}"
                         Loaded="NavView_Loaded"
-                        SelectionChanged="NavView_SelectionChanged">
+                        SelectionChanged="NavView_SelectionChanged"
+                        SelectedItem="{x:Bind ViewModel.SelectedCategory}">
 
 
             <Frame x:Name="ContentFrame" Margin="24" >

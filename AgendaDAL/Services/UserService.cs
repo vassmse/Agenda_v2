@@ -1,4 +1,4 @@
-﻿using AgendaBLL.Models;
+﻿using AgendaCON.Models;
 using AgendaDAL.Models;
 using AutoMapper;
 using System;

@@ -101,8 +101,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Models\AgendaRestClient.cs" />
     <Compile Include="Models\BusinessLayer.cs" />
+    <Compile Include="Models\CategoryCollection.cs" />
     <Compile Include="Models\NavigationViewMenuItems.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -249,14 +251,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgendaBLL\AgendaBLL.csproj">
-      <Project>{76021921-2254-43a8-a138-f4e7ad0e61a4}</Project>
-      <Name>AgendaBLL</Name>
-    </ProjectReference>
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="Images\" />
+    <ProjectReference Include="..\AgendaCON\AgendaCON.csproj">
+      <Project>{fdb17e3e-61a0-48bf-a8c8-8410b92d97c2}</Project>
+      <Name>AgendaCON</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

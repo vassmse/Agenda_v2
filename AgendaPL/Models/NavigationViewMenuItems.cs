@@ -1,4 +1,4 @@
-﻿using AgendaBLL.Models;
+﻿using AgendaCON.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

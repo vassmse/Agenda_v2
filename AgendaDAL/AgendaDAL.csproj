@@ -17,6 +17,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgendaBLL\AgendaBLL.csproj" />
+    <ProjectReference Include="..\AgendaCON\AgendaCON.csproj" />
   </ItemGroup>
 </Project>

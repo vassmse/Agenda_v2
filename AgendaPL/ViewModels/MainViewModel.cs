@@ -1,4 +1,4 @@
-﻿using AgendaBLL.Models;
+﻿using AgendaCON.Models;
 using AgendaPL.Models;
 using GalaSoft.MvvmLight;
 using System;
@@ -22,7 +22,7 @@ namespace AgendaPL.ViewModels
 
         #endregion
 
-        public ObservableCollection<CategoryDto> Categories { get; set; }
+        public CategoryCollection CategoryCollection { get; set; }
 
         private BusinessLayer businessLayer { get; set; }
 
@@ -30,13 +30,29 @@ namespace AgendaPL.ViewModels
 
         public CategoryDto NewCategory { get; set; }
 
+        private CategoryDto selectedCategory;
+
+        public CategoryDto SelectedCategory
+        {
+            get { return selectedCategory; }
+            set
+            {
+                selectedCategory = value;
+                RaisePropertyChanged(nameof(SelectedCategory));
+            }
+        }
+
+
 
         public MainViewModel()
         {
             businessLayer = new BusinessLayer(this);
             NewCategory = new CategoryDto();
-            Categories = businessLayer.GetAllCategories();
-            NavigationViewItems = new NavigationViewMenuItems(Categories);
+            CategoryCollection = new CategoryCollection();
+            CategoryCollection.Categories = businessLayer.GetAllCategories();
+            NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
+            SelectedCategory = new CategoryDto();
+            
 
             #region RelayCommands
 
