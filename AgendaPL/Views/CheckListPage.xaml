@@ -6,9 +6,88 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:models="using:AgendaCON.Models"  
+    xmlns:converters="using:AgendaPL.Converters"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <converters:StringFormatConverter x:Key="StringFormatConverter" />
+    </Page.Resources>
 
-    </Grid>
+    <SplitView IsPaneOpen="True"
+               DisplayMode="Inline"
+               OpenPaneLength="256"
+               CompactPaneLength="48"
+               PanePlacement="Right">
+        <SplitView.Content>
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical">
+                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TaskDto">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
+                                        <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"  />
+                                        <TextBlock Text="{x:Bind ScheduledDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" FontSize="12" VerticalAlignment="Center" Padding="5 0 0 0" />
+                                        <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Padding="15 0 0 0" />
+                                        <TextBlock Text="{x:Bind DeadlineDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyy-MM-dd}'}" FontSize="12"  VerticalAlignment="Center" Padding="5 0 0 0" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ListViewItem Margin="0 40 0 0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <SymbolIcon  Symbol="Add" Margin="10 0"/>
+                            <TextBlock Text="Add new task"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Content>
+        <SplitView.Pane>
+            <ScrollViewer>
+                <StackPanel Padding="10 20">
+                    <TextBox x:Name="TaskName" Header= "Név" Margin="10"  MaxLength="32" Width="200" HorizontalAlignment="Center" />
+                    <TextBox x:Name="TaskDescription" Header= "Leírás" Margin="10" Width="200" TextWrapping="Wrap" AcceptsReturn="True" Height="100"  HorizontalAlignment="Center" />
+                    <TextBlock Text="Határidő"  Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseDeadline"  />
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskDeadlineDate"  />
+                    </Grid>
+                    <TextBlock Text="Ütemezés"  Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseSchedule"/>
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskScheduledDate" HorizontalAlignment="Center" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0 24" HorizontalAlignment="Center">
+                        <Button Content="Mentés" Margin="8 0" Width="80" />
+                        <Button Content="Törlés"   Margin="8 0" Width="80" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Pane>
+    </SplitView>
 </Page>

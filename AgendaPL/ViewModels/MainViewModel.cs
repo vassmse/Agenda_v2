@@ -31,7 +31,6 @@ namespace AgendaPL.ViewModels
         public CategoryDto NewCategory { get; set; }
 
         private CategoryDto selectedCategory;
-
         public CategoryDto SelectedCategory
         {
             get { return selectedCategory; }

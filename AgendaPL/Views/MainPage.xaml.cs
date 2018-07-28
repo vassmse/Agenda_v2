@@ -63,6 +63,9 @@ namespace AgendaPL
         {
             if (item != null)
             {
+                NavView.Header = item.Content;
+                ViewModel.SelectedCategory = ViewModel.CategoryCollection.Categories.FirstOrDefault(c => c.Name == item.Content.ToString());
+
                 switch (item.Tag)
                 {
                     case "today":
@@ -91,12 +94,11 @@ namespace AgendaPL
                         ContentFrame.Navigate(typeof(NewCategoryPage));
                         break;
                     default:
-                       // ContentFrame.Navigate(typeof(SettingsPage));
+                        // ContentFrame.Navigate(typeof(SettingsPage));
                         break;
                 }
             }
 
-            NavView.Header = item.Content;
         }
 
 

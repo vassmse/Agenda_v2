@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgendaPL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace AgendaPL.Views
     /// </summary>
     public sealed partial class CheckListPage : Page
     {
+        ViewModelLocator vm = new ViewModelLocator();
+        public MainViewModel ViewModel { get; set; }
+
         public CheckListPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ViewModel = vm.MainPage;
         }
     }
 }
