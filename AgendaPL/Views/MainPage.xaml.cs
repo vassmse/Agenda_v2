@@ -2,6 +2,7 @@
 using AgendaPL.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,6 +34,25 @@ namespace AgendaPL
             ViewModel = vm.MainPage;
         }
 
+        private void NavView_Loaded(object sender, RoutedEventArgs e)
+        {
+            //var menuItem = NavView.MenuItems
+            //             .OfType<NavigationViewItem>()
+            //             .Where(item => item.Tag.ToString() == "today")
+            //             .First();
+            //NavView.SelectedItem = menuItem;
+            //var a = NavView.MenuItems as ObservableCollection<NavigationViewItemBase>;
+            //foreach (NavigationViewItemBase item in NavView.MenuItems)
+            //{
+            //    if (item is NavigationViewItem && item.Tag.ToString() == "today")
+            //    {
+            //        NavView.SelectedItem = item;
+            //        break;
+            //    }
+            //}
+
+        }
+
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem item = args.SelectedItem as NavigationViewItem;
@@ -47,22 +67,36 @@ namespace AgendaPL
                 {
                     case "today":
                         ContentFrame.Navigate(typeof(DailyReportPage));
-                        NavView.Header = "Mai nap";
                         break;
                     case "week":
                         ContentFrame.Navigate(typeof(WeeklyReportPage));
-                        NavView.Header = "Heti jelentés";
+                        break;
+                    case "expired":
+                        ContentFrame.Navigate(typeof(ExpiredTasksPage));
+                        break;
+
+                    case "Checklist":
+                        ContentFrame.Navigate(typeof(CheckListPage));
+                        break;
+                    case "MultiChecklist":
+                        ContentFrame.Navigate(typeof(MultiCheckListPage));
+                        break;
+                    case "Kanban3":
+                        ContentFrame.Navigate(typeof(KanbanPage));
+                        break;
+                    case "Kanban5":
+                        ContentFrame.Navigate(typeof(KanbanExtendedPage));
                         break;
                     case "addnew":
                         ContentFrame.Navigate(typeof(NewCategoryPage));
-                        NavView.Header = "Add new category";
                         break;
-
                     default:
+                       // ContentFrame.Navigate(typeof(SettingsPage));
                         break;
-
                 }
             }
+
+            NavView.Header = item.Content;
         }
 
 

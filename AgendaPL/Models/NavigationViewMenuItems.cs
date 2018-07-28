@@ -18,9 +18,9 @@ namespace AgendaPL.Models
         public NavigationViewMenuItems(ObservableCollection<CategoryDto> categories)
         {
             MenuItems.Add(new NavigationViewItemHeader { Content = "Calendar", Margin = new Thickness(33, 0, 0, 0) });
-            MenuItems.Add(new NavigationViewItem() { Content = "Today", Icon = new SymbolIcon(Symbol.CalendarDay), Tag = "today" });
-            MenuItems.Add(new NavigationViewItem() { Content = "My week", Icon = new SymbolIcon(Symbol.CalendarWeek), Tag = "week" });
-            MenuItems.Add(new NavigationViewItem() { Content = "Expired", Icon = new SymbolIcon(Symbol.CalendarReply), Tag = "expired" });
+            MenuItems.Add(new NavigationViewItem() { Content = "Daily report", Icon = new SymbolIcon(Symbol.CalendarDay), Tag = "today" });
+            MenuItems.Add(new NavigationViewItem() { Content = "Weekly report", Icon = new SymbolIcon(Symbol.CalendarWeek), Tag = "week" });
+            MenuItems.Add(new NavigationViewItem() { Content = "Expired tasks", Icon = new SymbolIcon(Symbol.CalendarReply), Tag = "expired" });
             MenuItems.Add(new NavigationViewItemSeparator());
             MenuItems.Add(new NavigationViewItemHeader { Content = "Categories", Margin = new Thickness(33, 0, 0, 0) });
 

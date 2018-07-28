@@ -22,8 +22,15 @@ namespace AgendaPL.Models
 
         public ObservableCollection<CategoryDto> GetAllCategories()
         {
-            var categories = RestClient.GetAllCategories();
-            return new ObservableCollection<CategoryDto>(categories);
+            try
+            {
+                var categories = RestClient.GetAllCategories();
+                return new ObservableCollection<CategoryDto>(categories);
+            }
+            catch (Exception)
+            {
+                return new ObservableCollection<CategoryDto>();
+            }
         }
 
         public void AddCategory(CategoryDto category)
