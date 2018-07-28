@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgendaPL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace AgendaPL.Views
     /// </summary>
     public sealed partial class ExpiredTasksPage : Page
     {
+        ViewModelLocator vm = new ViewModelLocator();
+        public MainViewModel ViewModel { get; set; }
+
         public ExpiredTasksPage()
         {
             this.InitializeComponent();
+            ViewModel = vm.MainPage;
         }
     }
 }
