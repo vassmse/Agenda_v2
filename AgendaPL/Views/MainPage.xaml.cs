@@ -36,12 +36,6 @@ namespace AgendaPL
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            //var menuItem = NavView.MenuItems
-            //             .OfType<NavigationViewItem>()
-            //             .Where(item => item.Tag.ToString() == "today")
-            //             .First();
-            //NavView.SelectedItem = menuItem;
-            //var a = NavView.MenuItems as ObservableCollection<NavigationViewItemBase>;
             //foreach (NavigationViewItemBase item in NavView.MenuItems)
             //{
             //    if (item is NavigationViewItem && item.Tag.ToString() == "today")
