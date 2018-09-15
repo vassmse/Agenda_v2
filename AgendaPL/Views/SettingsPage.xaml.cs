@@ -22,27 +22,21 @@ namespace AgendaPL.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CheckListPage : Page
+    public sealed partial class SettingsPage : Page
     {
         ViewModelLocator vm = new ViewModelLocator();
         public MainViewModel ViewModel { get; set; }
 
-        public CheckListPage()
+        public SettingsPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             ViewModel = vm.MainPage;
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void DeleteCategory(object sender, RoutedEventArgs e)
         {
-            var selectedTask = e.ClickedItem as TaskDto;
-            ViewModel.SelectedTaskAction(selectedTask.TaskId);
-        }
-
-        private void TaskReady(object sender, RoutedEventArgs e)
-        {
-            TaskDto source = ((CheckBox)sender).DataContext as TaskDto;
-            ViewModel.CheckChangedAction(source);
+            CategoryDto source = ((Button)sender).DataContext as CategoryDto;
+            ViewModel.DeleteCategoryAction(source);
         }
     }
 }

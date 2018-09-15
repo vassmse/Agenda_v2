@@ -88,7 +88,7 @@ namespace AgendaPL
                         ContentFrame.Navigate(typeof(NewCategoryPage));
                         break;
                     default:
-                        // ContentFrame.Navigate(typeof(SettingsPage));
+                        ContentFrame.Navigate(typeof(SettingsPage));
                         break;
                 }
             }

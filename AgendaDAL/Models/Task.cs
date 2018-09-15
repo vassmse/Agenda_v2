@@ -19,7 +19,11 @@ namespace AgendaDAL.Models
 
         public DateTime CreatedDate { get; set; }
 
+        public bool HasDeadlineDate { get; set; }
+        
         public DateTime DeadlineDate { get; set; }
+
+        public bool HasScheduledDate { get; set; }
 
         public DateTime ScheduledDate { get; set; }
 

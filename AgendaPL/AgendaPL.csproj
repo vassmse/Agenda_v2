@@ -101,7 +101,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntToBoolConverter.cs" />
+    <Compile Include="Converters\NullableBooleanToBooleanConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="Models\AgendaRestClient.cs" />
     <Compile Include="Models\BusinessLayer.cs" />
     <Compile Include="Models\CategoryCollection.cs" />
@@ -132,6 +135,9 @@
     </Compile>
     <Compile Include="Views\NewCategoryPage.xaml.cs">
       <DependentUpon>NewCategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WeeklyReportPage.xaml.cs">
       <DependentUpon>WeeklyReportPage.xaml</DependentUpon>
@@ -228,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewCategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,6 +22,8 @@ namespace AgendaPL.ViewModels
 
         public RelayCommand<int> TaskSelectedCommand { get; private set; }
 
+        public RelayCommand SaveTaskCommand { get; private set; }
+
 
         #endregion
 
@@ -85,6 +87,7 @@ namespace AgendaPL.ViewModels
 
             #region RelayCommands
 
+            SaveTaskCommand = new RelayCommand(SaveTaskAction);
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
 
 
@@ -109,6 +112,22 @@ namespace AgendaPL.ViewModels
                 IsPanelActive = true;
             }
         }
+
+        public void SaveTaskAction()
+        {
+            businessLayer.UpdateTask(SelectedTask);
+        }
+
+        public void CheckChangedAction(TaskDto task)
+        {
+            businessLayer.UpdateTask(task);
+        }
+
+        public void DeleteCategoryAction(CategoryDto category)
+        {
+            businessLayer.DeleteCategory(category);
+        }
+
 
         #endregion
 

@@ -64,6 +64,17 @@ namespace AgendaCON.Models
             }
         }
 
+        private bool hasDeadlineDate;
+        public bool HasDeadlineDate
+        {
+            get { return hasDeadlineDate; }
+            set
+            {
+                hasDeadlineDate = value;
+                NotifyPropertyChanged(nameof(HasDeadlineDate));
+            }
+        }
+
         private DateTime createdDate;
         public DateTime CreatedDate
         {
@@ -72,6 +83,17 @@ namespace AgendaCON.Models
             {
                 createdDate = value;
                 NotifyPropertyChanged(nameof(CreatedDate));
+            }
+        }
+
+        private bool hasScheduledDate;
+        public bool HasScheduledDate
+        {
+            get { return hasScheduledDate; }
+            set
+            {
+                hasScheduledDate = value;
+                NotifyPropertyChanged(nameof(HasScheduledDate));
             }
         }
 

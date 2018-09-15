@@ -47,11 +47,18 @@ namespace AgendaPL.Models
 
         public void AddCategory(CategoryDto category)
         {
-            var newCategory = new CategoryDto {Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
+            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
             ViewModel.CategoryCollection.Categories.Add(newCategory);
             RestClient.AddCategory(category);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);
             ViewModel.NewCategory.Name = String.Empty;
+        }
+
+        public void DeleteCategory(CategoryDto category)
+        {
+            ViewModel.CategoryCollection.Categories.Remove(category);
+            RestClient.DeleteCategory(category);
+            ViewModel.NavigationViewItems.DeleteMenuItem(category.Name);
         }
 
         public ObservableCollection<TaskDto> GetAllTasks()
@@ -64,6 +71,35 @@ namespace AgendaPL.Models
             catch (Exception)
             {
                 return new ObservableCollection<TaskDto>();
+            }
+        }
+
+        public void UpdateTask(TaskDto task)
+        {
+            RestClient.UpdateTask(task);
+
+            for (int i = 0; i < ViewModel.CategoryCollection.Categories.Count(); i++)
+            {
+                if (ViewModel.CategoryCollection.Categories[i] == ViewModel.SelectedCategory)
+                {
+                    for (int j = 0; j < ViewModel.CategoryCollection.Categories[i].Tasks.Count(); j++)
+                    {
+                        if (ViewModel.CategoryCollection.Categories[i].Tasks[j].TaskId == ViewModel.SelectedTask.TaskId)
+                        {
+                            ViewModel.CategoryCollection.Categories[i].Tasks[j] = ViewModel.SelectedTask;
+                        }
+                        else
+                        {
+                            for (int k = 0; k < ViewModel.CategoryCollection.Categories[i].Tasks[j].SubTasks.Count(); k++)
+                            {
+                                if (ViewModel.CategoryCollection.Categories[i].Tasks[j].SubTasks[k].TaskId == ViewModel.SelectedTask.TaskId)
+                                {
+                                    ViewModel.CategoryCollection.Categories[i].Tasks[j].SubTasks[k] = ViewModel.SelectedTask;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
