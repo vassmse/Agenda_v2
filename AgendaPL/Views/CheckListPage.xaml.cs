@@ -44,5 +44,10 @@ namespace AgendaPL.Views
             TaskDto source = ((CheckBox)sender).DataContext as TaskDto;
             ViewModel.CheckChangedAction(source);
         }
+
+        private void AddNewTask(object sender, PointerRoutedEventArgs e)
+        {
+            ViewModel.AddNewTask();
+        }
     }
 }

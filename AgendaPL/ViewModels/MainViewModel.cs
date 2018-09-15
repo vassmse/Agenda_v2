@@ -128,6 +128,13 @@ namespace AgendaPL.ViewModels
             businessLayer.DeleteCategory(category);
         }
 
+        public void AddNewTask()
+        {
+            int id = CategoryCollection.AllTasks.Last().TaskId + 1;
+            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId  = SelectedCategory.CategoryId };
+            businessLayer.AddTask(newTask);            
+        }
+
 
         #endregion
 

@@ -52,7 +52,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <ListViewItem Margin="0 40 0 0">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" PointerPressed="AddNewTask">                            
                             <SymbolIcon  Symbol="Add" Margin="10 0"/>
                             <TextBlock Text="Add new task"/>
                         </StackPanel>

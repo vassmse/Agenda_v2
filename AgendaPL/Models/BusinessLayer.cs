@@ -61,6 +61,13 @@ namespace AgendaPL.Models
             ViewModel.NavigationViewItems.DeleteMenuItem(category.Name);
         }
 
+        public void AddTask(TaskDto task)
+        {
+            RestClient.AddTask(task);
+            ViewModel.SelectedCategory.Tasks.Add(task);
+            ViewModel.CategoryCollection.AllTasks.Add(task);
+        }
+
         public ObservableCollection<TaskDto> GetAllTasks()
         {
             try
