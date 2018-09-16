@@ -21,7 +21,7 @@ namespace AgendaPL.Models
                 NotifyPropertyChanged(nameof(Categories));
             }
         }
-        
+
         public ObservableCollection<TaskDto> AllTasks
         {
             get { return getAllTasks(); }
@@ -52,7 +52,7 @@ namespace AgendaPL.Models
 
         private ObservableCollection<TaskDto> getDailyTasks()
         {
-           return new ObservableCollection<TaskDto>(AllTasks.Where(t => ((t.DeadlineDate.Year == DateTime.Now.Year && t.DeadlineDate.Day == DateTime.Now.Day) || ( t.ScheduledDate.Year == DateTime.Now.Year && t.ScheduledDate.Day == DateTime.Now.Day))).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => ((t.DeadlineDate.Year == DateTime.Now.Year && t.DeadlineDate.Day == DateTime.Now.Day) || (t.ScheduledDate.Year == DateTime.Now.Year && t.ScheduledDate.Day == DateTime.Now.Day))).ToList());
 
         }
 

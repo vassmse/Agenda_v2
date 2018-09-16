@@ -29,6 +29,8 @@ namespace AgendaDAL.Models
 
         public List<Task> SubTasks { get; set; }
 
+        public bool IsSubTask { get; set; }
+
         public int ParentTaskId { get; set; }
 
         public int ParentCategoryId { get; set; }

@@ -120,6 +120,19 @@ namespace AgendaCON.Models
             }
         }
 
+        private bool isSubTask;
+
+        public bool IsSubTask
+        {
+            get { return isSubTask; }
+            set
+            {
+                isSubTask = value;
+                NotifyPropertyChanged(nameof(IsSubTask));
+            }
+        }
+
+
         private int parentTaskId;
         public int ParentTaskId
         {
@@ -140,7 +153,7 @@ namespace AgendaCON.Models
                 parentCategoryId = value;
                 NotifyPropertyChanged(nameof(ParentCategoryId));
             }
-        }        
+        }
 
         public TaskDto()
         {

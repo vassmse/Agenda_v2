@@ -1,10 +1,12 @@
-﻿using System;
+﻿using AgendaPL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +24,14 @@ namespace AgendaPL.Views
     /// </summary>
     public sealed partial class MultiCheckListPage : Page
     {
+        ViewModelLocator vm = new ViewModelLocator();
+        public MainViewModel ViewModel { get; set; }
+
         public MultiCheckListPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ViewModel = vm.MainPage;
         }
+
     }
 }

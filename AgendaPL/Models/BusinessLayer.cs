@@ -32,7 +32,20 @@ namespace AgendaPL.Models
                     {
                         if (category.CategoryId == task.ParentCategoryId)
                         {
-                            category.Tasks.Add(task);
+                            if (!task.IsSubTask)
+                                category.Tasks.Add(task);
+                        }
+                    }
+                }
+
+                //SubTasks
+                foreach (var category in categories)
+                {
+                    foreach (var task in GetAllTasks())
+                    {
+                        if (category.CategoryId == task.ParentCategoryId && task.IsSubTask)
+                        {
+                            category.Tasks.FirstOrDefault(t => t.TaskId == task.ParentTaskId).SubTasks.Add(task);
                         }
                     }
                 }

@@ -4,11 +4,134 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:AgendaPL.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    xmlns:models="using:AgendaCON.Models"
+    xmlns:converters="using:AgendaPL.Converters"
     mc:Ignorable="d"
+    
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <converters:StringFormatConverter x:Key="StringFormatConverter" />
+        <converters:TimeConverter x:Key="TimeConverter"/>
+        <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+        <converters:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
+    </Page.Resources>
 
-    </Grid>
+
+    <SplitView PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+               IsPaneOpen="{x:Bind ViewModel.IsPanelActive, Mode=TwoWay}"
+               DisplayMode="Inline"
+               OpenPaneLength="256"
+               CompactPaneLength="48"
+               PanePlacement="Right">
+        <SplitView.Content>
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical">
+                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TaskDto">
+                                <StackPanel Orientation="Vertical">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}"  Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                                        <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
+
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
+                                            <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}"  />
+                                            <TextBlock Text="{x:Bind ScheduledDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Visibility="{x:Bind HasScheduledDate}" FontSize="12" VerticalAlignment="Center" Padding="5 0 0 0" />
+                                            <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Padding="15 0 0 0"  Visibility="{x:Bind HasDeadlineDate}" />
+                                            <TextBlock Text="{x:Bind DeadlineDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyy-MM-dd}'}" Visibility="{x:Bind HasDeadlineDate}" FontSize="12"  VerticalAlignment="Center" Padding="5 0 0 0" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <ListView ItemsSource="{Binding SubTasks}" Margin="40 0 0 0">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:TaskDto">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
+
+                                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
+                                                        <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}"  />
+                                                        <TextBlock Text="{x:Bind ScheduledDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Visibility="{x:Bind HasScheduledDate}" FontSize="12" VerticalAlignment="Center" Padding="5 0 0 0" />
+                                                        <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Padding="15 0 0 0"  Visibility="{x:Bind HasDeadlineDate}" />
+                                                        <TextBlock Text="{x:Bind DeadlineDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyy-MM-dd}'}" Visibility="{x:Bind HasDeadlineDate}" FontSize="12"  VerticalAlignment="Center" Padding="5 0 0 0" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+                                    <ListViewItem Margin="40 0 0 0">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                                            <Viewbox MaxHeight="11" MaxWidth="12">
+                                                <SymbolIcon  Symbol="Add" Margin="10 0" />
+                                            </Viewbox>
+                                            <TextBlock Text="Add new subtask" FontSize="12"/>
+                                        </StackPanel>
+                                    </ListViewItem>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ListViewItem Margin="0 40 0 0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                            <SymbolIcon  Symbol="Add" Margin="10 0"/>
+                            <TextBlock Text="Add new task"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Content>
+        <SplitView.Pane>
+            <ScrollViewer>
+                <StackPanel Padding="10 20">
+                    <TextBox x:Name="TaskName" Header= "Name" Text="{x:Bind ViewModel.SelectedTask.Name, Mode=TwoWay}" Margin="10"  MaxLength="32" Width="200" HorizontalAlignment="Center" />
+                    <TextBox x:Name="TaskDescription" Header="Description" Text="{x:Bind ViewModel.SelectedTask.Description, Mode=TwoWay}" Margin="10" Width="200" TextWrapping="Wrap" AcceptsReturn="True" Height="100"  HorizontalAlignment="Center" />
+                    <TextBlock Text="Deadline date" Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseDeadline" IsChecked="{x:Bind ViewModel.SelectedTask.HasDeadlineDate, Mode=TwoWay}"  />
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskDeadlineDate" IsEnabled="{x:Bind UseDeadline.IsChecked, Converter={StaticResource NullableBooleanToBooleanConverter}, Mode=OneWay}" Date="{x:Bind ViewModel.SelectedTask.DeadlineDate, Mode=TwoWay, Converter={StaticResource TimeConverter}}"  />
+                    </Grid>
+                    <TextBlock Text="Schedule date"  Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseSchedule"  IsChecked="{x:Bind ViewModel.SelectedTask.HasScheduledDate, Mode=TwoWay}"/>
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskScheduledDate" HorizontalAlignment="Center" IsEnabled="{x:Bind UseSchedule.IsChecked, Converter={StaticResource NullableBooleanToBooleanConverter}, Mode=OneWay}" Date="{x:Bind ViewModel.SelectedTask.ScheduledDate, Mode=TwoWay, Converter={StaticResource TimeConverter}}"  />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0 24" HorizontalAlignment="Center">
+                        <Button Content="Save" Margin="8 0" Width="80" Command="{x:Bind ViewModel.SaveTaskCommand}" />
+                        <Button Content="Delete"   Margin="8 0" Width="80" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Pane>
+    </SplitView>
 </Page>

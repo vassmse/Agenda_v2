@@ -60,9 +60,16 @@ namespace AgendaDAL.Services
         {
             if (DbContext.Tasks.Count() == 0)
             {
-                AddItem(new TaskDto { Name = "Alma", Description = "1 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
-                AddItem(new TaskDto { Name = "Banán", Description = "2 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
-                AddItem(new TaskDto { Name = "Mangó", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Történelem", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Esszé", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1, ParentTaskId=1, IsSubTask=true });
+                AddItem(new TaskDto { Name = "Készülés", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1, ParentTaskId=1, IsSubTask=true });
+                AddItem(new TaskDto { Name = "Rajz", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Biosz", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Fizika", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Matek", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 1 });
+                AddItem(new TaskDto { Name = "Alma", Description = "1 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 2 });
+                AddItem(new TaskDto { Name = "Banán", Description = "2 kg", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 2 });
+                AddItem(new TaskDto { Name = "Mangó", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 2 });
 
             }
         }

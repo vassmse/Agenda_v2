@@ -63,7 +63,7 @@ namespace AgendaCON.Models
 
         public CategoryDto()
         {
-            Tasks = new ObservableCollection<TaskDto>();
+            Tasks = new ObservableCollection<TaskDto>();            
             CategoryTypeValues = Enum.GetValues(typeof(CategoryTypes));
         }
 
