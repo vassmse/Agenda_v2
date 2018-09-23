@@ -105,14 +105,26 @@ namespace AgendaPL.ViewModels
             businessLayer.AddCategory(NewCategory);
         }
 
-        public void SelectedTaskAction(int taskId)
+        public void SelectedTaskAction(TaskDto task)
         {
-            if (SelectedTask.TaskId == taskId)
-                IsPanelActive = !IsPanelActive;
-            else
+            try
             {
-                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == taskId).FirstOrDefault();
-                IsPanelActive = true;
+                if (SelectedTask.TaskId == task.TaskId)
+                    IsPanelActive = !IsPanelActive;
+                else if (!task.IsSubTask)
+                {
+                    SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                    IsPanelActive = true;
+                }
+                else
+                {
+                    SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).FirstOrDefault().SubTasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                    IsPanelActive = true;
+                }
+            }
+            catch (Exception e1)
+            {
+                
             }
         }
 
@@ -133,14 +145,14 @@ namespace AgendaPL.ViewModels
 
         public void AddNewTask()
         {
-            int id = CategoryCollection.AllTasks.Count + 1;
+            int id = ++CategoryCollection.LastId;
             var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId };
             businessLayer.AddTask(newTask);
         }
 
         public void AddNewSubTask(int parentTaskId)
         {
-            int id = CategoryCollection.AllTasks.Count + 1;
+            int id = ++CategoryCollection.LastId;
             var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
             businessLayer.AddTask(newTask);
         }

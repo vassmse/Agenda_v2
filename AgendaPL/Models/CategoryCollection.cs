@@ -32,6 +32,8 @@ namespace AgendaPL.Models
             get { return getDailyTasks(); }
         }
 
+        public int LastId { get; set; }
+
         public CategoryCollection()
         {
 

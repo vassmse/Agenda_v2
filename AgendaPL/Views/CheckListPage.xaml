@@ -38,8 +38,8 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="TaskReady" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
-                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
+                                    <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="TaskReady" Grid.RowSpan="2" Grid.Column="0"  Width="26" Height="26" />
+                                    <TextBlock Text="{x:Bind Name}" FontSize="14" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 8 0 5" />
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
                                         <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}"  />

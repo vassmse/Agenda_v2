@@ -36,7 +36,7 @@ namespace AgendaPL.Views
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedTask = e.ClickedItem as TaskDto;
-            ViewModel.SelectedTaskAction(selectedTask.TaskId);
+            ViewModel.SelectedTaskAction(selectedTask);
         }
 
         private void TaskReady(object sender, RoutedEventArgs e)

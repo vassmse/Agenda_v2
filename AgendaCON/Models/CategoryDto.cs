@@ -47,15 +47,6 @@ namespace AgendaCON.Models
         }
 
 
-        public ObservableCollection<TaskDto> FirstLevelTasks
-        {
-            get
-            {
-                return new ObservableCollection<TaskDto>(Tasks.Where(t => !t.IsSubTask).ToList());
-
-            }
-        }
-
         private int parentUserId;
 
         public int ParentUserId
