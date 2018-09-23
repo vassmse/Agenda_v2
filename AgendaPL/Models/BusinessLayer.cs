@@ -147,5 +147,12 @@ namespace AgendaPL.Models
                 }
             }
         }
+
+        public void DeleteTask(TaskDto task)
+        {
+            RestClient.DeleteTask(task);
+            ViewModel.IsPanelActive = false;
+            ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).FirstOrDefault().Tasks.Remove(task);
+        }
     }
 }

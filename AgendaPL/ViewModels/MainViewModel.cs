@@ -24,6 +24,8 @@ namespace AgendaPL.ViewModels
 
         public RelayCommand SaveTaskCommand { get; private set; }
 
+        public RelayCommand DeleteTaskCommand { get; private set; }
+
 
         #endregion
 
@@ -89,6 +91,7 @@ namespace AgendaPL.ViewModels
 
             SaveTaskCommand = new RelayCommand(SaveTaskAction);
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
+            DeleteTaskCommand = new RelayCommand(DeleteTaskAction);
 
 
             #endregion
@@ -140,6 +143,11 @@ namespace AgendaPL.ViewModels
             int id = CategoryCollection.AllTasks.Count + 1;
             var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
             businessLayer.AddTask(newTask);
+        }
+
+        public void DeleteTaskAction()
+        {
+            businessLayer.DeleteTask(SelectedTask);    
         }
 
 

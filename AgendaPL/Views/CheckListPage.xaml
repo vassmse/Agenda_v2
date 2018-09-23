@@ -87,7 +87,7 @@
                     </Grid>
                     <StackPanel Orientation="Horizontal" Margin="0 24" HorizontalAlignment="Center">
                         <Button Content="Save" Margin="8 0" Width="80" Command="{x:Bind ViewModel.SaveTaskCommand}" />
-                        <Button Content="Delete"   Margin="8 0" Width="80" />
+                        <Button Content="Delete" Command="{x:Bind ViewModel.DeleteTaskCommand}"  Margin="8 0" Width="80" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
