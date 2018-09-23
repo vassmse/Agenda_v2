@@ -140,7 +140,11 @@ namespace AgendaPL.Models
         {
             RestClient.DeleteTask(task);
             ViewModel.IsPanelActive = false;
-            ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).FirstOrDefault().Tasks.Remove(task);
+            if (!task.IsSubTask)
+                ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).FirstOrDefault().Tasks.Remove(task);
+            else
+                ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Remove(task);
+
         }
     }
 }
