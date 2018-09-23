@@ -39,6 +39,59 @@ namespace AgendaPL.Models
 
         }
 
+        public void AddTask(TaskDto task)
+        {
+            if (task.IsSubTask)
+            {
+                Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+            }
+            else
+            {
+                Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Add(task);
+            }
+        }
+
+
+        public void DeleteTask(TaskDto task)
+        {
+            if (task.IsSubTask)
+            {
+                Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Remove(task);
+            }
+            else
+            {
+                Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Remove(task);
+            }
+        }
+
+        public void UpdateTask(TaskDto task)
+        {
+            if (task.IsSubTask)
+            {
+                var actualCategory = Categories.Where(c => c.CategoryId == task.ParentCategoryId).First();
+                var categoryIdx = Categories.IndexOf(actualCategory);
+
+                var actualTask = actualCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).First();
+                var taskIdx = Categories[categoryIdx].Tasks.IndexOf(actualTask);
+
+                var actualSub = Categories[categoryIdx].Tasks[taskIdx].SubTasks.Where(s => s.TaskId == task.TaskId).First();
+                var subIdx = Categories[categoryIdx].Tasks[taskIdx].SubTasks.IndexOf(actualSub);
+
+                Categories[categoryIdx].Tasks[taskIdx].SubTasks[subIdx] = task;
+            }
+            else
+            {
+                var actualCategory = Categories.Where(c => c.CategoryId == task.ParentCategoryId).First();
+                var categoryIdx = Categories.IndexOf(actualCategory);
+
+                var actualTask = actualCategory.Tasks.Where(t => t.TaskId == task.TaskId).First();
+                var taskIdx = Categories[categoryIdx].Tasks.IndexOf(actualTask);
+
+                Categories[categoryIdx].Tasks[taskIdx] = task;
+            }
+        }
+
+
         private ObservableCollection<TaskDto> getAllTasks()
         {
             var tasks = new ObservableCollection<TaskDto>();
@@ -63,5 +116,9 @@ namespace AgendaPL.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+
+
     }
 }
