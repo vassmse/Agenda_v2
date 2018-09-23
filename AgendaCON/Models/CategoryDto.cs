@@ -46,6 +46,16 @@ namespace AgendaCON.Models
             }
         }
 
+
+        public ObservableCollection<TaskDto> FirstLevelTasks
+        {
+            get
+            {
+                return new ObservableCollection<TaskDto>(Tasks.Where(t => !t.IsSubTask).ToList());
+
+            }
+        }
+
         private int parentUserId;
 
         public int ParentUserId
@@ -63,7 +73,7 @@ namespace AgendaCON.Models
 
         public CategoryDto()
         {
-            Tasks = new ObservableCollection<TaskDto>();            
+            Tasks = new ObservableCollection<TaskDto>();
             CategoryTypeValues = Enum.GetValues(typeof(CategoryTypes));
         }
 

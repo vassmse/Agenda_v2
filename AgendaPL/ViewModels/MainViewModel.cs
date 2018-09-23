@@ -108,7 +108,7 @@ namespace AgendaPL.ViewModels
                 IsPanelActive = !IsPanelActive;
             else
             {
-                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == taskId).FirstOrDefault();                
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == taskId).FirstOrDefault();
                 IsPanelActive = true;
             }
         }
@@ -130,9 +130,16 @@ namespace AgendaPL.ViewModels
 
         public void AddNewTask()
         {
-            int id = CategoryCollection.AllTasks.Last().TaskId + 1;
-            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId  = SelectedCategory.CategoryId };
-            businessLayer.AddTask(newTask);            
+            int id = CategoryCollection.AllTasks.Count + 1;
+            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId };
+            businessLayer.AddTask(newTask);
+        }
+
+        public void AddNewSubTask(int parentTaskId)
+        {
+            int id = CategoryCollection.AllTasks.Count + 1;
+            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
+            businessLayer.AddTask(newTask);
         }
 
 

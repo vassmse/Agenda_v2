@@ -24,16 +24,19 @@ namespace AgendaPL.Models
         {
             try
             {
+                //TODO
                 var categories = RestClient.GetAllCategories();
+                var tasks = GetAllTasks();
 
                 foreach (var category in categories)
                 {
-                    foreach (var task in GetAllTasks())
+                    foreach (var task in tasks)
                     {
                         if (category.CategoryId == task.ParentCategoryId)
                         {
                             if (!task.IsSubTask)
-                                category.Tasks.Add(task);
+                                category.FirstLevelTasks.Add(task);
+                            category.Tasks.Add(task);
                         }
                     }
                 }
@@ -41,7 +44,7 @@ namespace AgendaPL.Models
                 //SubTasks
                 foreach (var category in categories)
                 {
-                    foreach (var task in GetAllTasks())
+                    foreach (var task in tasks)
                     {
                         if (category.CategoryId == task.ParentCategoryId && task.IsSubTask)
                         {
@@ -49,6 +52,7 @@ namespace AgendaPL.Models
                         }
                     }
                 }
+                var a = categories;
 
                 return new ObservableCollection<CategoryDto>(categories);
             }
@@ -77,8 +81,29 @@ namespace AgendaPL.Models
         public void AddTask(TaskDto task)
         {
             RestClient.AddTask(task);
-            ViewModel.SelectedCategory.Tasks.Add(task);
-            ViewModel.CategoryCollection.AllTasks.Add(task);
+
+            if (task.IsSubTask)
+                ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+            else
+                ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Add(task);
+
+            //if(!task.IsSubTask)
+            //{
+            //      ViewModel.SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+            //       ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+
+            //}
+
+            //if (task.IsSubTask)
+            //{
+            //    ViewModel.SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+            //    ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Where(t => t.TaskId == task.ParentTaskId).First().SubTasks.Add(task);
+            //}
+            //else
+            //{
+            //    ViewModel.SelectedCategory.Tasks.Add(task);
+            //    ViewModel.CategoryCollection.Categories.Where(c => c.CategoryId == task.ParentCategoryId).First().Tasks.Add(task);
+            //}
         }
 
         public ObservableCollection<TaskDto> GetAllTasks()

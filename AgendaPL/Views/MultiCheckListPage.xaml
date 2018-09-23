@@ -28,7 +28,7 @@
         <SplitView.Content>
             <ScrollViewer>
                 <StackPanel Orientation="Vertical">
-                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks}" >
+                    <ListView ItemsSource="{x:Bind ViewModel.SelectedCategory.FirstLevelTasks}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" >
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:TaskDto">
                                 <StackPanel Orientation="Vertical">
@@ -42,7 +42,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}"  Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                                        <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="TaskReady" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
                                         <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
 
                                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
@@ -53,7 +53,7 @@
                                         </StackPanel>
                                     </Grid>
 
-                                    <ListView ItemsSource="{Binding SubTasks}" Margin="40 0 0 0">
+                                    <ListView ItemsSource="{Binding SubTasks}" Margin="40 0 0 0" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:TaskDto">
                                                 <Grid>
@@ -66,10 +66,10 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                                                    <CheckBox  IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="TaskReady" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
                                                     <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
 
-                                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
+                                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5" >
                                                         <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}"  />
                                                         <TextBlock Text="{x:Bind ScheduledDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Visibility="{x:Bind HasScheduledDate}" FontSize="12" VerticalAlignment="Center" Padding="5 0 0 0" />
                                                         <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Padding="15 0 0 0"  Visibility="{x:Bind HasDeadlineDate}" />
@@ -81,7 +81,7 @@
                                     </ListView>
 
                                     <ListViewItem Margin="40 0 0 0">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" PointerPressed="AddNewSubTask" >
                                             <Viewbox MaxHeight="11" MaxWidth="12">
                                                 <SymbolIcon  Symbol="Add" Margin="10 0" />
                                             </Viewbox>
@@ -93,7 +93,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <ListViewItem Margin="0 40 0 0">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" PointerPressed="AddNewTask">
                             <SymbolIcon  Symbol="Add" Margin="10 0"/>
                             <TextBlock Text="Add new task"/>
                         </StackPanel>
