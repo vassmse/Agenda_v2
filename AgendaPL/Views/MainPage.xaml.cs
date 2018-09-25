@@ -1,4 +1,5 @@
-﻿using AgendaPL.ViewModels;
+﻿using AgendaPL.Models;
+using AgendaPL.ViewModels;
 using AgendaPL.Views;
 using System;
 using System.Collections.Generic;
@@ -36,15 +37,7 @@ namespace AgendaPL
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            //foreach (NavigationViewItemBase item in NavView.MenuItems)
-            //{
-            //    if (item is NavigationViewItem && item.Tag.ToString() == "today")
-            //    {
-            //        NavView.SelectedItem = item;
-            //        break;
-            //    }
-            //}
-
+            NavView.SelectedItem = ViewModel.NavigationViewItems.MenuItems[1];
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
