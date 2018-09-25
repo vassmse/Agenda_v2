@@ -5,10 +5,161 @@
     xmlns:local="using:AgendaPL.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:AgendaPL.Converters"
+    xmlns:models="using:AgendaCON.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:TimeConverter x:Key="TimeConverter"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter" />
+        <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+        <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
+        <converters:TaskStateConverter x:Key="TaskStateConverter" />
+    </Page.Resources>
 
-    <Grid>
+    <SplitView x:Name="splitView"
+               PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+               IsPaneOpen="{x:Bind ViewModel.IsPanelActive, Mode=TwoWay}"
+               DisplayMode="Inline"
+               OpenPaneLength="256"
+               CompactPaneLength="48"
+               PanePlacement="Right">
+        <SplitView.Content>
+            <Grid HorizontalAlignment="Stretch" Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <Border BorderThickness="0,0,1,0" BorderBrush="#c0c0c0" Grid.Column="0" Grid.Row="0"  >
+                    <TextBlock Grid.Column="0" Text="Backlog" FontSize="18" Foreground="{ThemeResource  SystemControlForegroundAccentBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />
+                </Border>
+                <Border BorderThickness="0, 0, 1, 0" BorderBrush="#c0c0c0" Grid.Column="1" Grid.Row="0"  >
+                    <TextBlock Grid.Column="1" Text="In Progress" FontSize="18" Foreground="{ThemeResource  SystemControlForegroundAccentBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                </Border>
+                <Border BorderThickness="0" BorderBrush="#c0c0c0" Grid.Column="2" Grid.Row="0"  >
+                    <TextBlock Grid.Column="2" Text="Done" FontSize="18" Foreground="{ThemeResource  SystemControlForegroundAccentBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                </Border>
 
-    </Grid>
+                <Border BorderThickness="0,1,1,0" BorderBrush="#c0c0c0" Grid.Column="0" Grid.Row="1"  >
+                    <ScrollViewer x:Name="BacklogPanel" AllowDrop="True">
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
+                            <ItemsControl x:Name="itemsControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=0|3, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:TaskDto">
+                                        <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True"  >
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  HorizontalAlignment="Center"  VerticalAlignment="Center"  />
+                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="13" Padding="0 5 0 0" VerticalAlignment="Center" Visibility="{Binding Description, Converter={StaticResource StringToVisibility}}" />
+                                            <StackPanel Orientation="Horizontal" Padding="0 5 0 0">
+                                                <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                                <TextBlock Text="{Binding DeadlineDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                                <TextBlock Text="{Binding ScheduledDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Border BorderThickness="2" Width="150" BorderBrush="{ThemeResource SystemAccentColorLight1}" Margin="10" Background="Transparent"  >
+                                <StackPanel Width="150" Margin="10" HorizontalAlignment="Center">
+                                    <SymbolIcon  Symbol="Add" />
+                                    <TextBlock Text="Hozzáadás" HorizontalAlignment="Center" Padding="0 5 0 0"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <Border BorderThickness="0,1,1,0" BorderBrush="#c0c0c0" Grid.Column="1" Grid.Row="1"  >
+                    <ScrollViewer x:Name="DoingPanel" AllowDrop="True">
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
+                            <ItemsControl x:Name="doingControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=2|4, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:TaskDto">
+                                        <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True" >
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  HorizontalAlignment="Center"  VerticalAlignment="Center"  />
+                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="13" Padding="0 5 0 0" VerticalAlignment="Center" Visibility="{Binding Description, Converter={StaticResource StringToVisibility}}" />
+                                            <StackPanel Orientation="Horizontal" Padding="0 5 0 0">
+                                                <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                                <TextBlock Text="{Binding DeadlineDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                                <TextBlock Text="{Binding ScheduledDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <Border BorderThickness="0,1,0,0" BorderBrush="#c0c0c0" Grid.Column="2" Grid.Row="1"  >
+                    <ScrollViewer x:Name="DonePanel" AllowDrop="True">
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
+                            <ItemsControl x:Name="doneControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=1, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:TaskDto">
+                                        <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True" >
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  HorizontalAlignment="Center"  VerticalAlignment="Center"  />
+                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="13" Padding="0 5 0 0" VerticalAlignment="Center" Visibility="{Binding Description, Converter={StaticResource StringToVisibility}}" />
+                                            <StackPanel Orientation="Horizontal" Padding="0 5 0 0">
+                                                <TextBlock Text="&#xEC92;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                                <TextBlock Text="{Binding DeadlineDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="&#xE1DC;" FontSize="12" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Visibility="{x:Bind HasDeadlineDate}" />
+                                                <TextBlock Text="{Binding ScheduledDate,Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy-MM-dd}'}" Padding="5 0 0 0 " FontSize="12" VerticalAlignment="Center" Visibility="{x:Bind HasScheduledDate}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
+            </Grid>
+        </SplitView.Content>
+        <SplitView.Pane>
+            <ScrollViewer>
+                <!--<StackPanel Padding="10 20">
+                    <TextBox x:Name="TaskName" Header= "Name" Text="{x:Bind ViewModel.SelectedTask.Name, Mode=TwoWay}" Margin="10"  MaxLength="32" Width="200" HorizontalAlignment="Center" />
+                    <TextBox x:Name="TaskDescription" Header="Description" Text="{x:Bind ViewModel.SelectedTask.Description, Mode=TwoWay}" Margin="10" Width="200" TextWrapping="Wrap" AcceptsReturn="True" Height="100"  HorizontalAlignment="Center" />
+                    <TextBlock Text="Deadline date" Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseDeadline" IsChecked="{x:Bind ViewModel.SelectedTask.HasDeadlineDate, Mode=TwoWay}"  />
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskDeadlineDate" IsEnabled="{x:Bind UseDeadline.IsChecked, Converter={StaticResource NullableBooleanToBooleanConverter}, Mode=OneWay}" Date="{x:Bind ViewModel.SelectedTask.DeadlineDate, Mode=TwoWay, Converter={StaticResource TimeConverter}}"  />
+                    </Grid>
+                    <TextBlock Text="Schedule date"  Margin="20 10" ></TextBlock>
+                    <Grid Margin="20 0 ">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="UseSchedule"  IsChecked="{x:Bind ViewModel.SelectedTask.HasScheduledDate, Mode=TwoWay}"/>
+                        <CalendarDatePicker Grid.Column="1" Width="156" x:Name="TaskScheduledDate" HorizontalAlignment="Center" IsEnabled="{x:Bind UseSchedule.IsChecked, Converter={StaticResource NullableBooleanToBooleanConverter}, Mode=OneWay}" Date="{x:Bind ViewModel.SelectedTask.ScheduledDate, Mode=TwoWay, Converter={StaticResource TimeConverter}}"  />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0 24" HorizontalAlignment="Center">
+                        <Button Content="Save" Margin="8 0" Width="80" Command="{x:Bind ViewModel.SaveTaskCommand}" />
+                        <Button Content="Delete" Command="{x:Bind ViewModel.DeleteTaskCommand}"  Margin="8 0" Width="80" />
+                    </StackPanel>
+                </StackPanel>-->
+            </ScrollViewer>
+        </SplitView.Pane>
+    </SplitView>
 </Page>
