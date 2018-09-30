@@ -146,20 +146,27 @@ namespace AgendaPL.ViewModels
         public void AddNewTask()
         {
             int id = ++CategoryCollection.LastId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId };
+            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
             businessLayer.AddTask(newTask);
         }
 
         public void AddNewSubTask(int parentTaskId)
         {
             int id = ++CategoryCollection.LastId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 3, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
+            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
             businessLayer.AddTask(newTask);
         }
 
         public void DeleteTaskAction()
         {
             businessLayer.DeleteTask(SelectedTask);    
+        }
+
+        public void ChangeTaskState(int taskId, int newState)
+        {
+            var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
+            task.State = newState;
+            businessLayer.UpdateTask(task);
         }
 
 
