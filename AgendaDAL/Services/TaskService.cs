@@ -72,6 +72,9 @@ namespace AgendaDAL.Services
                 AddItem(new TaskDto { Name = "Mangó", Description = "3 db", State = 0, DeadlineDate = DateTime.Now.AddDays(2), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 2 });
                 AddItem(new TaskDto { Name = "Task1", Description = "", State = 0, DeadlineDate = DateTime.Now.AddDays(1), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 4 });
                 AddItem(new TaskDto { Name = "Task2", Description = "", State = 1, DeadlineDate = DateTime.Now.AddDays(1), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 4 });
+                AddItem(new TaskDto { Name = "Task3", Description = "", State = 2, DeadlineDate = DateTime.Now.AddDays(1), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 4 });
+                AddItem(new TaskDto { Name = "Task4", Description = "", State = 4, DeadlineDate = DateTime.Now.AddDays(1), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 4 });
+                AddItem(new TaskDto { Name = "Task5", Description = "", State = 4, DeadlineDate = DateTime.Now.AddDays(1), ScheduledDate = DateTime.Now.AddDays(1), ParentCategoryId = 4 });
 
             }
         }

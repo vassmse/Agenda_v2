@@ -14,21 +14,35 @@ namespace AgendaPL.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            //string parameterString = parameter as string;
+
+            //string[] parameters = parameterString.Split(new char[] { '|' });
+
+
+            //var result = ((IEnumerable)value).Cast<object>().ToList();
+            //ArrayList collection = new ArrayList(result);
+            //ObservableCollection<TaskDto> retCollection = new ObservableCollection<TaskDto>();
+
+            //foreach (var task in collection)
+            //{
+            //    if (((TaskDto)(task)).State == int.Parse(parameters[0]) || (parameters.Count() > 1 && ((TaskDto)(task)).State == int.Parse(parameters[1])))
+            //        retCollection.Add(((TaskDto)(task)));
+            //}
+            //return retCollection;
+
             string parameterString = parameter as string;
-
-            string[] parameters = parameterString.Split(new char[] { '|' });
-
-
             var result = ((IEnumerable)value).Cast<object>().ToList();
             ArrayList collection = new ArrayList(result);
             ObservableCollection<TaskDto> retCollection = new ObservableCollection<TaskDto>();
 
             foreach (var task in collection)
             {
-                if (((TaskDto)(task)).State == int.Parse(parameters[0]) || (parameters.Count() > 1 && ((TaskDto)(task)).State == int.Parse(parameters[1])))
+                if (((TaskDto)(task)).State == int.Parse(parameterString))
                     retCollection.Add(((TaskDto)(task)));
             }
             return retCollection;
+
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

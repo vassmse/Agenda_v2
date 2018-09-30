@@ -49,7 +49,7 @@
                 <Border BorderThickness="0,1,1,0" BorderBrush="#c0c0c0" Grid.Column="0" Grid.Row="1"  >
                     <ScrollViewer x:Name="BacklogPanel" AllowDrop="True">
                         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
-                            <ItemsControl x:Name="itemsControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=0|3, Mode=OneWay}">
+                            <ItemsControl x:Name="itemsControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=0, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:TaskDto">
                                         <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True"  >
@@ -71,7 +71,7 @@
                             <Border BorderThickness="2" Width="150" BorderBrush="{ThemeResource SystemAccentColorLight1}" Margin="10" Background="Transparent"  >
                                 <StackPanel Width="150" Margin="10" HorizontalAlignment="Center">
                                     <SymbolIcon  Symbol="Add" />
-                                    <TextBlock Text="Hozzáadás" HorizontalAlignment="Center" Padding="0 5 0 0"/>
+                                    <TextBlock Text="Add new task" HorizontalAlignment="Center" Padding="0 5 0 0"/>
                                 </StackPanel>
                             </Border>
 
@@ -79,9 +79,9 @@
                     </ScrollViewer>
                 </Border>
                 <Border BorderThickness="0,1,1,0" BorderBrush="#c0c0c0" Grid.Column="1" Grid.Row="1"  >
-                    <ScrollViewer x:Name="DoingPanel" AllowDrop="True">
+                    <ScrollViewer x:Name="InProgressPanel" AllowDrop="True">
                         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
-                            <ItemsControl x:Name="doingControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=2|4, Mode=OneWay}">
+                            <ItemsControl x:Name="doingControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=2, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:TaskDto">
                                         <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True" >
@@ -105,7 +105,7 @@
                 <Border BorderThickness="0,1,0,0" BorderBrush="#c0c0c0" Grid.Column="2" Grid.Row="1"  >
                     <ScrollViewer x:Name="DonePanel" AllowDrop="True">
                         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  >
-                            <ItemsControl x:Name="doneControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=1, Mode=OneWay}">
+                            <ItemsControl x:Name="doneControl" ItemsSource="{x:Bind ViewModel.SelectedCategory.Tasks, Converter={StaticResource TaskStateConverter}, ConverterParameter=4, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:TaskDto">
                                         <StackPanel Width="150" Background="{ThemeResource SystemAccentColorLight1}" Margin="10" Padding="10 5" HorizontalAlignment="Center" CanDrag="True" >
