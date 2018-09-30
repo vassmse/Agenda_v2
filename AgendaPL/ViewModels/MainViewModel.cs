@@ -107,30 +107,25 @@ namespace AgendaPL.ViewModels
 
         public void SelectedTaskAction(TaskDto task)
         {
-            try
+            if (SelectedTask.TaskId == task.TaskId)
+                IsPanelActive = !IsPanelActive;
+            else if (!task.IsSubTask)
             {
-                if (SelectedTask.TaskId == task.TaskId)
-                    IsPanelActive = !IsPanelActive;
-                else if (!task.IsSubTask)
-                {
-                    SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
-                    IsPanelActive = true;
-                }
-                else
-                {
-                    SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).FirstOrDefault().SubTasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
-                    IsPanelActive = true;
-                }
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                IsPanelActive = true;
             }
-            catch (Exception e1)
+            else
             {
-                
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).FirstOrDefault().SubTasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                IsPanelActive = true;
             }
+
         }
 
         public void SaveTaskAction()
         {
             businessLayer.UpdateTask(SelectedTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
         }
 
         public void CheckChangedAction(TaskDto task)
@@ -148,6 +143,7 @@ namespace AgendaPL.ViewModels
             int id = ++CategoryCollection.LastId;
             var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
             businessLayer.AddTask(newTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
         }
 
         public void AddNewSubTask(int parentTaskId)
@@ -159,7 +155,8 @@ namespace AgendaPL.ViewModels
 
         public void DeleteTaskAction()
         {
-            businessLayer.DeleteTask(SelectedTask);    
+            businessLayer.DeleteTask(SelectedTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
         }
 
         public void ChangeTaskState(int taskId, int newState)
@@ -167,6 +164,7 @@ namespace AgendaPL.ViewModels
             var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
             task.State = newState;
             businessLayer.UpdateTask(task);
+            RaisePropertyChanged(nameof(SelectedCategory));
         }
 
 
