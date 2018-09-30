@@ -89,7 +89,13 @@ namespace AgendaPL.Views
 
         }
 
-        private void itemsControl_PointerPressed(object sender, PointerRoutedEventArgs e)
+
+        private void AddNewTask(object sender, PointerRoutedEventArgs e)
+        {
+            ViewModel.AddNewTask();
+        }
+
+        private void doneControl_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             TaskDto selectedTask;
             if (e.OriginalSource as TextBlock == null)
@@ -101,14 +107,9 @@ namespace AgendaPL.Views
             {
                 var source = e.OriginalSource as TextBlock;
                 selectedTask = source.DataContext as TaskDto;
-            }                
-            
-            ViewModel.SelectedTaskAction(selectedTask);
-        }
+            }
 
-        private void AddNewTask(object sender, PointerRoutedEventArgs e)
-        {
-            ViewModel.AddNewTask();
+            ViewModel.SelectedTaskAction(selectedTask);
         }
     }
 }
