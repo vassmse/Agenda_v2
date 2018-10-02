@@ -239,8 +239,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <converters:AppBarVisibilityConverter  x:Key="AppBarVisibility" />
     </Page.Resources>
 
     <Grid>
@@ -268,13 +266,14 @@
                             Grid.Column="1"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            DefaultLabelPosition="Right"                            
+                            DefaultLabelPosition="Right"     
+                            Loaded="CommandBar_Loaded"
                             Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                            Margin="10">
-                            <AppBarButton Icon="AllApps" Label="Checklist" Click="AppBarButton_Click" CommandParameter="0"/>
-                            <AppBarButton Icon="DockBottom" Label="Multichecklist" Click="AppBarButton_Click" CommandParameter="1"/>
-                            <AppBarButton Icon="SelectAll" Label="Kanban3" Click="AppBarButton_Click" CommandParameter="2"/>
-                            <AppBarButton Icon="Bookmarks" Label="Kanban5" Click="AppBarButton_Click" CommandParameter="3"/>
+                            Margin="10" >
+                            <AppBarButton Icon="AllApps" Label="Checklist" Click="AppBarButton_Click" Loaded="ChecklistBarLoaded" CommandParameter="0"/>
+                            <AppBarButton Icon="DockBottom" Label="Multichecklist" Click="AppBarButton_Click" Loaded="MultiChecklistBarLoaded" CommandParameter="1"/>
+                            <AppBarButton Icon="SelectAll" Label="Kanban3" Click="AppBarButton_Click" Loaded="Kanban3BarLoaded" CommandParameter="2"/>
+                            <AppBarButton Icon="Bookmarks" Label="Kanban5" Click="AppBarButton_Click" Loaded="Kanban5BarLoaded"  CommandParameter="3"/>
                         </CommandBar>
                     </Grid>
                 </DataTemplate>
