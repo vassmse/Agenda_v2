@@ -44,5 +44,12 @@ namespace AgendaPL.Views
             CategoryDto source = ((Button)sender).DataContext as CategoryDto;
             ViewModel.RenameCategoryAction(source);
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CategoryDto source = ((ComboBox)sender).DataContext as CategoryDto;
+            if (source != null)
+                ViewModel.UpdateCategoryAction(source);
+        }
     }
 }

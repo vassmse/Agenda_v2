@@ -76,6 +76,7 @@ namespace AgendaPL.Models
             RestClient.UpdateCategory(category);
             ViewModel.CategoryCollection.UpdateCategory(category);
             ViewModel.NavigationViewItems.RenameMenuItem(category.CategoryId, category.Name);
+            ViewModel.NavigationViewItems.ChangeMenuItemTag(category.CategoryId, category.CategoryType.ToString());
         }
 
         public void DeleteCategory(CategoryDto category)

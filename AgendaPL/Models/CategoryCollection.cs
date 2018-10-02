@@ -96,6 +96,7 @@ namespace AgendaPL.Models
             var selectedCategory = Categories.Where(c => c.CategoryId == category.CategoryId).First();
             var categoryIdx = Categories.IndexOf(selectedCategory);
             Categories[categoryIdx].Name = category.Name;
+            Categories[categoryIdx].CategoryType = category.CategoryType;
         }
 
 

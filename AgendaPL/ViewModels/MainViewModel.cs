@@ -26,6 +26,8 @@ namespace AgendaPL.ViewModels
 
         public RelayCommand DeleteTaskCommand { get; private set; }
 
+        public RelayCommand<int> ChangeCategoryType { get; private set; }
+
 
         #endregion
 
@@ -45,18 +47,6 @@ namespace AgendaPL.ViewModels
             {
                 selectedCategory = value;
                 RaisePropertyChanged(nameof(SelectedCategory));
-            }
-        }
-
-        private CategoryTypes categoryType;
-
-        public CategoryTypes CategoryType
-        {
-            get { return categoryType; }
-            set
-            {
-                categoryType = value;
-                RaisePropertyChanged(nameof(CategoryType));
             }
         }
 
@@ -105,7 +95,7 @@ namespace AgendaPL.ViewModels
             SaveTaskCommand = new RelayCommand(SaveTaskAction);
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
             DeleteTaskCommand = new RelayCommand(DeleteTaskAction);
-
+            ChangeCategoryType = new RelayCommand<int>(ChangeCategoryTypeAction);
 
             #endregion
 
@@ -191,6 +181,19 @@ namespace AgendaPL.ViewModels
                 category.RenamingInProgress = false;
                 businessLayer.UpdateCategory(category);
             }
+        }
+
+        public void UpdateCategoryAction(CategoryDto category)
+        {
+            businessLayer.UpdateCategory(category);
+        }
+
+        public void ChangeCategoryTypeAction(int categoryType)
+        {
+            CategoryTypes type = (CategoryTypes)categoryType;
+            SelectedCategory.CategoryType = type;            
+            businessLayer.UpdateCategory(SelectedCategory);
+            RaisePropertyChanged("SelectedCategory");
         }
 
 

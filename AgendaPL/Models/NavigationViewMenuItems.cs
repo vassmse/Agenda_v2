@@ -95,6 +95,12 @@ namespace AgendaPL.Models
             }
         }
 
+        public void ChangeMenuItemTag(int id, string newTag)
+        {
+           var item= MenuItems.Where(i => i.Name == id.ToString()).First();
+            MenuItems[MenuItems.IndexOf(item)].Tag = newTag;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

@@ -53,6 +53,7 @@ namespace AgendaPL
                 NavView.Header = item.Content;
                 ViewModel.SelectedCategory = ViewModel.CategoryCollection.Categories.FirstOrDefault(c => c.Name == item.Content.ToString());
 
+
                 switch (item.Tag)
                 {
                     case "today":
@@ -88,6 +89,17 @@ namespace AgendaPL
 
         }
 
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            int parameter = Convert.ToInt32(((AppBarButton)sender).CommandParameter);
+            if ((NavView.SelectedItem as NavigationViewItem).Name.Length > 0)
+            {
+                ViewModel.ChangeCategoryTypeAction(parameter);
+                var selectedItem = NavView.SelectedItem as NavigationViewItem;
+                NavView_Navigate(selectedItem);
+            }
+
+        }
 
     }
 }

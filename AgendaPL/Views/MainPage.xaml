@@ -5,8 +5,9 @@
     xmlns:local="using:AgendaPL"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:AgendaPL.Converters"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">    
     <Page.Resources>
         <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="XamlAutoFontFamily"/>
@@ -238,6 +239,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <converters:AppBarVisibilityConverter  x:Key="AppBarVisibility" />
     </Page.Resources>
 
     <Grid>
@@ -261,15 +264,17 @@
                            Margin="10" 
                            Foreground="White"       
                            Text="{Binding}"/>
-                        <CommandBar Grid.Column="1"
+                        <CommandBar x:Name="commandBar"
+                            Grid.Column="1"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            DefaultLabelPosition="Right"
+                            DefaultLabelPosition="Right"                            
                             Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
                             Margin="10">
-                            <AppBarButton Icon="Bullets"/>
-                            <AppBarButton Icon="Pictures"/>
-                            <AppBarButton Icon="Save"/>
+                            <AppBarButton Icon="AllApps" Label="Checklist" Click="AppBarButton_Click" CommandParameter="0"/>
+                            <AppBarButton Icon="DockBottom" Label="Multichecklist" Click="AppBarButton_Click" CommandParameter="1"/>
+                            <AppBarButton Icon="SelectAll" Label="Kanban3" Click="AppBarButton_Click" CommandParameter="2"/>
+                            <AppBarButton Icon="Bookmarks" Label="Kanban5" Click="AppBarButton_Click" CommandParameter="3"/>
                         </CommandBar>
                     </Grid>
                 </DataTemplate>
