@@ -48,6 +48,19 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        private CategoryTypes categoryType;
+
+        public CategoryTypes CategoryType
+        {
+            get { return categoryType; }
+            set
+            {
+                categoryType = value;
+                RaisePropertyChanged(nameof(CategoryType));
+            }
+        }
+
+
         private TaskDto selectedTask;
 
         public TaskDto SelectedTask
@@ -165,6 +178,19 @@ namespace AgendaPL.ViewModels
             task.State = newState;
             businessLayer.UpdateTask(task);
             RaisePropertyChanged(nameof(SelectedCategory));
+        }
+
+        public void RenameCategoryAction(CategoryDto category)
+        {
+            if (!category.RenamingInProgress)
+            {
+                category.RenamingInProgress = true;
+            }
+            else
+            {
+                category.RenamingInProgress = false;
+                businessLayer.UpdateCategory(category);
+            }
         }
 
 

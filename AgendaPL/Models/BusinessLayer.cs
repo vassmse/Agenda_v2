@@ -71,11 +71,18 @@ namespace AgendaPL.Models
             ViewModel.NewCategory.Name = String.Empty;
         }
 
+        public void UpdateCategory(CategoryDto category)
+        {
+            RestClient.UpdateCategory(category);
+            ViewModel.CategoryCollection.UpdateCategory(category);
+            ViewModel.NavigationViewItems.RenameMenuItem(category.CategoryId, category.Name);
+        }
+
         public void DeleteCategory(CategoryDto category)
         {
             ViewModel.CategoryCollection.Categories.Remove(category);
             RestClient.DeleteCategory(category);
-            ViewModel.NavigationViewItems.DeleteMenuItem(category.Name);
+            ViewModel.NavigationViewItems.DeleteMenuItem(category.CategoryId);
         }
 
         public void AddTask(TaskDto task)

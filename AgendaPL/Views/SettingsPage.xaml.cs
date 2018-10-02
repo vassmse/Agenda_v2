@@ -38,5 +38,11 @@ namespace AgendaPL.Views
             CategoryDto source = ((Button)sender).DataContext as CategoryDto;
             ViewModel.DeleteCategoryAction(source);
         }
+
+        private void RenameCategory(object sender, RoutedEventArgs e)
+        {
+            CategoryDto source = ((Button)sender).DataContext as CategoryDto;
+            ViewModel.RenameCategoryAction(source);
+        }
     }
 }

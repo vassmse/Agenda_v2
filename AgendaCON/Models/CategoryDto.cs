@@ -61,6 +61,17 @@ namespace AgendaCON.Models
 
         public Array CategoryTypeValues { get; set; }
 
+        private bool renamingInProgress;
+        public bool RenamingInProgress
+        {
+            get { return renamingInProgress; }
+            set
+            {
+                renamingInProgress = value;
+                NotifyPropertyChanged(nameof(RenamingInProgress));
+            }
+        }
+
 
         public CategoryDto()
         {

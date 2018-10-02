@@ -91,6 +91,13 @@ namespace AgendaPL.Models
             }
         }
 
+        public void UpdateCategory(CategoryDto category)
+        {
+            var selectedCategory = Categories.Where(c => c.CategoryId == category.CategoryId).First();
+            var categoryIdx = Categories.IndexOf(selectedCategory);
+            Categories[categoryIdx].Name = category.Name;
+        }
+
 
         private ObservableCollection<TaskDto> getAllTasks()
         {

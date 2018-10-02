@@ -42,7 +42,7 @@ namespace AgendaPL.Models
                         icon = new SymbolIcon(Symbol.Bookmarks);
                         break;
                 }
-                MenuItems.Add(new NavigationViewItem { Content = category.Name, Icon = icon, Tag = category.CategoryType.ToString() });
+                MenuItems.Add(new NavigationViewItem { Content = category.Name, Name=category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
             }
 
             MenuItems.Add(new NavigationViewItemSeparator());
@@ -70,20 +70,29 @@ namespace AgendaPL.Models
 
             MenuItems.RemoveAt(MenuItems.Count - 1);
             MenuItems.RemoveAt(MenuItems.Count - 1);
-            MenuItems.Add(new NavigationViewItem { Content = category.Name, Icon = icon, Tag = category.CategoryType.ToString() });
+            MenuItems.Add(new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
             MenuItems.Add(new NavigationViewItemSeparator());
             MenuItems.Add(new NavigationViewItem { Content = "Add new category", Icon = new SymbolIcon(Symbol.Add), Tag = "addnew" });
         }
 
-        public void DeleteMenuItem(string name)
+        public void DeleteMenuItem(int id)
         {
             NavigationViewItemBase deletion = null;
             foreach (var item in MenuItems)
             {
-                if (item.Content != null && item.Content.ToString() == name)
+                if (item.Name != null && item.Name == id.ToString())
                     deletion = item;
             }
             MenuItems.Remove(deletion);
+        }
+
+        public void RenameMenuItem(int id, string name)
+        {
+            foreach (var item in MenuItems)
+            {
+                if (item.Name != null && item.Name == id.ToString())
+                    item.Content = name;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
