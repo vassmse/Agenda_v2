@@ -137,7 +137,7 @@ namespace AgendaPL.Models
 
         private ObservableCollection<TaskDto> getExpiredTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
         }
 
         private bool areDaysSame(DateTime date1, DateTime date2)
