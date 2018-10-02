@@ -1,4 +1,5 @@
-﻿using AgendaPL.ViewModels;
+﻿using AgendaCON.Models;
+using AgendaPL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +31,12 @@ namespace AgendaPL.Views
         {
             InitializeComponent();
             ViewModel = vm.MainPage;
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            TaskDto source = ((CheckBox)sender).DataContext as TaskDto;
+            ViewModel.CheckChangedAction(source);
         }
     }
 }
