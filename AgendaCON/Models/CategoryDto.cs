@@ -31,16 +31,7 @@ namespace AgendaCON.Models
             }
         }
 
-        private CategoryTypes categoryType;
-        public CategoryTypes CategoryType
-        {
-            get { return categoryType; }
-            set
-            {
-                categoryType = value;
-                NotifyPropertyChanged(nameof(CategoryType));
-            }
-        }
+        public CategoryTypes CategoryType { get; set; }
 
 
         private ObservableCollection<TaskDto> tasks;

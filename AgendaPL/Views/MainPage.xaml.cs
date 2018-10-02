@@ -57,7 +57,7 @@ namespace AgendaPL
                 NavView.Header = item.Content;
                 ViewModel.SelectedCategory = ViewModel.CategoryCollection.Categories.FirstOrDefault(c => c.Name == item.Content.ToString());
 
-                if (item.Name.Length > 0)
+                if (item.Name.Length == 1)
                     commandBar.Visibility = Visibility.Visible;
                 else
                     commandBar.Visibility = Visibility.Collapsed;
