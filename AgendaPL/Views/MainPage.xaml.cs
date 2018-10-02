@@ -65,14 +65,14 @@ namespace AgendaPL
 
                 switch (item.Tag)
                 {
-                    case "today":
+                    case "myday":
                         ContentFrame.Navigate(typeof(DailyReportPage));
-                        break;
-                    case "week":
-                        ContentFrame.Navigate(typeof(WeeklyReportPage));
                         break;
                     case "expired":
                         ContentFrame.Navigate(typeof(ExpiredTasksPage));
+                        break;
+                    case "alltasks":
+                        ContentFrame.Navigate(typeof(AllTaskPage));
                         break;
 
                     case "Checklist":

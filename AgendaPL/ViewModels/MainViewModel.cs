@@ -50,6 +50,14 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        private DateTime today;
+
+        public DateTime Today
+        {
+            get { return DateTime.Now; }
+        }
+
+
 
         private TaskDto selectedTask;
 

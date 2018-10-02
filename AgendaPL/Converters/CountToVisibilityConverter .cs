@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
-    public class TimeConverter : IValueConverter
+    public class CountToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return new DateTimeOffset(((DateTime)value).ToUniversalTime());
-
+            var elements = value as List<object>;
+            return Visibility.Visible;
+            //    return Visibility.Collapsed;
+            //else return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if (value != null)
-                return ((DateTimeOffset)value).DateTime;
-            else
-                return DateTime.Now;
+            if (value.ToString() == "Visible")
+                return true;
+            else return false;
+
         }
     }
 }

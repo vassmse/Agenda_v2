@@ -32,6 +32,16 @@ namespace AgendaPL.Models
             get { return getDailyTasks(); }
         }
 
+        public ObservableCollection<TaskDto> WeeklyTasks
+        {
+            get { return getWeeklyTasks(); }
+        }
+
+        public ObservableCollection<TaskDto> ExpiredTasks
+        {
+            get { return getExpiredTasks(); }
+        }
+
         public int LastId { get; set; }
 
         public CategoryCollection()
@@ -115,9 +125,26 @@ namespace AgendaPL.Models
 
         private ObservableCollection<TaskDto> getDailyTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => ((t.DeadlineDate.Year == DateTime.Now.Year && t.DeadlineDate.Day == DateTime.Now.Day) || (t.ScheduledDate.Year == DateTime.Now.Year && t.ScheduledDate.Day == DateTime.Now.Day))).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => !t.IsSubTask && ((t.HasDeadlineDate && areDaysSame(t.DeadlineDate, DateTime.Now)) || (t.HasScheduledDate && areDaysSame(t.ScheduledDate, DateTime.Now)))).ToList());
 
         }
+
+        private ObservableCollection<TaskDto> getWeeklyTasks()
+        {
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && ((t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear + 7 && t.DeadlineDate.DayOfYear >= DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear + 7 && t.ScheduledDate.DayOfYear >= DateTime.Now.DayOfYear))).ToList());
+
+        }
+
+        private ObservableCollection<TaskDto> getExpiredTasks()
+        {
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
+        }
+
+        private bool areDaysSame(DateTime date1, DateTime date2)
+        {
+            return date1.Year == date2.Year && date1.Month == date2.Month && date1.Day == date2.Day;
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

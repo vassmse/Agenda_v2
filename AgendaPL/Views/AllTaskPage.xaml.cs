@@ -21,16 +21,15 @@ namespace AgendaPL.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class WeeklyReportPage : Page
+    public sealed partial class AllTaskPage : Page
     {
         ViewModelLocator vm = new ViewModelLocator();
         public MainViewModel ViewModel { get; set; }
 
-        public WeeklyReportPage()
+        public AllTaskPage()
         {
             InitializeComponent();
             ViewModel = vm.MainPage;
-
         }
     }
 }
