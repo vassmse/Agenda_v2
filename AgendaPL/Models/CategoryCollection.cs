@@ -125,19 +125,19 @@ namespace AgendaPL.Models
 
         private ObservableCollection<TaskDto> getDailyTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => !t.IsSubTask && ((t.HasDeadlineDate && areDaysSame(t.DeadlineDate, DateTime.Now)) || (t.HasScheduledDate && areDaysSame(t.ScheduledDate, DateTime.Now)))).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => !t.IsSubTask && (t.State < 4) && ((t.HasDeadlineDate && areDaysSame(t.DeadlineDate, DateTime.Now)) || (t.HasScheduledDate && areDaysSame(t.ScheduledDate, DateTime.Now)))).ToList());
 
         }
 
         private ObservableCollection<TaskDto> getWeeklyTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && ((t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear + 7 && t.DeadlineDate.DayOfYear >= DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear + 7 && t.ScheduledDate.DayOfYear >= DateTime.Now.DayOfYear))).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State < 4) && ((t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear+8  && t.DeadlineDate.DayOfYear > DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear+8  && t.ScheduledDate.DayOfYear > DateTime.Now.DayOfYear))).ToList());
 
         }
 
         private ObservableCollection<TaskDto> getExpiredTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear) && (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
         }
 
         private bool areDaysSame(DateTime date1, DateTime date2)

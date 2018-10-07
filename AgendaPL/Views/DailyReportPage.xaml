@@ -18,12 +18,12 @@
 
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
-            <ListView ItemsSource="{x:Bind ViewModel.CategoryCollection.DailyTasks}" Margin="0 0 0 10">
+            <ListView ItemsSource="{x:Bind ViewModel.CategoryCollection.DailyTasks}" Margin="0 0 0 20">
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid  Padding="12" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-                            <TextBlock Text="Tasks for today" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Bold" />
-                        </Grid>
+                        <Border  Padding="12" BorderBrush="#c0c0c0" BorderThickness="0 0 0 1">
+                            <TextBlock Text="Tasks for today" />
+                        </Border>
                     </DataTemplate>
                 </ListView.HeaderTemplate>
                 <ListView.ItemTemplate>
@@ -38,7 +38,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=OneWay}" IsEnabled="False" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                            <CheckBox IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="CheckBox_Click" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30"/>
                             <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
 
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
@@ -55,9 +55,9 @@
             <ListView ItemsSource="{x:Bind ViewModel.CategoryCollection.WeeklyTasks}" >
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid  Padding="12" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-                            <TextBlock Text="Tasks for the week" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Bold" />
-                        </Grid>
+                        <Border  Padding="12" BorderBrush="#c0c0c0" BorderThickness="0 0 0 1">
+                            <TextBlock Text="Tasks for the next 7 days" />
+                        </Border>
                     </DataTemplate>
                 </ListView.HeaderTemplate>
                 <ListView.ItemTemplate>
@@ -72,7 +72,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=OneWay}" IsEnabled="False" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30" />
+                            <CheckBox IsChecked="{x:Bind State, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}" Click="CheckBox_Click" Grid.RowSpan="2" Grid.Column="0"  Width="30" Height="30"/>
                             <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="-78 5 0 5" />
 
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="-78 0 0 5">
