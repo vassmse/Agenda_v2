@@ -65,6 +65,17 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        private string loginErrorMessage;
+
+        public string LoginErrorMessage
+        {
+            get { return loginErrorMessage; }
+            set { loginErrorMessage = value;
+                RaisePropertyChanged(nameof(LoginErrorMessage));
+            }
+        }
+
+
 
 
 
@@ -216,7 +227,13 @@ namespace AgendaPL.ViewModels
 
         public bool LoginButtonAction()
         {
-            return businessLayer.AuthenticateUser(UserLoggedIn);
+            if (businessLayer.AuthenticateUser(UserLoggedIn))
+                return true;
+            else
+            {
+                LoginErrorMessage = "Username or password is incorrect";
+                return false;
+            }
 
         }
 

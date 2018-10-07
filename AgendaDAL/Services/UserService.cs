@@ -26,11 +26,11 @@ namespace AgendaDAL.Services
             AddInitialItems();
         }
 
-        public UserDto Authenticate(string email, string passworld)
+        public UserDto Authenticate(string email, string password)
         {
             try
             {
-                var user = mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(t => t.Email == email ));
+                var user = mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(t => t.Email == email && t.PasswordHash == password));
 
                 if (user == null)
                     return null;
