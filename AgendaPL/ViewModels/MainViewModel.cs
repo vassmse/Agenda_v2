@@ -29,6 +29,8 @@ namespace AgendaPL.ViewModels
         public RelayCommand<int> ChangeCategoryType { get; private set; }
 
 
+
+
         #endregion
 
         public CategoryCollection CategoryCollection { get; set; }
@@ -50,12 +52,19 @@ namespace AgendaPL.ViewModels
             }
         }
 
-        private DateTime today;
+        private UserDto userLoggedIn;
 
-        public DateTime Today
+        public UserDto UserLoggedIn
         {
-            get { return DateTime.Now; }
+            get { return userLoggedIn; }
+            set
+            {
+                userLoggedIn = value;
+                RaisePropertyChanged(nameof(UserLoggedIn));
+
+            }
         }
+
 
 
 
@@ -104,6 +113,7 @@ namespace AgendaPL.ViewModels
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
             DeleteTaskCommand = new RelayCommand(DeleteTaskAction);
             ChangeCategoryType = new RelayCommand<int>(ChangeCategoryTypeAction);
+            UserLoggedIn = new UserDto();
 
             #endregion
 
@@ -199,9 +209,15 @@ namespace AgendaPL.ViewModels
         public void ChangeCategoryTypeAction(int categoryType)
         {
             CategoryTypes type = (CategoryTypes)categoryType;
-            SelectedCategory.CategoryType = type;            
+            SelectedCategory.CategoryType = type;
             businessLayer.UpdateCategory(SelectedCategory);
             RaisePropertyChanged("SelectedCategory");
+        }
+
+        public bool LoginButtonAction()
+        {
+            return businessLayer.AuthenticateUser(UserLoggedIn);
+
         }
 
 

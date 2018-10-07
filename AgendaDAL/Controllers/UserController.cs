@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AgendaCON.Models;
 using AgendaDAL.Models;
 using AgendaDAL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,6 +21,19 @@ namespace AgendaDAL.Controllers
         {
             Service = new UserService(context);
         }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]UserDto userParam)
+        {
+            var user = Service.Authenticate(userParam.Email, userParam.PasswordHash);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
+
 
         // GET: api/<controller>
         [HttpGet]

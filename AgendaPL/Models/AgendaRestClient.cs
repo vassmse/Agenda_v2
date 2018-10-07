@@ -83,6 +83,20 @@ namespace AgendaPL.Models
         #endregion
 
         #region User CRUD
+
+        public bool AuthenticateUser(UserDto user)
+        {
+            var request = new RestRequest("user/authenticate", Method.POST);
+            request.AddJsonBody(user);
+            var response = Client.Execute<UserDto>(request);
+            var authUser = JsonConvert.DeserializeObject<UserDto>(response.Content);
+            if(authUser.Email == null)
+                return false;
+            else
+                return true;
+        }
+
+
         #endregion
     }
 }

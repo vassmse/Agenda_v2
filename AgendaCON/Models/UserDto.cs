@@ -19,17 +19,6 @@ namespace AgendaCON.Models
             }
         }
 
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-                NotifyPropertyChanged(nameof(Name));
-            }
-        }
-
         private string passwordHash;
         public string PasswordHash
         {
@@ -52,16 +41,28 @@ namespace AgendaCON.Models
             }
         }
 
-        private DateTime registerDate;
-        public DateTime RegisterDate
+        private string token;
+        public string Token
         {
-            get { return registerDate; }
+            get { return token; }
             set
             {
-                registerDate = value;
-                NotifyPropertyChanged(nameof(RegisterDate));
+                token = value;
+                NotifyPropertyChanged(nameof(Token));
             }
         }
+
+        private bool isLoggedIn;
+        public bool IsLoggedIn
+        {
+            get { return isLoggedIn; }
+            set
+            {
+                isLoggedIn = value;
+                NotifyPropertyChanged(nameof(IsLoggedIn));
+            }
+        }
+
 
         private List<CategoryDto> categories;
 

@@ -26,7 +26,6 @@ namespace AgendaDAL.Services
         {
             DbContext.Tasks.Add(mapper.Map<Models.Task>(item));
             DbContext.SaveChanges();
-
         }
 
         public void DeleteItem(TaskDto item)

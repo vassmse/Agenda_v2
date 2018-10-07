@@ -117,5 +117,10 @@ namespace AgendaPL.Models
             ViewModel.IsPanelActive = false;
             ViewModel.CategoryCollection.DeleteTask(task);
         }
+
+        public bool AuthenticateUser(UserDto user)
+        {
+            return RestClient.AuthenticateUser(user);
+        }
     }
 }
