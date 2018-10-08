@@ -116,41 +116,44 @@
     <Compile Include="Models\NavigationViewMenuItems.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\AllTaskPage.xaml.cs">
+    <Compile Include="Views\Calendar\AllTaskPage.xaml.cs">
       <DependentUpon>AllTaskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CheckListPage.xaml.cs">
+    <Compile Include="Views\Categories\CheckListPage.xaml.cs">
       <DependentUpon>CheckListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DailyReportPage.xaml.cs">
+    <Compile Include="Views\Calendar\DailyReportPage.xaml.cs">
       <DependentUpon>DailyReportPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExpiredTasksPage.xaml.cs">
+    <Compile Include="Views\Calendar\ExpiredTasksPage.xaml.cs">
       <DependentUpon>ExpiredTasksPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\KanbanExtendedPage.xaml.cs">
+    <Compile Include="Views\Categories\KanbanExtendedPage.xaml.cs">
       <DependentUpon>KanbanExtendedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\KanbanPage.xaml.cs">
+    <Compile Include="Views\Categories\KanbanPage.xaml.cs">
       <DependentUpon>KanbanPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoginPage.xaml.cs">
+    <Compile Include="Views\UserControl\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\MultiCheckListPage.xaml.cs">
+    <Compile Include="Views\Categories\MultiCheckListPage.xaml.cs">
       <DependentUpon>MultiCheckListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewCategoryPage.xaml.cs">
+    <Compile Include="Views\Categories\NewCategoryPage.xaml.cs">
       <DependentUpon>NewCategoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserPage.xaml.cs">
+    <Compile Include="Views\UserControl\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControl\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -216,31 +219,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\AllTaskPage.xaml">
+    <Page Include="Views\Calendar\AllTaskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CheckListPage.xaml">
+    <Page Include="Views\Categories\CheckListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DailyReportPage.xaml">
+    <Page Include="Views\Calendar\DailyReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExpiredTasksPage.xaml">
+    <Page Include="Views\Calendar\ExpiredTasksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\KanbanExtendedPage.xaml">
+    <Page Include="Views\Categories\KanbanExtendedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\KanbanPage.xaml">
+    <Page Include="Views\Categories\KanbanPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LoginPage.xaml">
+    <Page Include="Views\UserControl\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,11 +251,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MultiCheckListPage.xaml">
+    <Page Include="Views\Categories\MultiCheckListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewCategoryPage.xaml">
+    <Page Include="Views\Categories\NewCategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,7 +263,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserPage.xaml">
+    <Page Include="Views\UserControl\RegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControl\UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -97,10 +97,17 @@ namespace AgendaPL.Models
             request.AddJsonBody(user);
             var response = Client.Execute<UserDto>(request);
             var authUser = JsonConvert.DeserializeObject<UserDto>(response.Content);
-            if(authUser == null)
+            if(authUser == null || authUser.Email==null)
                 return null;
             else
                 return authUser;
+        }
+
+        public async void AddUser(UserDto user)
+        {
+            var request = new RestRequest("user", Method.POST);
+            request.AddJsonBody(user);
+            await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
         }
 
 

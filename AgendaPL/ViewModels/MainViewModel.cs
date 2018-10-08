@@ -11,6 +11,7 @@ using System.Resources;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using GalaSoft.MvvmLight.Command;
+using System.Net.Mail;
 
 namespace AgendaPL.ViewModels
 {
@@ -239,6 +240,11 @@ namespace AgendaPL.ViewModels
                 return false;
             }
 
+        }
+
+        public void Register()
+        {
+            businessLayer.RegisterUser();
         }
 
         public void Logout()

@@ -1,4 +1,5 @@
 ﻿using AgendaPL.ViewModels;
+using AgendaPL.Views.UserControl;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +41,16 @@ namespace AgendaPL.Views
                 Frame.Navigate(typeof(MainPage));
            
 
+        }
+
+        private void RegisterButtonTextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(RegisterPage));
+        }
+
+        private void RegisterButtonTextBlock_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 0);
         }
     }
 }

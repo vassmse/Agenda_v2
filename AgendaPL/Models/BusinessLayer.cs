@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace AgendaPL.Models
     {
         private AgendaRestClient RestClient { get; set; }
         private MainViewModel ViewModel { get; set; }
-        private UserDto LoggedInUser { get; set; }
+        private UserDto UserLoggedIn { get; set; }
 
         public BusinessLayer(MainViewModel viewModel)
         {
@@ -23,7 +24,7 @@ namespace AgendaPL.Models
 
         public void SwitchUser(UserDto user)
         {
-            LoggedInUser = user;
+            UserLoggedIn = user;
             RestClient.SwitchUser(user);
         }
 
@@ -32,7 +33,7 @@ namespace AgendaPL.Models
             try
             {
                 //TODO
-                var categories = RestClient.GetAllCategories().Where(c=>c.ParentUserId==LoggedInUser.UserId).ToList();
+                var categories = RestClient.GetAllCategories().Where(c=>c.ParentUserId==UserLoggedIn.UserId).ToList();
                 var tasks = GetAllTasks();
                 ViewModel.CategoryCollection.LastId = tasks.Count + 1;
 
@@ -71,7 +72,7 @@ namespace AgendaPL.Models
 
         public void AddCategory(CategoryDto category)
         {
-            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType, ParentUserId=LoggedInUser.UserId };
+            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType, ParentUserId=UserLoggedIn.UserId };
             ViewModel.CategoryCollection.Categories.Add(newCategory);
             RestClient.AddCategory(category);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);
@@ -128,6 +129,18 @@ namespace AgendaPL.Models
         public UserDto AuthenticateUser(UserDto user)
         {
             return RestClient.AuthenticateUser(user);
+        }
+
+        public void RegisterUser()
+        {
+            RestClient.AddUser(UserLoggedIn);
+            //MailMessage mail = new MailMessage("noreply@agenda.com", UserLoggedIn.Email, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
+            //SmtpClient client = new SmtpClient();
+            //client.Port = 25;
+            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //client.UseDefaultCredentials = false;
+            //client.Host = "smtp.gmail.com";
+            //client.Send(mail);
         }
     }
 }
