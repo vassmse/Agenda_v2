@@ -97,7 +97,7 @@ namespace AgendaPL.Models
             request.AddJsonBody(user);
             var response = Client.Execute<UserDto>(request);
             var authUser = JsonConvert.DeserializeObject<UserDto>(response.Content);
-            if(authUser.Email == null)
+            if(authUser == null)
                 return null;
             else
                 return authUser;

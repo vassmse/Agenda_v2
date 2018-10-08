@@ -96,10 +96,27 @@ namespace AgendaPL.Models
             }
         }
 
-        public void ChangeMenuItemTag(int id, string newTag)
+        public void ChangeMenuItemTag(int id, string newType)
         {
+            SymbolIcon icon = new SymbolIcon();
+            switch (Enum.Parse(typeof(CategoryTypes), newType))
+            {
+                case CategoryTypes.Checklist:
+                    icon = new SymbolIcon(Symbol.AllApps);
+                    break;
+                case CategoryTypes.Kanban3:
+                    icon = new SymbolIcon(Symbol.DockBottom);
+                    break;
+                case CategoryTypes.Kanban5:
+                    icon = new SymbolIcon(Symbol.SelectAll);
+                    break;
+                case CategoryTypes.MultiChecklist:
+                    icon = new SymbolIcon(Symbol.Bookmarks);
+                    break;
+            }
             var item = MenuItems.Where(i => i.Name == id.ToString()).First();
-            MenuItems[MenuItems.IndexOf(item)].Tag = newTag;
+            (MenuItems[MenuItems.IndexOf(item)] as NavigationViewItem).Tag = newType;
+            (MenuItems[MenuItems.IndexOf(item)] as NavigationViewItem).Icon = icon;
         }
 
         public void SetUserEmail(string email)
