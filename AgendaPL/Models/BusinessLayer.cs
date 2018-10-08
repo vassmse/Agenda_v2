@@ -13,6 +13,7 @@ namespace AgendaPL.Models
     {
         private AgendaRestClient RestClient { get; set; }
         private MainViewModel ViewModel { get; set; }
+        private UserDto LoggedInUser { get; set; }
 
         public BusinessLayer(MainViewModel viewModel)
         {
@@ -20,12 +21,18 @@ namespace AgendaPL.Models
             ViewModel = viewModel;
         }
 
+        public void SwitchUser(UserDto user)
+        {
+            LoggedInUser = user;
+            RestClient.SwitchUser(user);
+        }
+
         public ObservableCollection<CategoryDto> GetAllCategories()
         {
             try
             {
                 //TODO
-                var categories = RestClient.GetAllCategories();
+                var categories = RestClient.GetAllCategories().Where(c=>c.ParentUserId==LoggedInUser.UserId).ToList();
                 var tasks = GetAllTasks();
                 ViewModel.CategoryCollection.LastId = tasks.Count + 1;
 
@@ -118,7 +125,7 @@ namespace AgendaPL.Models
             ViewModel.CategoryCollection.DeleteTask(task);
         }
 
-        public bool AuthenticateUser(UserDto user)
+        public UserDto AuthenticateUser(UserDto user)
         {
             return RestClient.AuthenticateUser(user);
         }

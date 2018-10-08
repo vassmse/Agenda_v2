@@ -1,4 +1,5 @@
-﻿using AgendaDAL.Models;
+﻿using AgendaCON.Models;
+using AgendaDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

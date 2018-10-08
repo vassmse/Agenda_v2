@@ -108,8 +108,8 @@ namespace AgendaPL.ViewModels
             businessLayer = new BusinessLayer(this);
             NewCategory = new CategoryDto();
             CategoryCollection = new CategoryCollection();
-            CategoryCollection.Categories = businessLayer.GetAllCategories();
-            NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
+            //CategoryCollection.Categories = businessLayer.GetAllCategories();
+            //NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
             SelectedCategory = new CategoryDto();
             SelectedTask = new TaskDto();
 
@@ -223,8 +223,13 @@ namespace AgendaPL.ViewModels
 
         public bool LoginButtonAction()
         {
-            if (businessLayer.AuthenticateUser(UserLoggedIn))
+            UserLoggedIn = businessLayer.AuthenticateUser(UserLoggedIn);
+            if (UserLoggedIn != null)
             {
+                UserLoggedIn.IsLoggedIn = true;
+                businessLayer.SwitchUser(UserLoggedIn);
+                CategoryCollection.Categories = businessLayer.GetAllCategories();
+                NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
                 NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
                 return true;
             }

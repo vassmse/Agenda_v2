@@ -13,9 +13,16 @@ namespace AgendaPL.Models
     {
         private RestClient Client { get; set; }
 
+        private UserDto LoggedInUser { get; set; }
+
         public AgendaRestClient()
         {
             Client = new RestClient("http://localhost:60225/api/");
+        }
+
+        public void SwitchUser(UserDto user)
+        {
+            LoggedInUser = user;
         }
 
         #region Category CRUD
@@ -84,16 +91,16 @@ namespace AgendaPL.Models
 
         #region User CRUD
 
-        public bool AuthenticateUser(UserDto user)
+        public UserDto AuthenticateUser(UserDto user)
         {
             var request = new RestRequest("user/authenticate", Method.POST);
             request.AddJsonBody(user);
             var response = Client.Execute<UserDto>(request);
             var authUser = JsonConvert.DeserializeObject<UserDto>(response.Content);
             if(authUser.Email == null)
-                return false;
+                return null;
             else
-                return true;
+                return authUser;
         }
 
 
