@@ -98,9 +98,9 @@ namespace AgendaDAL.Services
         {
             if (DbContext.Users.Count() == 0)
             {
-                AddItem(new UserDto { Email = "test@test.com", PasswordHash = "asdasd" });
-                AddItem(new UserDto { Email = "test2@test.com", PasswordHash = "asda" });
                 AddItem(new UserDto { Email = "a", PasswordHash = "a" });
+                AddItem(new UserDto { Email = "b", PasswordHash = "b" });
+                AddItem(new UserDto { Email = "c", PasswordHash = "c" });
 
             }
         }

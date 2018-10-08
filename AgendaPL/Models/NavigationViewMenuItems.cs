@@ -17,6 +17,7 @@ namespace AgendaPL.Models
 
         public NavigationViewMenuItems(ObservableCollection<CategoryDto> categories)
         {
+            MenuItems.Add(new NavigationViewItem() { Content = "", Icon = new SymbolIcon(Symbol.Contact), Tag = "user" });
             MenuItems.Add(new NavigationViewItemHeader { Content = "Calendar", Margin = new Thickness(33, 0, 0, 0) });
             MenuItems.Add(new NavigationViewItem() { Content = "My days", Icon = new SymbolIcon(Symbol.CalendarDay), Tag = "myday" });
             MenuItems.Add(new NavigationViewItem() { Content = "Expired tasks", Icon = new SymbolIcon(Symbol.CalendarWeek), Tag = "expired" });
@@ -42,7 +43,7 @@ namespace AgendaPL.Models
                         icon = new SymbolIcon(Symbol.Bookmarks);
                         break;
                 }
-                MenuItems.Add(new NavigationViewItem { Content = category.Name, Name=category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
+                MenuItems.Add(new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
             }
 
             MenuItems.Add(new NavigationViewItemSeparator());
@@ -97,8 +98,14 @@ namespace AgendaPL.Models
 
         public void ChangeMenuItemTag(int id, string newTag)
         {
-           var item= MenuItems.Where(i => i.Name == id.ToString()).First();
+            var item = MenuItems.Where(i => i.Name == id.ToString()).First();
             MenuItems[MenuItems.IndexOf(item)].Tag = newTag;
+        }
+
+        public void SetUserEmail(string email)
+        {
+            var item = MenuItems.Where(i => i.Tag.ToString() == "user").First();
+            MenuItems[MenuItems.IndexOf(item)].Content = email;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

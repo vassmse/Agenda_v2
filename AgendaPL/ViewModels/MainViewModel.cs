@@ -75,10 +75,6 @@ namespace AgendaPL.ViewModels
             }
         }
 
-
-
-
-
         private TaskDto selectedTask;
 
         public TaskDto SelectedTask
@@ -228,13 +224,21 @@ namespace AgendaPL.ViewModels
         public bool LoginButtonAction()
         {
             if (businessLayer.AuthenticateUser(UserLoggedIn))
+            {
+                NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
                 return true;
+            }
             else
             {
                 LoginErrorMessage = "Username or password is incorrect";
                 return false;
             }
 
+        }
+
+        public void Logout()
+        {
+            UserLoggedIn = new UserDto();
         }
 
 

@@ -64,6 +64,9 @@ namespace AgendaDAL.Services
                 AddItem(new CategoryDto { Name = "Bevásárlás", CategoryType = CategoryTypes.Checklist, ParentUserId = 1 });
                 AddItem(new CategoryDto { Name = "Projekt", CategoryType = CategoryTypes.Kanban3, ParentUserId = 1 });
 
+                AddItem(new CategoryDto { Name = "Iskola", CategoryType = CategoryTypes.MultiChecklist, ParentUserId = 2 });
+                AddItem(new CategoryDto { Name = "Munka", CategoryType = CategoryTypes.Checklist, ParentUserId = 2 });
+
             }
         }
     }

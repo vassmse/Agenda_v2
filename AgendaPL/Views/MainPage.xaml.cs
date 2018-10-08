@@ -55,7 +55,7 @@ namespace AgendaPL
             if (item != null)
             {
                 NavView.Header = item.Content;
-                ViewModel.SelectedCategory = ViewModel.CategoryCollection.Categories.FirstOrDefault(c => c.Name == item.Content.ToString());
+                ViewModel.SelectedCategory = ViewModel.CategoryCollection.Categories.FirstOrDefault(c => c.CategoryId.ToString() == item.Name.ToString());
 
                 if (item.Name.Length == 1)
                     commandBar.Visibility = Visibility.Visible;
@@ -65,6 +65,9 @@ namespace AgendaPL
 
                 switch (item.Tag)
                 {
+                    case "user":
+                        ContentFrame.Navigate(typeof(UserPage));
+                        break;
                     case "myday":
                         ContentFrame.Navigate(typeof(DailyReportPage));
                         break;
