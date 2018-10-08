@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using GalaSoft.MvvmLight.Command;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace AgendaPL.ViewModels
 {
@@ -66,15 +67,15 @@ namespace AgendaPL.ViewModels
             }
         }
 
-        private string loginErrorMessage;
+        private string errorMessage;
 
-        public string LoginErrorMessage
+        public string ErrorMessage
         {
-            get { return loginErrorMessage; }
+            get { return errorMessage; }
             set
             {
-                loginErrorMessage = value;
-                RaisePropertyChanged(nameof(LoginErrorMessage));
+                errorMessage = value;
+                RaisePropertyChanged(nameof(ErrorMessage));
             }
         }
 
@@ -250,7 +251,7 @@ namespace AgendaPL.ViewModels
             }
             else
             {
-                LoginErrorMessage = "Username or password is incorrect";
+                ErrorMessage = "Username or password is incorrect";
                 return false;
             }
 
@@ -258,13 +259,43 @@ namespace AgendaPL.ViewModels
 
         public void Register()
         {
-            businessLayer.RegisterUser(UserLoggedIn);
-            RegisterOkMessage = "Your registration is complete. Now you can log in.";
+            RegisterOkMessage = String.Empty;
+            ErrorMessage = String.Empty;
+
+            if (IsValidEmail(UserLoggedIn.Email))
+            {
+                if (UserLoggedIn.PasswordHash.Length > 4)
+                {
+                    businessLayer.RegisterUser(UserLoggedIn);
+                    RegisterOkMessage = "Your registration is complete. Now you can log in.";
+                }
+                else
+                {
+                    ErrorMessage = "Password must be longer than 4 characters.";
+                }
+            }
+            else
+            {
+                ErrorMessage = "Please give a valid email address.";
+            }           
         }
 
         public void Logout()
         {
             UserLoggedIn = new UserDto();
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                MailAddress mail = new MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 

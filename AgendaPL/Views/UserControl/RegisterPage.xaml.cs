@@ -40,12 +40,17 @@ namespace AgendaPL.Views.UserControl
         private void LoginButtonTextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(LoginPage));
-
         }
 
         private void LoginButtonTextBlock_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 0);
+        }
+
+        private void LoginButtonTextBlock_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
+
         }
     }
 }

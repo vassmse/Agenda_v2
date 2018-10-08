@@ -11,7 +11,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"> 
         <StackPanel Orientation="Vertical" Padding="20">
             <TextBlock Text="Login" FontSize="36" Margin="4" TextAlignment="Center"/>
-            <TextBlock x:Name="ErrorMessage" Text="{x:Bind ViewModel.LoginErrorMessage, Mode=TwoWay}" FontSize="18" Margin="4" Foreground="Red" TextAlignment="Center"/>
+            <TextBlock x:Name="Message" Text="{x:Bind ViewModel.ErrorMessage, Mode=TwoWay}" FontSize="18" Margin="4" Foreground="Red" TextAlignment="Center"/>
             <TextBlock Text="Enter your login datas below." Margin="0,0,0,20"
                TextWrapping="Wrap" Width="300"
                TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
@@ -31,7 +31,7 @@
                 TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
             <TextBlock x:Name="RegisterButtonTextBlock" Text="Register now"
                Foreground="{StaticResource SystemControlBackgroundAccentBrush}"
-               TextAlignment="Center" VerticalAlignment="Center" FontSize="16" PointerPressed="RegisterButtonTextBlock_PointerPressed" PointerEntered="RegisterButtonTextBlock_PointerEntered" />
+               TextAlignment="Center" VerticalAlignment="Center" FontSize="16" PointerPressed="RegisterButtonTextBlock_PointerPressed" PointerEntered="RegisterButtonTextBlock_PointerEntered" PointerExited="RegisterButtonTextBlock_PointerExited"/>
         </StackPanel>
     </Grid>
 </Page>
