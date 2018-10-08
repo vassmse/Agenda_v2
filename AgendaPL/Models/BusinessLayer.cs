@@ -71,7 +71,7 @@ namespace AgendaPL.Models
 
         public void AddCategory(CategoryDto category)
         {
-            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType };
+            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType, ParentUserId=LoggedInUser.UserId };
             ViewModel.CategoryCollection.Categories.Add(newCategory);
             RestClient.AddCategory(category);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);
