@@ -71,8 +71,22 @@ namespace AgendaPL.ViewModels
         public string LoginErrorMessage
         {
             get { return loginErrorMessage; }
-            set { loginErrorMessage = value;
+            set
+            {
+                loginErrorMessage = value;
                 RaisePropertyChanged(nameof(LoginErrorMessage));
+            }
+        }
+
+        private string registerOkMessage;
+
+        public string RegisterOkMessage
+        {
+            get { return registerOkMessage; }
+            set
+            {
+                registerOkMessage = value;
+                RaisePropertyChanged(nameof(RegisterOkMessage));
             }
         }
 
@@ -244,7 +258,8 @@ namespace AgendaPL.ViewModels
 
         public void Register()
         {
-            businessLayer.RegisterUser();
+            businessLayer.RegisterUser(UserLoggedIn);
+            RegisterOkMessage = "Your registration is complete. Now you can log in.";
         }
 
         public void Logout()

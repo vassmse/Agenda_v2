@@ -131,9 +131,9 @@ namespace AgendaPL.Models
             return RestClient.AuthenticateUser(user);
         }
 
-        public void RegisterUser()
+        public void RegisterUser(UserDto user)
         {
-            RestClient.AddUser(UserLoggedIn);
+            RestClient.AddUser(user);
             //MailMessage mail = new MailMessage("noreply@agenda.com", UserLoggedIn.Email, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
             //SmtpClient client = new SmtpClient();
             //client.Port = 25;
