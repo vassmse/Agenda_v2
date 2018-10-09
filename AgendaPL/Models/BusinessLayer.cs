@@ -27,7 +27,6 @@ namespace AgendaPL.Models
         public void SwitchUser(UserDto user)
         {
             UserLoggedIn = user;
-            RestClient.SwitchUser(user);
         }
 
         public ObservableCollection<CategoryDto> GetAllCategories()
@@ -164,9 +163,9 @@ namespace AgendaPL.Models
                 };
                 client.Send(mail);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine("nomail");
+                throw;
             }
         }
     }
