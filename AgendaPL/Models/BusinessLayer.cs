@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
@@ -144,15 +145,29 @@ namespace AgendaPL.Models
             var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(user.PasswordHash));
             user.PasswordHash = Encoding.Default.GetString(md5.Hash);
             bool isOK = RestClient.AddUser(user);            
-            user.PasswordHash = String.Empty;
+            user.PasswordHash = String.Empty;            
             return isOK;
-            //MailMessage mail = new MailMessage("noreply@agenda.com", user.Email, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
-            //SmtpClient client = new SmtpClient();
-            //client.Port = 25;
-            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            //client.UseDefaultCredentials = false;
-            //client.Host = "smtp.gmail.com";
-            //client.Send(mail);
+            
+        }
+
+        private void SendMail(string mailTo)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage("noreply@agenda.com", mailTo, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 25,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Host = "smtp.gmail.com"                    
+                };
+                client.Send(mail);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("nomail");
+            }
         }
     }
 }
