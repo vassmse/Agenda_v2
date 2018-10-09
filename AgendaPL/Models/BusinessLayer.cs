@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -128,13 +129,24 @@ namespace AgendaPL.Models
 
         public UserDto AuthenticateUser(UserDto user)
         {
-            return RestClient.AuthenticateUser(user);
+            var md5 = new MD5CryptoServiceProvider();
+            var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(user.PasswordHash));
+            user.PasswordHash = Encoding.Default.GetString(md5.Hash);
+            UserDto isOk = RestClient.AuthenticateUser(user);
+            user.PasswordHash = String.Empty;
+            return isOk;
+
         }
 
-        public void RegisterUser(UserDto user)
+        public bool RegisterUser(UserDto user)
         {
-            RestClient.AddUser(user);
-            //MailMessage mail = new MailMessage("noreply@agenda.com", UserLoggedIn.Email, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
+            var md5 = new MD5CryptoServiceProvider();
+            var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(user.PasswordHash));
+            user.PasswordHash = Encoding.Default.GetString(md5.Hash);
+            bool isOK = RestClient.AddUser(user);            
+            user.PasswordHash = String.Empty;
+            return isOK;
+            //MailMessage mail = new MailMessage("noreply@agenda.com", user.Email, "Register to Agenda", "You have succesfully registered to the Agenda To-Do application.");
             //SmtpClient client = new SmtpClient();
             //client.Port = 25;
             //client.DeliveryMethod = SmtpDeliveryMethod.Network;

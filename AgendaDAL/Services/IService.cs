@@ -13,7 +13,7 @@ namespace AgendaDAL.Services
 
         T GetItem(int id);
 
-        void AddItem(T item);
+        //void AddItem(T item);
 
         void DeleteItem(T item);
 

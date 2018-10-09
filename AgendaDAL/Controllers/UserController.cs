@@ -65,8 +65,11 @@ namespace AgendaDAL.Controllers
         {
             if (item != null)
             {
-                Service.AddItem(item);
-                return Ok();
+                if (Service.AddItem(item))
+                    return Ok();
+                else
+                    return BadRequest(new { message = "Email is already taken." });
+
             }
             return BadRequest();
         }

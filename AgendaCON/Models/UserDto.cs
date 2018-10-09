@@ -62,10 +62,8 @@ namespace AgendaCON.Models
                 NotifyPropertyChanged(nameof(IsLoggedIn));
             }
         }
-
-
+        
         private List<CategoryDto> categories;
-
         public List<CategoryDto> Categories
         {
             get { return categories; }
@@ -80,7 +78,6 @@ namespace AgendaCON.Models
         {
             Categories = new List<CategoryDto>();
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

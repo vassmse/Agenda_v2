@@ -109,7 +109,6 @@ namespace AgendaCON.Models
         }
 
         private ObservableCollection<TaskDto> subTasks;
-
         public ObservableCollection<TaskDto> SubTasks
         {
             get { return subTasks; }
@@ -121,7 +120,6 @@ namespace AgendaCON.Models
         }
 
         private bool isSubTask;
-
         public bool IsSubTask
         {
             get { return isSubTask; }
@@ -131,8 +129,7 @@ namespace AgendaCON.Models
                 NotifyPropertyChanged(nameof(IsSubTask));
             }
         }
-
-
+        
         private int parentTaskId;
         public int ParentTaskId
         {

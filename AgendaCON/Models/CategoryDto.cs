@@ -32,10 +32,8 @@ namespace AgendaCON.Models
         }
 
         public CategoryTypes CategoryType { get; set; }
-
-
+        
         private ObservableCollection<TaskDto> tasks;
-
         public ObservableCollection<TaskDto> Tasks
         {
             get { return tasks; }
@@ -46,9 +44,7 @@ namespace AgendaCON.Models
             }
         }
 
-
         private int parentUserId;
-
         public int ParentUserId
         {
             get { return parentUserId; }
@@ -71,7 +67,6 @@ namespace AgendaCON.Models
                 NotifyPropertyChanged(nameof(RenamingInProgress));
             }
         }
-
 
         public CategoryDto()
         {

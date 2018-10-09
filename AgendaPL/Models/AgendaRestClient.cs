@@ -103,11 +103,14 @@ namespace AgendaPL.Models
                 return authUser;
         }
 
-        public async void AddUser(UserDto user)
+        public bool AddUser(UserDto user)
         {
             var request = new RestRequest("user", Method.POST);
             request.AddJsonBody(user);
-            await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
+            var response = Client.Execute<List<CategoryDto>>(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return false;
+            return true;
         }
 
 

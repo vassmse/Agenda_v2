@@ -61,10 +61,20 @@ namespace AgendaDAL.Services
             }
         }
 
-        public void AddItem(UserDto item)
+        public bool AddItem(UserDto item)
         {
-            DbContext.Users.Add(mapper.Map<User>(item));
-            DbContext.SaveChanges();
+            var existingUser = mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.Email == item.Email));
+            if (existingUser == null)
+            {
+                DbContext.Users.Add(mapper.Map<User>(item));
+                DbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public void DeleteItem(UserDto item)
