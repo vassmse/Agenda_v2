@@ -35,7 +35,6 @@ namespace AgendaDAL.Services
                 if (user == null)
                     return null;
 
-
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes("Security key for Users' password");
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -54,10 +53,9 @@ namespace AgendaDAL.Services
 
                 return user;
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e);
-                throw;
+                return null;
             }
         }
 

@@ -27,60 +27,113 @@ namespace AgendaDAL.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var items = Service.GetAllItem();
-            if (items != null)
+            try
             {
-                return Ok(items);
+                var items = Service.GetAllItem();
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return BadRequest();
             }
-            return NotFound();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var item = Service.GetItem(id);
-            if (item != null)
+            try
             {
-                return Ok(item);
+                var item = Service.GetItem(id);
+                if (item != null)
+                {
+                    return Ok(item);
+                }
+                return BadRequest();
             }
-            return NotFound();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post([FromBody]CategoryDto item)
+        public IActionResult Post([FromBody]CategoryDto category)
         {
-            if (item != null)
+            try
             {
-                Service.AddItem(item);
-                return Ok();
+                if (category != null)
+                {
+                    if (Service.AddItem(category))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]CategoryDto item)
-        {            
-            if (item != null)
+        public IActionResult Put(int id, [FromBody]CategoryDto category)
+        {
+            try
             {
-                Service.UpdateItem(item);
-                return Ok();
+                if (category != null)
+                {
+                    if (Service.UpdateItem(category))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] CategoryDto item)
-        {            
-            if (item != null)
+        public IActionResult Delete([FromBody] CategoryDto category)
+        {
+            try
             {
-                Service.DeleteItem(item);
-                return Ok();
+                if (category != null)
+                {
+                    if (Service.DeleteItem(category))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

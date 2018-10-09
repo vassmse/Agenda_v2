@@ -30,7 +30,7 @@ namespace AgendaDAL.Controllers
             {
                 return Ok(items);
             }
-            return NotFound();
+            return BadRequest();
         }
 
         // GET api/<controller>/5
@@ -42,41 +42,50 @@ namespace AgendaDAL.Controllers
             {
                 return Ok(item);
             }
-            return NotFound();
+            return BadRequest();
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post([FromBody]TaskDto item)
+        public IActionResult Post([FromBody]TaskDto task)
         {
-            if (item != null)
+            if (task != null)
             {
-                Service.AddItem(item);
-                return Ok();
+                if (Service.AddItem(task))
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
             return BadRequest();
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]TaskDto item)
+        public IActionResult Put(int id, [FromBody]TaskDto task)
         {
-            if (item != null)
+            if (task != null)
             {
-                Service.UpdateItem(item);
-                return Ok();
+                if (Service.UpdateItem(task))
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
             return BadRequest();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] TaskDto item)
+        public IActionResult Delete([FromBody] TaskDto task)
         {
-            if (item != null)
+            if (task != null)
             {
-                Service.DeleteItem(item);
-                return Ok();
+                if (Service.DeleteItem(task))
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
             return BadRequest();
         }

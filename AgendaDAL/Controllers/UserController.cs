@@ -22,80 +22,130 @@ namespace AgendaDAL.Controllers
             Service = new UserService(context);
         }
 
-        [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]UserDto userParam)
+        public IActionResult Authenticate([FromBody]UserDto user)
         {
-            var user = Service.Authenticate(userParam.Email, userParam.PasswordHash);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            return Ok(user);
+            try
+            {
+                if (user != null)
+                {
+                    var item = Service.Authenticate(user.Email, user.PasswordHash);
+                    if (item != null)
+                    {
+                        return Ok(item);
+                    }
+                    return BadRequest();
+                }
+                return BadRequest();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
-
 
         // GET: api/<controller>
         [HttpGet]
         public IActionResult Get()
         {
-            var items = Service.GetAllItem();
-            if (items != null)
+            try
             {
-                return Ok(items);
+                var items = Service.GetAllItem();
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return BadRequest();
             }
-            return NotFound();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var item = Service.GetItem(id);
-            if (item != null)
+            try
             {
-                return Ok(item);
+                var item = Service.GetItem(id);
+                if (item != null)
+                {
+                    return Ok(item);
+                }
+                return BadRequest();
             }
-            return NotFound();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
         public IActionResult Post([FromBody]UserDto item)
         {
-            if (item != null)
+            try
             {
-                if (Service.AddItem(item))
-                    return Ok();
-                else
-                    return BadRequest(new { message = "Email is already taken." });
-
+                if (item != null)
+                {
+                    if (Service.AddItem(item))
+                    {
+                        return Ok();
+                    }
+                    return BadRequest();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]UserDto item)
         {
-            if (item != null)
+            try
             {
-                Service.UpdateItem(item);
-                return Ok();
+                if (item != null)
+                {
+                    if (Service.UpdateItem(item))
+                    {
+                        return Ok();
+                    }
+                    return BadRequest();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public IActionResult Delete([FromBody] UserDto item)
         {
-            if (item != null)
+            try
             {
-                Service.DeleteItem(item);
-                return Ok();
+                if (item != null)
+                {
+                    if (Service.DeleteItem(item))
+                    {
+                        return Ok();
+                    }
+                    return BadRequest();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
