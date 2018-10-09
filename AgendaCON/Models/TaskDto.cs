@@ -129,7 +129,7 @@ namespace AgendaCON.Models
                 NotifyPropertyChanged(nameof(IsSubTask));
             }
         }
-        
+
         private int parentTaskId;
         public int ParentTaskId
         {

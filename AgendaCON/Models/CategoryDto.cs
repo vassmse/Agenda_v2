@@ -32,7 +32,7 @@ namespace AgendaCON.Models
         }
 
         public CategoryTypes CategoryType { get; set; }
-        
+
         private ObservableCollection<TaskDto> tasks;
         public ObservableCollection<TaskDto> Tasks
         {

@@ -16,13 +16,13 @@ namespace AgendaDAL.Services
     {
         private AgendaDbContext DbContext { get; set; }
 
-        private IMapper mapper { get; set; }
+        private IMapper DbMapper { get; set; }
 
         public UserService(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
-            mapper = new Mapper(config);
+            DbMapper = new Mapper(config);
             AddInitialItems();
         }
 
@@ -30,7 +30,7 @@ namespace AgendaDAL.Services
         {
             try
             {
-                var user = mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(t => t.Email == email && t.PasswordHash == password));
+                var user = DbMapper.Map<UserDto>(DbContext.Users.FirstOrDefault(t => t.Email == email && t.PasswordHash == password));
 
                 if (user == null)
                     return null;
@@ -63,44 +63,81 @@ namespace AgendaDAL.Services
 
         public bool AddItem(UserDto item)
         {
-            var existingUser = mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.Email == item.Email));
-            if (existingUser == null)
+            try
             {
-                DbContext.Users.Add(mapper.Map<User>(item));
-                DbContext.SaveChanges();
-                return true;
+                var existingUser = DbMapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.Email == item.Email));
+                if (existingUser == null)
+                {
+                    DbContext.Users.Add(DbMapper.Map<User>(item));
+                    DbContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch
             {
                 return false;
             }
-            
+
         }
 
-        public void DeleteItem(UserDto item)
+        public bool DeleteItem(UserDto item)
         {
-            var result = DbContext.Users.SingleOrDefault(u => u.UserId == item.UserId);
-            DbContext.Remove(result);
-            DbContext.SaveChanges();
+            try
+            {
+                var result = DbContext.Users.SingleOrDefault(u => u.UserId == item.UserId);
+                DbContext.Remove(result);
+                DbContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public List<UserDto> GetAllItem()
         {
-            return mapper.Map<List<User>, List<UserDto>>(DbContext.Users.ToList());
+            try
+            {
+                return DbMapper.Map<List<User>, List<UserDto>>(DbContext.Users.ToList());
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public UserDto GetItem(int id)
         {
-            return mapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.UserId == id));
+            try
+            {
+                return DbMapper.Map<UserDto>(DbContext.Users.FirstOrDefault(u => u.UserId == id));
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public void UpdateItem(UserDto item)
+        public bool UpdateItem(UserDto item)
         {
-            var result = DbContext.Users.SingleOrDefault(u => u.UserId == item.UserId);
-            if (result != null)
+            try
             {
-                DbContext.Entry(result).CurrentValues.SetValues(item);
-                DbContext.SaveChanges();
+                var result = DbContext.Users.SingleOrDefault(u => u.UserId == item.UserId);
+                if (result != null)
+                {
+                    DbContext.Entry(result).CurrentValues.SetValues(item);
+                    DbContext.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

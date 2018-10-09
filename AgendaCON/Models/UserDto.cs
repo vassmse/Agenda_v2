@@ -62,7 +62,7 @@ namespace AgendaCON.Models
                 NotifyPropertyChanged(nameof(IsLoggedIn));
             }
         }
-        
+
         private List<CategoryDto> categories;
         public List<CategoryDto> Categories
         {
