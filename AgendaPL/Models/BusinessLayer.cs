@@ -36,7 +36,8 @@ namespace AgendaPL.Models
                 //TODO
                 var categories = RestClient.GetAllCategories().Where(c=>c.ParentUserId==UserLoggedIn.UserId).ToList();
                 var tasks = GetAllTasks();
-                ViewModel.CategoryCollection.LastId = tasks.Count + 1;
+                ViewModel.CategoryCollection.LastTaskId = tasks.Count;
+                ViewModel.CategoryCollection.LastCategoryId = categories.Count;
 
                 foreach (var category in categories)
                 {
@@ -73,7 +74,8 @@ namespace AgendaPL.Models
 
         public void AddCategory(CategoryDto category)
         {
-            var newCategory = new CategoryDto { Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType, ParentUserId=UserLoggedIn.UserId };
+            int id = ++ViewModel.CategoryCollection.LastCategoryId;
+            var newCategory = new CategoryDto {CategoryId=id, Name = ViewModel.NewCategory.Name, CategoryType = ViewModel.NewCategory.CategoryType, ParentUserId=UserLoggedIn.UserId };
             ViewModel.CategoryCollection.Categories.Add(newCategory);
             RestClient.AddCategory(newCategory);
             ViewModel.NavigationViewItems.AddMenuItem(newCategory);

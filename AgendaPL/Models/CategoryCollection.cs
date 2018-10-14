@@ -42,7 +42,8 @@ namespace AgendaPL.Models
             get { return getExpiredTasks(); }
         }
 
-        public int LastId { get; set; }
+        public int LastTaskId { get; set; }
+        public int LastCategoryId { get; set; }
 
         public CategoryCollection()
         {
@@ -137,7 +138,7 @@ namespace AgendaPL.Models
 
         private ObservableCollection<TaskDto> getExpiredTasks()
         {
-            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear) && (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
+            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (!t.IsSubTask) && (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
         }
 
         private bool areDaysSame(DateTime date1, DateTime date2)

@@ -137,17 +137,25 @@ namespace AgendaPL.ViewModels
 
         public bool LoginButtonAction()
         {
-            if (IsValidEmail(UserLoggedIn.Email) && UserLoggedIn.PasswordHash.Length > 4)
+            try
             {
-                UserLoggedIn = BusinessLayer.AuthenticateUser(UserLoggedIn);
-                if (UserLoggedIn != null)
+                if (IsValidEmail(UserLoggedIn.Email) && UserLoggedIn.PasswordHash.Length > 4)
                 {
-                    UserLoggedIn.IsLoggedIn = true;
-                    BusinessLayer.SwitchUser(UserLoggedIn);
-                    CategoryCollection.Categories = BusinessLayer.GetAllCategories();
-                    NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
-                    NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
-                    return true;
+                    UserLoggedIn = BusinessLayer.AuthenticateUser(UserLoggedIn);
+                    if (UserLoggedIn != null)
+                    {
+                        UserLoggedIn.IsLoggedIn = true;
+                        BusinessLayer.SwitchUser(UserLoggedIn);
+                        CategoryCollection.Categories = BusinessLayer.GetAllCategories();
+                        NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
+                        NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
+                        return true;
+                    }
+                    else
+                    {
+                        ErrorMessage = "Username or password is incorrect";
+                        return false;
+                    }
                 }
                 else
                 {
@@ -155,7 +163,7 @@ namespace AgendaPL.ViewModels
                     return false;
                 }
             }
-            else
+            catch
             {
                 ErrorMessage = "Username or password is incorrect";
                 return false;
@@ -164,27 +172,37 @@ namespace AgendaPL.ViewModels
 
         public void Register()
         {
-            if (IsValidEmail(UserLoggedIn.Email))
+            try
             {
-                if (UserLoggedIn.PasswordHash.Length > 4)
+                OkMessage = String.Empty;
+                ErrorMessage = String.Empty;
+
+                if (IsValidEmail(UserLoggedIn.Email))
                 {
-                    if (BusinessLayer.RegisterUser(UserLoggedIn))
+                    if (UserLoggedIn.PasswordHash.Length > 4)
                     {
-                        OkMessage = "Your registration is complete. Now you can log in.";
+                        if (BusinessLayer.RegisterUser(UserLoggedIn))
+                        {
+                            OkMessage = "Your registration is complete. Now you can log in.";
+                        }
+                        else
+                        {
+                            ErrorMessage = "Email is already taken.";
+                        }
                     }
                     else
                     {
-                        ErrorMessage = "Email is already taken.";
+                        ErrorMessage = "Password must be longer than 4 characters.";
                     }
                 }
                 else
                 {
-                    ErrorMessage = "Password must be longer than 4 characters.";
+                    ErrorMessage = "Please give a valid email address.";
                 }
             }
-            else
+            catch
             {
-                ErrorMessage = "Please give a valid email address.";
+                ErrorMessage = "Something went wrong.";
             }
         }
 
@@ -257,7 +275,7 @@ namespace AgendaPL.ViewModels
 
         public void AddNewTask()
         {
-            int id = ++CategoryCollection.LastId;
+            int id = ++CategoryCollection.LastTaskId;
             var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
             BusinessLayer.AddTask(newTask);
             RaisePropertyChanged(nameof(SelectedCategory));
@@ -265,7 +283,7 @@ namespace AgendaPL.ViewModels
 
         public void AddNewSubTask(int parentTaskId)
         {
-            int id = ++CategoryCollection.LastId;
+            int id = ++CategoryCollection.LastTaskId;
             var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
             BusinessLayer.AddTask(newTask);
         }
