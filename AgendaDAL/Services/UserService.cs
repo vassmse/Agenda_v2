@@ -23,7 +23,6 @@ namespace AgendaDAL.Services
             DbContext = dbContext;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
             DbMapper = new Mapper(config);
-            AddInitialItems();
         }
 
         public UserDto Authenticate(string email, string password)
@@ -137,17 +136,6 @@ namespace AgendaDAL.Services
             {
                 return false;
             }
-        }
-
-        private void AddInitialItems()
-        {
-            if (DbContext.Users.Count() == 0)
-            {
-                AddItem(new UserDto { Email = "a", PasswordHash = "a" });
-                AddItem(new UserDto { Email = "b", PasswordHash = "b" });
-                AddItem(new UserDto { Email = "c", PasswordHash = "c" });
-
-            }
-        }
+        }        
     }
 }

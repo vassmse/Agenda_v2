@@ -169,10 +169,13 @@ namespace AgendaPL.ViewModels
                 if (UserLoggedIn.PasswordHash.Length > 4)
                 {
                     if (BusinessLayer.RegisterUser(UserLoggedIn))
+                    {
                         OkMessage = "Your registration is complete. Now you can log in.";
+                    }
                     else
+                    {
                         ErrorMessage = "Email is already taken.";
-
+                    }
                 }
                 else
                 {

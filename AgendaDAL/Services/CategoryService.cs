@@ -18,7 +18,6 @@ namespace AgendaDAL.Services
             DbContext = dbContext;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
             DbMapper = new Mapper(config);
-            AddInitialItems();
         }
 
         public bool AddItem(CategoryDto item)
@@ -95,22 +94,6 @@ namespace AgendaDAL.Services
             {
                 return false;
             }
-        }
-
-        private void AddInitialItems()
-        {
-            if (DbContext.Categories.Count() == 0)
-            {
-                // Initial categories for Test user 1
-                AddItem(new CategoryDto { Name = "School", CategoryType = CategoryTypes.MultiChecklist, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Work", CategoryType = CategoryTypes.Kanban3, ParentUserId = 1 });
-                AddItem(new CategoryDto { Name = "Shopping list", CategoryType = CategoryTypes.Checklist, ParentUserId = 1 });
-
-                // Initial categories for Test user 2
-                AddItem(new CategoryDto { Name = "Shopping", CategoryType = CategoryTypes.Checklist, ParentUserId = 2 });
-                AddItem(new CategoryDto { Name = "Exercising", CategoryType = CategoryTypes.MultiChecklist, ParentUserId = 2 });
-                AddItem(new CategoryDto { Name = "Project", CategoryType = CategoryTypes.Kanban5, ParentUserId = 2 });
-            }
-        }
+        }       
     }
 }
