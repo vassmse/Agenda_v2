@@ -41,7 +41,7 @@ namespace AgendaPL
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            NavView.SelectedItem = ViewModel.NavigationViewItems.MenuItems[1];
+            NavView.SelectedItem = ViewModel.NavigationViewItems.MenuItems[2];
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

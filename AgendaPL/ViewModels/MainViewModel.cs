@@ -22,26 +22,25 @@ namespace AgendaPL.ViewModels
 
         public RelayCommand AddCategoryCommand { get; private set; }
 
-        public RelayCommand<int> TaskSelectedCommand { get; private set; }
-
         public RelayCommand SaveTaskCommand { get; private set; }
 
         public RelayCommand DeleteTaskCommand { get; private set; }
 
-        public RelayCommand<int> ChangeCategoryType { get; private set; }
-
-
-
-
         #endregion
+
+        #region Properties
 
         public CategoryCollection CategoryCollection { get; set; }
 
-        private BusinessLayer businessLayer { get; set; }
+        private BusinessLayer BusinessLayer { get; set; }
 
         public NavigationViewMenuItems NavigationViewItems { get; set; }
 
         public CategoryDto NewCategory { get; set; }
+
+        #endregion
+
+        #region Full Properties with RaisePropertyChanged
 
         private CategoryDto selectedCategory;
         public CategoryDto SelectedCategory
@@ -55,7 +54,6 @@ namespace AgendaPL.ViewModels
         }
 
         private UserDto userLoggedIn;
-
         public UserDto UserLoggedIn
         {
             get { return userLoggedIn; }
@@ -68,7 +66,6 @@ namespace AgendaPL.ViewModels
         }
 
         private string errorMessage;
-
         public string ErrorMessage
         {
             get { return errorMessage; }
@@ -79,20 +76,18 @@ namespace AgendaPL.ViewModels
             }
         }
 
-        private string registerOkMessage;
-
-        public string RegisterOkMessage
+        private string okMessage;
+        public string OkMessage
         {
-            get { return registerOkMessage; }
+            get { return okMessage; }
             set
             {
-                registerOkMessage = value;
-                RaisePropertyChanged(nameof(RegisterOkMessage));
+                okMessage = value;
+                RaisePropertyChanged(nameof(OkMessage));
             }
         }
 
         private TaskDto selectedTask;
-
         public TaskDto SelectedTask
         {
             get { return selectedTask; }
@@ -103,9 +98,7 @@ namespace AgendaPL.ViewModels
             }
         }
 
-
         private bool isPanelActive;
-
         public bool IsPanelActive
         {
             get { return isPanelActive; }
@@ -116,158 +109,67 @@ namespace AgendaPL.ViewModels
             }
         }
 
-
-
+        #endregion
 
         public MainViewModel()
         {
-            businessLayer = new BusinessLayer(this);
+            #region Init objects
+
+            BusinessLayer = new BusinessLayer(this);
             NewCategory = new CategoryDto();
             CategoryCollection = new CategoryCollection();
-            //CategoryCollection.Categories = businessLayer.GetAllCategories();
-            //NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
             SelectedCategory = new CategoryDto();
             SelectedTask = new TaskDto();
+            UserLoggedIn = new UserDto();
 
+            #endregion
 
             #region RelayCommands
 
             SaveTaskCommand = new RelayCommand(SaveTaskAction);
             AddCategoryCommand = new RelayCommand(AddCategoryAction);
             DeleteTaskCommand = new RelayCommand(DeleteTaskAction);
-            ChangeCategoryType = new RelayCommand<int>(ChangeCategoryTypeAction);
-            UserLoggedIn = new UserDto();
 
             #endregion
-
         }
 
-        #region Commands
-
-        private void AddCategoryAction()
-        {
-            businessLayer.AddCategory(NewCategory);
-        }
-
-        public void SelectedTaskAction(TaskDto task)
-        {
-            if (SelectedTask.TaskId == task.TaskId)
-                IsPanelActive = !IsPanelActive;
-            else if (!task.IsSubTask)
-            {
-                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
-                IsPanelActive = true;
-            }
-            else
-            {
-                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).FirstOrDefault().SubTasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
-                IsPanelActive = true;
-            }
-
-        }
-
-        public void SaveTaskAction()
-        {
-            businessLayer.UpdateTask(SelectedTask);
-            RaisePropertyChanged(nameof(SelectedCategory));
-        }
-
-        public void CheckChangedAction(TaskDto task)
-        {
-            businessLayer.UpdateTask(task);
-        }
-
-        public void DeleteCategoryAction(CategoryDto category)
-        {
-            businessLayer.DeleteCategory(category);
-        }
-
-        public void AddNewTask()
-        {
-            int id = ++CategoryCollection.LastId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
-            businessLayer.AddTask(newTask);
-            RaisePropertyChanged(nameof(SelectedCategory));
-        }
-
-        public void AddNewSubTask(int parentTaskId)
-        {
-            int id = ++CategoryCollection.LastId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
-            businessLayer.AddTask(newTask);
-        }
-
-        public void DeleteTaskAction()
-        {
-            businessLayer.DeleteTask(SelectedTask);
-            RaisePropertyChanged(nameof(SelectedCategory));
-        }
-
-        public void ChangeTaskState(int taskId, int newState)
-        {
-            var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
-            task.State = newState;
-            businessLayer.UpdateTask(task);
-            RaisePropertyChanged(nameof(SelectedCategory));
-        }
-
-        public void RenameCategoryAction(CategoryDto category)
-        {
-            if (!category.RenamingInProgress)
-            {
-                category.RenamingInProgress = true;
-            }
-            else
-            {
-                category.RenamingInProgress = false;
-                businessLayer.UpdateCategory(category);
-            }
-        }
-
-        public void UpdateCategoryAction(CategoryDto category)
-        {
-            businessLayer.UpdateCategory(category);
-        }
-
-        public void ChangeCategoryTypeAction(int categoryType)
-        {
-            CategoryTypes type = (CategoryTypes)categoryType;
-            SelectedCategory.CategoryType = type;
-            businessLayer.UpdateCategory(SelectedCategory);
-            RaisePropertyChanged("SelectedCategory");
-        }
+        #region User actions
 
         public bool LoginButtonAction()
         {
-            UserLoggedIn = businessLayer.AuthenticateUser(UserLoggedIn);
-            if (UserLoggedIn != null)
+            if (IsValidEmail(UserLoggedIn.Email) && UserLoggedIn.PasswordHash.Length > 4)
             {
-                UserLoggedIn.IsLoggedIn = true;
-                businessLayer.SwitchUser(UserLoggedIn);
-                CategoryCollection.Categories = businessLayer.GetAllCategories();
-                NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
-                NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
-                return true;
+                UserLoggedIn = BusinessLayer.AuthenticateUser(UserLoggedIn);
+                if (UserLoggedIn != null)
+                {
+                    UserLoggedIn.IsLoggedIn = true;
+                    BusinessLayer.SwitchUser(UserLoggedIn);
+                    CategoryCollection.Categories = BusinessLayer.GetAllCategories();
+                    NavigationViewItems = new NavigationViewMenuItems(CategoryCollection.Categories);
+                    NavigationViewItems.SetUserEmail(UserLoggedIn.Email);
+                    return true;
+                }
+                else
+                {
+                    ErrorMessage = "Username or password is incorrect";
+                    return false;
+                }
             }
             else
             {
                 ErrorMessage = "Username or password is incorrect";
                 return false;
             }
-
         }
 
         public void Register()
         {
-            RegisterOkMessage = String.Empty;
-            ErrorMessage = String.Empty;
-
             if (IsValidEmail(UserLoggedIn.Email))
             {
                 if (UserLoggedIn.PasswordHash.Length > 4)
                 {
-                    if(businessLayer.RegisterUser(UserLoggedIn))
-                        RegisterOkMessage = "Your registration is complete. Now you can log in.";
+                    if (BusinessLayer.RegisterUser(UserLoggedIn))
+                        OkMessage = "Your registration is complete. Now you can log in.";
                     else
                         ErrorMessage = "Email is already taken.";
 
@@ -280,7 +182,7 @@ namespace AgendaPL.ViewModels
             else
             {
                 ErrorMessage = "Please give a valid email address.";
-            }           
+            }
         }
 
         public void Logout()
@@ -301,6 +203,105 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        #endregion
+
+        #region Category actions
+
+        public void RenameCategoryAction(CategoryDto category)
+        {
+            if (!category.RenamingInProgress)
+            {
+                category.RenamingInProgress = true;
+            }
+            else
+            {
+                category.RenamingInProgress = false;
+                BusinessLayer.UpdateCategory(category);
+            }
+        }
+
+        public void UpdateCategoryAction(CategoryDto category)
+        {
+            BusinessLayer.UpdateCategory(category);
+        }
+
+        public void ChangeCategoryTypeAction(int categoryType)
+        {
+            CategoryTypes type = (CategoryTypes)categoryType;
+            SelectedCategory.CategoryType = type;
+            BusinessLayer.UpdateCategory(SelectedCategory);
+            RaisePropertyChanged("SelectedCategory");
+        }
+
+        public void DeleteCategoryAction(CategoryDto category)
+        {
+            BusinessLayer.DeleteCategory(category);
+        }
+
+        private void AddCategoryAction()
+        {
+            BusinessLayer.AddCategory(NewCategory);
+        }
+
+        #endregion
+
+        #region Task Actions
+
+        public void CheckChangedAction(TaskDto task)
+        {
+            BusinessLayer.UpdateTask(task);
+        }
+
+        public void AddNewTask()
+        {
+            int id = ++CategoryCollection.LastId;
+            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
+            BusinessLayer.AddTask(newTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
+        }
+
+        public void AddNewSubTask(int parentTaskId)
+        {
+            int id = ++CategoryCollection.LastId;
+            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
+            BusinessLayer.AddTask(newTask);
+        }
+
+        public void ChangeTaskState(int taskId, int newState)
+        {
+            var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
+            task.State = newState;
+            BusinessLayer.UpdateTask(task);
+            RaisePropertyChanged(nameof(SelectedCategory));
+        }
+
+        public void SelectedTaskAction(TaskDto task)
+        {
+            if (SelectedTask.TaskId == task.TaskId)
+                IsPanelActive = !IsPanelActive;
+            else if (!task.IsSubTask)
+            {
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                IsPanelActive = true;
+            }
+            else
+            {
+                SelectedTask = SelectedCategory.Tasks.Where(t => t.TaskId == task.ParentTaskId).FirstOrDefault().SubTasks.Where(t => t.TaskId == task.TaskId).FirstOrDefault();
+                IsPanelActive = true;
+            }
+        }
+
+        private void SaveTaskAction()
+        {
+            BusinessLayer.UpdateTask(SelectedTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
+        }
+
+        private void DeleteTaskAction()
+        {
+            BusinessLayer.DeleteTask(SelectedTask);
+            RaisePropertyChanged(nameof(SelectedCategory));
+        }
 
         #endregion
 

@@ -32,6 +32,12 @@ namespace AgendaPL.Views.UserControl
             ViewModel = vm.MainPage;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.OkMessage = String.Empty;
+            ViewModel.ErrorMessage = String.Empty;
+        }
+
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Register();

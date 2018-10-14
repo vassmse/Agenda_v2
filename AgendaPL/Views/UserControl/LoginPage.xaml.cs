@@ -35,12 +35,16 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.OkMessage = String.Empty;
+            ViewModel.ErrorMessage = String.Empty;
+        }
+
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.LoginButtonAction())
-                Frame.Navigate(typeof(MainPage));
-           
-
+                Frame.Navigate(typeof(MainPage));    
         }
 
         private void RegisterButtonTextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
