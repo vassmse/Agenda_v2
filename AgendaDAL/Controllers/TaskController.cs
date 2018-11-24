@@ -14,18 +14,18 @@ namespace AgendaDAL.Controllers
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {
-        private TaskService Service { get; }
+        private TaskRepository Repository { get; }
 
         public TaskController(AgendaDbContext context)
         {
-            Service = new TaskService(context);
+            Repository = new TaskRepository(context);
         }
 
         // GET: api/<controller>
         [HttpGet]
         public IActionResult Get()
         {
-            var items = Service.GetAllItem();
+            var items = Repository.GetAllItem();
             if (items != null)
             {
                 return Ok(items);
@@ -37,7 +37,7 @@ namespace AgendaDAL.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var item = Service.GetItem(id);
+            var item = Repository.GetItem(id);
             if (item != null)
             {
                 return Ok(item);
@@ -51,7 +51,7 @@ namespace AgendaDAL.Controllers
         {
             if (task != null)
             {
-                if (Service.AddItem(task))
+                if (Repository.AddItem(task))
                 {
                     return Ok();
                 }
@@ -66,7 +66,7 @@ namespace AgendaDAL.Controllers
         {
             if (task != null)
             {
-                if (Service.UpdateItem(task))
+                if (Repository.UpdateItem(task))
                 {
                     return Ok();
                 }
@@ -81,7 +81,7 @@ namespace AgendaDAL.Controllers
         {
             if (task != null)
             {
-                if (Service.DeleteItem(task))
+                if (Repository.DeleteItem(task))
                 {
                     return Ok();
                 }

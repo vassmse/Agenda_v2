@@ -8,24 +8,23 @@ using System.Threading.Tasks;
 
 namespace AgendaDAL.Services
 {
-    public class TaskService : IService<TaskDto>
+    public class CategoryRepository : IRepository<CategoryDto>
     {
         private AgendaDbContext DbContext { get; set; }
-
         private IMapper DbMapper { get; set; }
 
-        public TaskService(AgendaDbContext dbContext)
+        public CategoryRepository(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Task, TaskDto>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
             DbMapper = new Mapper(config);
         }
 
-        public bool AddItem(TaskDto item)
+        public bool AddItem(CategoryDto item)
         {
             try
             {
-                DbContext.Tasks.Add(DbMapper.Map<Models.Task>(item));
+                DbContext.Categories.Add(DbMapper.Map<Category>(item));
                 DbContext.SaveChanges();
                 return true;
             }
@@ -35,11 +34,11 @@ namespace AgendaDAL.Services
             }
         }
 
-        public bool DeleteItem(TaskDto item)
+        public bool DeleteItem(CategoryDto item)
         {
             try
             {
-                var result = DbContext.Tasks.SingleOrDefault(t => t.TaskId == item.TaskId);
+                var result = DbContext.Categories.SingleOrDefault(c => c.CategoryId == item.CategoryId);
                 DbContext.Remove(result);
                 DbContext.SaveChanges();
                 return true;
@@ -50,11 +49,11 @@ namespace AgendaDAL.Services
             }
         }
 
-        public List<TaskDto> GetAllItem()
+        public List<CategoryDto> GetAllItem()
         {
             try
             {
-                return DbMapper.Map<List<Models.Task>, List<TaskDto>>(DbContext.Tasks.ToList());
+                return DbMapper.Map<List<Category>, List<CategoryDto>>(DbContext.Categories.ToList());
             }
             catch
             {
@@ -62,11 +61,11 @@ namespace AgendaDAL.Services
             }
         }
 
-        public TaskDto GetItem(int id)
+        public CategoryDto GetItem(int id)
         {
             try
             {
-                return DbMapper.Map<TaskDto>(DbContext.Tasks.FirstOrDefault(t => t.TaskId == id));
+                return DbMapper.Map<CategoryDto>(DbContext.Categories.FirstOrDefault(t => t.CategoryId == id));
             }
             catch
             {
@@ -74,22 +73,27 @@ namespace AgendaDAL.Services
             }
         }
 
-        public bool UpdateItem(TaskDto item)
+        public bool UpdateItem(CategoryDto item)
         {
             try
             {
-                var result = DbContext.Tasks.SingleOrDefault(t => t.TaskId == item.TaskId);
+                var result = DbContext.Categories.SingleOrDefault(c => c.CategoryId == item.CategoryId);
                 if (result != null)
                 {
                     DbContext.Entry(result).CurrentValues.SetValues(item);
                     DbContext.SaveChanges();
+                    return true;
                 }
-                return true;
+                else
+                {
+                    return false;
+                }
+
             }
             catch
             {
                 return false;
             }
-        }        
+        }       
     }
 }

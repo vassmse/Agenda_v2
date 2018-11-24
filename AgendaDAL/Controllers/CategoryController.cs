@@ -16,11 +16,11 @@ namespace AgendaDAL.Controllers
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase
     {
-        private CategoryService Service { get; }
+        private CategoryRepository Repository { get; }
 
         public CategoryController(AgendaDbContext context)
         {
-            Service = new CategoryService(context);
+            Repository = new CategoryRepository(context);
         }
 
         // GET: api/<controller>
@@ -29,7 +29,7 @@ namespace AgendaDAL.Controllers
         {
             try
             {
-                var items = Service.GetAllItem();
+                var items = Repository.GetAllItem();
                 if (items != null)
                 {
                     return Ok(items);
@@ -48,7 +48,7 @@ namespace AgendaDAL.Controllers
         {
             try
             {
-                var item = Service.GetItem(id);
+                var item = Repository.GetItem(id);
                 if (item != null)
                 {
                     return Ok(item);
@@ -69,7 +69,7 @@ namespace AgendaDAL.Controllers
             {
                 if (category != null)
                 {
-                    if (Service.AddItem(category))
+                    if (Repository.AddItem(category))
                     {
                         return Ok();
                     }
@@ -94,7 +94,7 @@ namespace AgendaDAL.Controllers
             {
                 if (category != null)
                 {
-                    if (Service.UpdateItem(category))
+                    if (Repository.UpdateItem(category))
                     {
                         return Ok();
                     }
@@ -119,7 +119,7 @@ namespace AgendaDAL.Controllers
             {
                 if (category != null)
                 {
-                    if (Service.DeleteItem(category))
+                    if (Repository.DeleteItem(category))
                     {
                         return Ok();
                     }

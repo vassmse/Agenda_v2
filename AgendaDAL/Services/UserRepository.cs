@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace AgendaDAL.Services
 {
-    public class UserService : IService<UserDto>
+    public class UserRepository : IRepository<UserDto>
     {
         private AgendaDbContext DbContext { get; set; }
 
         private IMapper DbMapper { get; set; }
 
-        public UserService(AgendaDbContext dbContext)
+        public UserRepository(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());

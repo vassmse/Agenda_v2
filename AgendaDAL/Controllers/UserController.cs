@@ -15,11 +15,11 @@ namespace AgendaDAL.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private UserService Service { get; }
+        private UserRepository Repository { get; }
 
         public UserController(AgendaDbContext context)
         {
-            Service = new UserService(context);
+            Repository = new UserRepository(context);
         }
 
         [HttpPost("authenticate")]
@@ -29,7 +29,7 @@ namespace AgendaDAL.Controllers
             {
                 if (user != null)
                 {
-                    var item = Service.Authenticate(user.Email, user.PasswordHash);
+                    var item = Repository.Authenticate(user.Email, user.PasswordHash);
                     if (item != null)
                     {
                         return Ok(item);
@@ -50,7 +50,7 @@ namespace AgendaDAL.Controllers
         {
             try
             {
-                var items = Service.GetAllItem();
+                var items = Repository.GetAllItem();
                 if (items != null)
                 {
                     return Ok(items);
@@ -69,7 +69,7 @@ namespace AgendaDAL.Controllers
         {
             try
             {
-                var item = Service.GetItem(id);
+                var item = Repository.GetItem(id);
                 if (item != null)
                 {
                     return Ok(item);
@@ -90,7 +90,7 @@ namespace AgendaDAL.Controllers
             {
                 if (item != null)
                 {
-                    if (Service.AddItem(item))
+                    if (Repository.AddItem(item))
                     {
                         return Ok();
                     }
@@ -112,7 +112,7 @@ namespace AgendaDAL.Controllers
             {
                 if (item != null)
                 {
-                    if (Service.UpdateItem(item))
+                    if (Repository.UpdateItem(item))
                     {
                         return Ok();
                     }
@@ -134,7 +134,7 @@ namespace AgendaDAL.Controllers
             {
                 if (item != null)
                 {
-                    if (Service.DeleteItem(item))
+                    if (Repository.DeleteItem(item))
                     {
                         return Ok();
                     }
