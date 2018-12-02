@@ -41,7 +41,7 @@ namespace AgendaPL.Models
             {
                 var request = new RestRequest("category", Method.POST);
                 request.AddJsonBody(category);
-                await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
+                await Client.ExecuteTaskAsync(request);
             }
             catch
             {

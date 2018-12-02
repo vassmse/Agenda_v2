@@ -132,7 +132,6 @@ namespace AgendaPL.Models
         private ObservableCollection<TaskDto> getDailyTasks()
         {
            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (t.State < 4) && ((t.HasDeadlineDate && areDaysSame(t.DeadlineDate, DateTime.Now)) || (t.HasScheduledDate && areDaysSame(t.ScheduledDate, DateTime.Now)))).ToList());
-
         }
 
         private ObservableCollection<TaskDto> getWeeklyTasks()

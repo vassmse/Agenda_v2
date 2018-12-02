@@ -69,11 +69,7 @@ namespace AgendaPL.Models
                     break;
             }
 
-            MenuItems.RemoveAt(MenuItems.Count - 1);
-            MenuItems.RemoveAt(MenuItems.Count - 1);
-            MenuItems.Add(new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
-            MenuItems.Add(new NavigationViewItemSeparator());
-            MenuItems.Add(new NavigationViewItem { Content = "Add new category", Icon = new SymbolIcon(Symbol.Add), Tag = "addnew" });
+            MenuItems.Insert(MenuItems.Count - 2, new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
         }
 
         public void DeleteMenuItem(int id)
