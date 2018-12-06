@@ -1,18 +1,10 @@
 ﻿using AgendaCON.Models;
 using AgendaPL.Models;
 using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
-using System.Resources;
-using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Controls;
 using GalaSoft.MvvmLight.Command;
+using System;
+using System.Linq;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 
 namespace AgendaPL.ViewModels
 {
