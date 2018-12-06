@@ -15,13 +15,18 @@ namespace AgendaPL.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string parameterString = parameter as string;
+            string[] parameters = parameterString.Split(new char[] { '|' });
+
+
             var result = ((IEnumerable)value).Cast<object>().ToList();
             ArrayList collection = new ArrayList(result);
             ObservableCollection<TaskDto> retCollection = new ObservableCollection<TaskDto>();
 
             foreach (var task in collection)
             {
-                if (((TaskDto)(task)).State == int.Parse(parameterString))
+                if (((TaskDto)(task)).State == int.Parse(parameters[0]))
+                    retCollection.Add(((TaskDto)(task)));
+                else if(parameters.Length>1  && ((TaskDto)(task)).State == int.Parse(parameters[1]))
                     retCollection.Add(((TaskDto)(task)));
             }
             return retCollection;
