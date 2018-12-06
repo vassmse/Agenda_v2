@@ -223,7 +223,7 @@ namespace AgendaPL.ViewModels
                 return false;
             }
         }
-
+        
         #endregion
 
         #region Category actions
@@ -276,7 +276,7 @@ namespace AgendaPL.ViewModels
         public void AddNewTask()
         {
             int id = ++CategoryCollection.LastTaskId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId };
+            var newTask = new TaskDto { TaskId = id, Name = "New Task", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, CreatedDate=DateTime.Now };
             BusinessLayer.AddTask(newTask);
             RaisePropertyChanged(nameof(SelectedCategory));
         }
@@ -284,7 +284,7 @@ namespace AgendaPL.ViewModels
         public void AddNewSubTask(int parentTaskId)
         {
             int id = ++CategoryCollection.LastTaskId;
-            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true };
+            var newTask = new TaskDto { TaskId = id, Name = "New Subtask", Description = "", DeadlineDate = DateTime.Now, ScheduledDate = DateTime.Now, State = 0, ParentCategoryId = SelectedCategory.CategoryId, ParentTaskId = parentTaskId, IsSubTask = true, CreatedDate = DateTime.Now };
             BusinessLayer.AddTask(newTask);
         }
 
