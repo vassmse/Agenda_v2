@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
+    // Nullable boolean to boolean
     public class NullableBooleanToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

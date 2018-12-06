@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
+    // If length more than 1, then visible
     public class LengthToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

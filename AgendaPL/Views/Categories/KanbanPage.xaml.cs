@@ -35,6 +35,7 @@ namespace AgendaPL.Views
             DataContext = ViewModel;
         }
 
+        // Drop task to a state column
         private async void Grid_Drop(object sender, DragEventArgs e)
         {
             if (((e.OriginalSource as ScrollViewer)?.DataContext is MainViewModel targetAccount) && (e.OriginalSource as ScrollViewer).Name != null)
@@ -60,6 +61,7 @@ namespace AgendaPL.Views
                 }
         }
 
+        // Moving is over
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Move;
@@ -68,6 +70,7 @@ namespace AgendaPL.Views
             e.DragUIOverride.IsCaptionVisible = true;
         }
 
+        // Starts to move a task
         private void TextBlock_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
             if ((sender as StackPanel)?.DataContext is TaskDto task)
@@ -89,12 +92,13 @@ namespace AgendaPL.Views
 
         }
 
-
+        // Adding new task
         private void AddNewTask(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.AddNewTask();
         }
 
+        // Select a task for modifying
         private void doneControl_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             TaskDto selectedTask;

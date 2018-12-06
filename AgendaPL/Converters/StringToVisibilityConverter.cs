@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
+    // If string is empty than Collapsed, else visible
     public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

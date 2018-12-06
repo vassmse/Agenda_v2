@@ -32,11 +32,7 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        // User logout
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Logout();

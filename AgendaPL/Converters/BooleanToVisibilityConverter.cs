@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
+    // If true-> Visible, else Collapesed
     public class BooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

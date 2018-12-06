@@ -37,16 +37,39 @@ namespace AgendaPL.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.OkMessage = String.Empty;
-            ViewModel.ErrorMessage = String.Empty;
+            try
+            {
+                if ((bool)(e.Parameter))
+                {
+                    ViewModel.ErrorMessage = String.Empty;
+                }
+                else
+                {
+                    ViewModel.ErrorMessage = String.Empty;
+                    ViewModel.OkMessage = String.Empty;
+                }
+            }
+            catch
+            {
+                ViewModel.ErrorMessage = String.Empty;
+                ViewModel.OkMessage = String.Empty;
+            }
+
+
         }
 
+        // User pressed sign in button
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 0);
+
             if (ViewModel.LoginButtonAction())
-                Frame.Navigate(typeof(MainPage));    
+                Frame.Navigate(typeof(MainPage));
+
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
         }
 
+        // Navigate to register page
         private void RegisterButtonTextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(RegisterPage));
@@ -61,6 +84,18 @@ namespace AgendaPL.Views
         {
             Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
 
+        }
+
+        //If user pressed 'Enter' key
+        private void StackPanel_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 0);
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (ViewModel.LoginButtonAction())
+                    Frame.Navigate(typeof(MainPage));
+            }
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
         }
     }
 }

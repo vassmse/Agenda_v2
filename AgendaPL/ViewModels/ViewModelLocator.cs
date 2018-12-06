@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AgendaPL.ViewModels
 {
+    // ViewModelLocator class because one ViewModel for all the Views -> DI
     public class ViewModelLocator
     {
         static ViewModelLocator()

@@ -34,23 +34,27 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
+        // Select a task for modifying
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedTask = e.ClickedItem as TaskDto;
             ViewModel.SelectedTaskAction(selectedTask);
         }
 
+        // Task ticked to ready
         private void TaskReady(object sender, RoutedEventArgs e)
         {
             TaskDto source = ((CheckBox)sender).DataContext as TaskDto;
             ViewModel.CheckChangedAction(source);
         }
 
+        // Adding new task
         private void AddNewTask(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.AddNewTask();
         }
 
+        // Adding new subtask
         private void AddNewSubTask(object sender, PointerRoutedEventArgs e)
         {
             TaskDto source = ((StackPanel)sender).DataContext as TaskDto;

@@ -33,23 +33,18 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
+        // Delete the category
         private void DeleteCategory(object sender, RoutedEventArgs e)
         {
             CategoryDto source = ((Button)sender).DataContext as CategoryDto;
             ViewModel.DeleteCategoryAction(source);
         }
 
+        // Rename the category
         private void RenameCategory(object sender, RoutedEventArgs e)
         {
             CategoryDto source = ((Button)sender).DataContext as CategoryDto;
             ViewModel.RenameCategoryAction(source);
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            CategoryDto source = ((ComboBox)sender).DataContext as CategoryDto;
-            if (source != null)
-                ViewModel.UpdateCategoryAction(source);
         }
     }
 }

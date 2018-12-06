@@ -29,10 +29,6 @@
                             <TextBlock Text="{Binding Name, Mode=TwoWay}" Grid.Column="0" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{x:Bind RenamingInProgress, Converter={StaticResource InverseBooleanToVisibility}, Mode=TwoWay}" />
                             <TextBox Text="{Binding Name, Mode=TwoWay}"  Grid.Column="0" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{x:Bind RenamingInProgress, Converter={StaticResource BooleanToVisibility}, Mode=TwoWay}"  />
 
-                            <!--<StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left">
-                                <ComboBox ItemsSource="{x:Bind CategoryTypeValues }" SelectedItem="{x:Bind CategoryType}" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Center" Grid.Column="2" Margin="20 0 15 0"  />
-                            </StackPanel>-->
-                            
                             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
                                 <Button Margin="0 0 15 0" Background="Transparent" Click="RenameCategory" Visibility="{x:Bind RenamingInProgress, Converter={StaticResource InverseBooleanToVisibility}, Mode=TwoWay}">
                                     <SymbolIcon Symbol="Rename" />
@@ -44,21 +40,10 @@
                                     <SymbolIcon Symbol="Delete" />
                                 </Button>
                             </StackPanel>
-
-
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <!--<TextBlock Text="Language settings" FontSize="18" Margin="0 30 0 0"/>
-            <StackPanel Margin="10">
-                <TextBlock Text="Select a language:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <RadioButton x:Name="Option1RadioButton" Content="Hungarian" />
-                <RadioButton x:Name="Option2RadioButton" Content="English" />
-                <RadioButton x:Name="Option3RadioButton" Content="German"/>
-            </StackPanel>-->
-
         </StackPanel>
     </ScrollViewer>
 </Page>

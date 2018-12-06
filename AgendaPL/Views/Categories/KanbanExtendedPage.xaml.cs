@@ -1,20 +1,10 @@
 ﻿using AgendaCON.Models;
 using AgendaPL.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,13 +25,16 @@ namespace AgendaPL.Views
             DataContext = ViewModel;
         }
 
+        // Task dropped to a state column
         private async void Grid_Drop(object sender, DragEventArgs e)
         {
+            // Get task ID
             if (((e.OriginalSource as ScrollViewer)?.DataContext is MainViewModel targetAccount) && (e.OriginalSource as ScrollViewer).Name != null)
                 if (await (e.DataView.GetDataAsync("ID")) is int taskId)
                 {
                     try
                     {
+                        // Decide the new state
                         var targetState = (e.OriginalSource as ScrollViewer)?.Name;
                         switch (targetState)
                         {
@@ -66,6 +59,7 @@ namespace AgendaPL.Views
                 }
         }
 
+        // Moving is over something
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Move;
@@ -74,6 +68,7 @@ namespace AgendaPL.Views
             e.DragUIOverride.IsCaptionVisible = true;
         }
 
+        // Task started moving by mouse
         private void TextBlock_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
             if ((sender as StackPanel)?.DataContext is TaskDto task)
@@ -95,12 +90,13 @@ namespace AgendaPL.Views
 
         }
 
-
+        // Adding new task
         private void AddNewTask(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.AddNewTask();
         }
 
+        // Select task for modifying
         private void doneControl_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             TaskDto selectedTask;

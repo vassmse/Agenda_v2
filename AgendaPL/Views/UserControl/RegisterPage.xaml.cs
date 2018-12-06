@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -38,11 +39,20 @@ namespace AgendaPL.Views.UserControl
             ViewModel.ErrorMessage = String.Empty;
         }
 
+        // User pressed register button
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Register();
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 0);
+
+            if (ViewModel.Register())
+            {
+                Frame.Navigate(typeof(LoginPage), true);
+            }
+
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
         }
 
+        // Navigate to login page
         private void LoginButtonTextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(LoginPage));
@@ -57,6 +67,15 @@ namespace AgendaPL.Views.UserControl
         {
             Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
 
+        }
+
+        private void StackPanel_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (ViewModel.Register())
+                    Frame.Navigate(typeof(LoginPage));
+            }
         }
     }
 }

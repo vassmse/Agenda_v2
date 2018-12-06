@@ -5,8 +5,4 @@
     xmlns:local="using:AgendaPL"
     xmlns:vm="using:AgendaPL.ViewModels">
 
-    <!--<Application.Resources>
-        <vm:ViewModelLocator x:Key="ViewModelLocator" />
-    </Application.Resources>-->
-
 </Application>

@@ -33,18 +33,21 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
+        // Task selected by user to modify
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedTask = e.ClickedItem as TaskDto;
             ViewModel.SelectedTaskAction(selectedTask);
         }
 
+        // Task ticked
         private void TaskReady(object sender, RoutedEventArgs e)
         {
             TaskDto source = ((CheckBox)sender).DataContext as TaskDto;
             ViewModel.CheckChangedAction(source);
         }
 
+        // Adding new task
         private void AddNewTask(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.AddNewTask();

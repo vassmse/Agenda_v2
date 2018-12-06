@@ -9,8 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"> 
-        <StackPanel Orientation="Vertical" Padding="20">
+        <StackPanel Orientation="Vertical" Padding="20" KeyDown="StackPanel_KeyDown">
             <TextBlock Text="Login" FontSize="36" Margin="4" TextAlignment="Center"/>
+            <TextBlock x:Name="OkMessage" Text="{x:Bind ViewModel.OkMessage, Mode=TwoWay}" FontSize="18" Margin="4" Foreground="DarkGreen" TextAlignment="Center" />
             <TextBlock x:Name="Message" Text="{x:Bind ViewModel.ErrorMessage, Mode=TwoWay}" FontSize="18" Margin="4" Foreground="Red" TextAlignment="Center"/>
             <TextBlock Text="Enter your login datas below." Margin="0,0,0,20"
                TextWrapping="Wrap" Width="300"

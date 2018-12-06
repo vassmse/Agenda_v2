@@ -9,17 +9,20 @@ using System.Threading.Tasks;
 
 namespace AgendaPL.Models
 {
+    // Class for REST communication
     public class AgendaRestClient
     {
         private RestClient Client { get; set; }
 
         public AgendaRestClient()
         {
+            // Set port
             Client = new RestClient("http://localhost:60225/api/");
         }
 
         #region Category CRUD
 
+        // Request for all categories, syncron
         public List<CategoryDto> GetAllCategories()
         {
             try
@@ -30,11 +33,11 @@ namespace AgendaPL.Models
             }
             catch
             {
-                //TODO: Log
                 return null;
             }
         }
 
+        // Request for a category, asyncron
         public async void AddCategory(CategoryDto category)
         {
             try
@@ -43,12 +46,10 @@ namespace AgendaPL.Models
                 request.AddJsonBody(category);
                 await Client.ExecuteTaskAsync(request);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch { }
         }
 
+        // Request for deleting a category, asyncron
         public async void DeleteCategory(CategoryDto category)
         {
             try
@@ -57,12 +58,10 @@ namespace AgendaPL.Models
                 request.AddJsonBody(category);
                 await Client.ExecuteTaskAsync(request);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch { }
         }
 
+        // Request for updating a category, asyncron
         public async void UpdateCategory(CategoryDto category)
         {
             try
@@ -71,16 +70,14 @@ namespace AgendaPL.Models
                 request.AddJsonBody(category);
                 await Client.ExecuteTaskAsync(request);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch { }
         }
 
         #endregion
 
         #region Task CRUD
 
+        // Request for all the tasks, syncron
         public List<TaskDto> GetAllTasks()
         {
             try
@@ -91,11 +88,11 @@ namespace AgendaPL.Models
             }
             catch
             {
-                //TODO: Log
                 return null;
             }
         }
 
+        // Request for a task, asyncron
         public async void AddTask(TaskDto task)
         {
             try
@@ -104,12 +101,10 @@ namespace AgendaPL.Models
                 request.AddJsonBody(task);
                 await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch { }
         }
 
+        // Request for updating a task, asyncron
         public async void UpdateTask(TaskDto task)
         {
             try
@@ -118,12 +113,10 @@ namespace AgendaPL.Models
                 request.AddJsonBody(task);
                 await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch { }
         }
 
+        // Request for deleting a task, asyncron
         public async void DeleteTask(TaskDto task)
         {
             try
@@ -133,16 +126,14 @@ namespace AgendaPL.Models
                 var response = await Client.ExecuteTaskAsync<List<CategoryDto>>(request);
                 Console.WriteLine(response.Content);
             }
-            catch
-            {
-                //TODO: Log
-            }
+            catch  { }
         }
 
         #endregion
 
         #region User CRUD
 
+        // Request for authenticate a user, syncron
         public UserDto AuthenticateUser(UserDto user)
         {
             try
@@ -154,11 +145,11 @@ namespace AgendaPL.Models
             }
             catch
             {
-                //TODO: Log
                 return null;
             }
         }
 
+        // Request for adding a user, syncron
         public bool AddUser(UserDto user)
         {
             try
@@ -174,7 +165,6 @@ namespace AgendaPL.Models
             }
             catch
             {
-                //TODO: Log
                 return false;
             }
         }

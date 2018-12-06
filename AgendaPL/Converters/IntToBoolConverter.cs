@@ -9,6 +9,7 @@ namespace AgendaPL.Converters
 {
     public class IntToBoolConverter : IValueConverter
     {
+        // If integer less than 4, false, else true
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (int.Parse(value.ToString()) < 4)

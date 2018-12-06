@@ -33,6 +33,7 @@ namespace AgendaPL.Views
             ViewModel = vm.MainPage;
         }
 
+        // Task ticked or deticked
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             TaskDto source = ((CheckBox)sender).DataContext as TaskDto;

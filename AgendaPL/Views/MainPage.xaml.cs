@@ -39,17 +39,20 @@ namespace AgendaPL
 
         }
 
+        // When navview is loaded, select the daily report page
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
             NavView.SelectedItem = ViewModel.NavigationViewItems.MenuItems[2];
         }
 
+        // User selected another menu item
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem item = args.SelectedItem as NavigationViewItem;
             NavView_Navigate(item);
         }
 
+        // Navigation for the right page
         private void NavView_Navigate(NavigationViewItem item)
         {
             if (item != null)
@@ -106,6 +109,7 @@ namespace AgendaPL
 
         }
 
+        // Change category type
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             int parameter = Convert.ToInt32(((AppBarButton)sender).CommandParameter);
@@ -144,6 +148,7 @@ namespace AgendaPL
             appBarButtons.Add((AppBarButton)sender);
         }
 
+        // Disable the current state
         private void changeAppBarEnabling(string label)
         {
             foreach(var button in appBarButtons )

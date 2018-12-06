@@ -11,12 +11,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace AgendaPL.Models
 {
+    // Class for dynamic menu items
     public class NavigationViewMenuItems : INotifyPropertyChanged
     {
         public ObservableCollection<NavigationViewItemBase> MenuItems = new ObservableCollection<NavigationViewItemBase>();
 
         public NavigationViewMenuItems(ObservableCollection<CategoryDto> categories)
         {
+            // Set basic menu items
             MenuItems.Add(new NavigationViewItem() { Content = "", Icon = new SymbolIcon(Symbol.Contact), Tag = "user" });
             MenuItems.Add(new NavigationViewItemHeader { Content = "Calendar", Margin = new Thickness(33, 0, 0, 0) });
             MenuItems.Add(new NavigationViewItem() { Content = "My days", Icon = new SymbolIcon(Symbol.CalendarDay), Tag = "myday" });
@@ -25,6 +27,7 @@ namespace AgendaPL.Models
             MenuItems.Add(new NavigationViewItemSeparator());
             MenuItems.Add(new NavigationViewItemHeader { Content = "Categories", Margin = new Thickness(33, 0, 0, 0) });
 
+            // Set menu items for each category
             foreach (var category in categories)
             {
                 SymbolIcon icon = new SymbolIcon();
@@ -46,10 +49,12 @@ namespace AgendaPL.Models
                 MenuItems.Add(new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
             }
 
+            // Last basic items
             MenuItems.Add(new NavigationViewItemSeparator());
             MenuItems.Add(new NavigationViewItem { Content = "Add new category", Icon = new SymbolIcon(Symbol.Add), Tag = "addnew" });
         }
 
+        // Add new menu item for the category
         public void AddMenuItem(CategoryDto category)
         {
             SymbolIcon icon = new SymbolIcon();
@@ -72,6 +77,7 @@ namespace AgendaPL.Models
             MenuItems.Insert(MenuItems.Count - 2, new NavigationViewItem { Content = category.Name, Name = category.CategoryId.ToString(), Icon = icon, Tag = category.CategoryType.ToString() });
         }
 
+        // Delete menu item when a category is deleted
         public void DeleteMenuItem(int id)
         {
             NavigationViewItemBase deletion = null;
@@ -83,6 +89,7 @@ namespace AgendaPL.Models
             MenuItems.Remove(deletion);
         }
 
+        // Rename a menu item
         public void RenameMenuItem(int id, string name)
         {
             foreach (var item in MenuItems)
@@ -92,6 +99,7 @@ namespace AgendaPL.Models
             }
         }
 
+        // Change menu item tag
         public void ChangeMenuItemTag(int id, string newType)
         {
             SymbolIcon icon = new SymbolIcon();
@@ -115,6 +123,7 @@ namespace AgendaPL.Models
             (MenuItems[MenuItems.IndexOf(item)] as NavigationViewItem).Icon = icon;
         }
 
+        // Set user name to email
         public void SetUserEmail(string email)
         {
             var item = MenuItems.Where(i => i.Tag.ToString() == "user").First();
@@ -125,11 +134,7 @@ namespace AgendaPL.Models
         private void NotifyPropertyChanged(String propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
+        }        
 
     }
-
-
 }

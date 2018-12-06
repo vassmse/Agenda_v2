@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Data;
 
 namespace AgendaPL.Converters
 {
+    // Converts tasks' states
     public class TaskStateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

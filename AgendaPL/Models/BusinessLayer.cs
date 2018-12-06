@@ -24,21 +24,23 @@ namespace AgendaPL.Models
             ViewModel = viewModel;
         }
 
+        // Switching logged in users
         public void SwitchUser(UserDto user)
         {
             UserLoggedIn = user;
         }
 
+        // Get all categories from db and fill CategoryCollection
         public ObservableCollection<CategoryDto> GetAllCategories()
         {
             try
             {
-                //TODO
                 var categories = RestClient.GetAllCategories().Where(c=>c.ParentUserId==UserLoggedIn.UserId).ToList();
                 var tasks = GetAllTasks();
                 ViewModel.CategoryCollection.LastTaskId = tasks.Count;
                 ViewModel.CategoryCollection.LastCategoryId = categories.Count;
 
+                // Tasks
                 foreach (var category in categories)
                 {
                     foreach (var task in tasks)
@@ -51,7 +53,7 @@ namespace AgendaPL.Models
                     }
                 }
 
-                //SubTasks
+                // SubTasks
                 foreach (var category in categories)
                 {
                     foreach (var task in tasks)
@@ -72,6 +74,7 @@ namespace AgendaPL.Models
             }
         }
 
+        // Add new category
         public void AddCategory(CategoryDto category)
         {
             int id = ++ViewModel.CategoryCollection.LastCategoryId;
@@ -82,6 +85,7 @@ namespace AgendaPL.Models
             ViewModel.NewCategory.Name = String.Empty;
         }
 
+        // Update category
         public void UpdateCategory(CategoryDto category)
         {
             RestClient.UpdateCategory(category);
@@ -90,6 +94,7 @@ namespace AgendaPL.Models
             ViewModel.NavigationViewItems.ChangeMenuItemTag(category.CategoryId, category.CategoryType.ToString());
         }
 
+        // Delete category
         public void DeleteCategory(CategoryDto category)
         {
             ViewModel.CategoryCollection.Categories.Remove(category);
@@ -97,12 +102,14 @@ namespace AgendaPL.Models
             ViewModel.NavigationViewItems.DeleteMenuItem(category.CategoryId);
         }
 
+        // Add new task
         public void AddTask(TaskDto task)
         {
             RestClient.AddTask(task);
             ViewModel.CategoryCollection.AddTask(task);
         }
 
+        // Get all tasks
         public ObservableCollection<TaskDto> GetAllTasks()
         {
             try
@@ -116,18 +123,20 @@ namespace AgendaPL.Models
             }
         }
 
+        // Update a task
         public void UpdateTask(TaskDto task)
         {
             RestClient.UpdateTask(task);
             ViewModel.CategoryCollection.UpdateTask(task);
         }
 
+        // Update a task without CategoryCollection change
         public void UpdateTaskState(TaskDto task)
         {
             RestClient.UpdateTask(task);
-            //ViewModel.CategoryCollection.UpdateTask(task);
         }
 
+        // Delete a task
         public void DeleteTask(TaskDto task)
         {
             RestClient.DeleteTask(task);
@@ -135,6 +144,7 @@ namespace AgendaPL.Models
             ViewModel.CategoryCollection.DeleteTask(task);
         }
 
+        // Authenticate the user, hash the password
         public UserDto AuthenticateUser(UserDto user)
         {
             var md5 = new MD5CryptoServiceProvider();
@@ -146,6 +156,7 @@ namespace AgendaPL.Models
 
         }
 
+        // Register new user
         public bool RegisterUser(UserDto user)
         {
             var md5 = new MD5CryptoServiceProvider();
@@ -157,6 +168,7 @@ namespace AgendaPL.Models
             
         }
 
+        // Send mail to registrated user
         private void SendMail(string mailTo)
         {
             try

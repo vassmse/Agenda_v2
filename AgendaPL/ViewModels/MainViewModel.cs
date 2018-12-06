@@ -135,6 +135,7 @@ namespace AgendaPL.ViewModels
 
         #region User actions
 
+        // User clicked on login button -> authenticate the user
         public bool LoginButtonAction()
         {
             try
@@ -170,7 +171,8 @@ namespace AgendaPL.ViewModels
             }
         }
 
-        public void Register()
+        // Register a new user
+        public bool Register()
         {
             try
             {
@@ -184,6 +186,7 @@ namespace AgendaPL.ViewModels
                         if (BusinessLayer.RegisterUser(UserLoggedIn))
                         {
                             OkMessage = "Your registration is complete. Now you can log in.";
+                            return true;
                         }
                         else
                         {
@@ -199,18 +202,22 @@ namespace AgendaPL.ViewModels
                 {
                     ErrorMessage = "Please give a valid email address.";
                 }
+                return false;
             }
             catch
             {
                 ErrorMessage = "Something went wrong.";
+                return false;
             }
         }
 
+        // User logged out
         public void Logout()
         {
             UserLoggedIn = new UserDto();
         }
 
+        // Is the given email is valid
         private bool IsValidEmail(string email)
         {
             try
@@ -228,6 +235,7 @@ namespace AgendaPL.ViewModels
 
         #region Category actions
 
+        // Rename the selected category
         public void RenameCategoryAction(CategoryDto category)
         {
             if (!category.RenamingInProgress)
@@ -241,11 +249,13 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        // Update the cateogory
         public void UpdateCategoryAction(CategoryDto category)
         {
             BusinessLayer.UpdateCategory(category);
         }
 
+        // Change category type
         public void ChangeCategoryTypeAction(int categoryType)
         {
             CategoryTypes type = (CategoryTypes)categoryType;
@@ -254,11 +264,13 @@ namespace AgendaPL.ViewModels
             RaisePropertyChanged("SelectedCategory");
         }
 
+        // Delete the category
         public void DeleteCategoryAction(CategoryDto category)
         {
             BusinessLayer.DeleteCategory(category);
         }
 
+        // Add new category
         private void AddCategoryAction()
         {
             BusinessLayer.AddCategory(NewCategory);
@@ -268,11 +280,13 @@ namespace AgendaPL.ViewModels
 
         #region Task Actions
 
+        // User moved or ticket the task
         public void CheckChangedAction(TaskDto task)
         {
             BusinessLayer.UpdateTask(task);
         }
 
+        // Adding new task
         public void AddNewTask()
         {
             int id = ++CategoryCollection.LastTaskId;
@@ -280,7 +294,8 @@ namespace AgendaPL.ViewModels
             BusinessLayer.AddTask(newTask);
             RaisePropertyChanged(nameof(SelectedCategory));
         }
-
+        
+        // Adding new subtask
         public void AddNewSubTask(int parentTaskId)
         {
             int id = ++CategoryCollection.LastTaskId;
@@ -288,6 +303,7 @@ namespace AgendaPL.ViewModels
             BusinessLayer.AddTask(newTask);
         }
 
+        // Change tha state of the task
         public void ChangeTaskState(int taskId, int newState)
         {
             var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
@@ -297,6 +313,7 @@ namespace AgendaPL.ViewModels
             RaisePropertyChanged(nameof(SelectedCategory));
         }
 
+        // Select a task
         public void SelectedTaskAction(TaskDto task)
         {
             if (SelectedTask.TaskId == task.TaskId)
@@ -313,12 +330,14 @@ namespace AgendaPL.ViewModels
             }
         }
 
+        // Update the selected task
         private void SaveTaskAction()
         {
             BusinessLayer.UpdateTask(SelectedTask);
             RaisePropertyChanged(nameof(SelectedCategory));
         }
 
+        // Delete the selected task
         private void DeleteTaskAction()
         {
             BusinessLayer.DeleteTask(SelectedTask);

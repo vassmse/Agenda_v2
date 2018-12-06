@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgendaPL.Models
 {
+    // Category collection for logged in user
     public class CategoryCollection : INotifyPropertyChanged
     {
         private ObservableCollection<CategoryDto> categories;
@@ -50,6 +51,7 @@ namespace AgendaPL.Models
 
         }
 
+        // Adding task to category collection
         public void AddTask(TaskDto task)
         {
             if (task.IsSubTask)
@@ -62,7 +64,7 @@ namespace AgendaPL.Models
             }
         }
 
-
+        // Delete task from collection
         public void DeleteTask(TaskDto task)
         {
             if (task.IsSubTask)
@@ -75,9 +77,9 @@ namespace AgendaPL.Models
             }
         }
 
+        // Update the task
         public void UpdateTask(TaskDto task)
         {
-           // int newState = task.State;
             if (task.IsSubTask)
             {
                 var actualCategory = Categories.Where(c => c.CategoryId == task.ParentCategoryId).First();
@@ -99,10 +101,10 @@ namespace AgendaPL.Models
                 var actualTask = actualCategory.Tasks.Where(t => t.TaskId == task.TaskId).First();
                 var taskIdx = Categories[categoryIdx].Tasks.IndexOf(actualTask);
                 Categories[categoryIdx].Tasks[taskIdx] = task;
-               // Categories[categoryIdx].Tasks[taskIdx].State = task.State;//TODO
             }
         }
 
+        // Update the category
         public void UpdateCategory(CategoryDto category)
         {
             var selectedCategory = Categories.Where(c => c.CategoryId == category.CategoryId).First();
@@ -111,7 +113,7 @@ namespace AgendaPL.Models
             Categories[categoryIdx].CategoryType = category.CategoryType;
         }
 
-
+        // Get all tasks
         private ObservableCollection<TaskDto> getAllTasks()
         {
             var tasks = new ObservableCollection<TaskDto>();
@@ -130,22 +132,26 @@ namespace AgendaPL.Models
             return tasks;
         }
 
+        // Get tasks has deadline date or scheduled date for today
         private ObservableCollection<TaskDto> getDailyTasks()
         {
            return new ObservableCollection<TaskDto>(AllTasks.Where(t => (t.State < 4) && ((t.HasDeadlineDate && areDaysSame(t.DeadlineDate, DateTime.Now)) || (t.HasScheduledDate && areDaysSame(t.ScheduledDate, DateTime.Now)))).ToList());
         }
 
+        // Get tasks has deadline date or scheduled date for 7 days
         private ObservableCollection<TaskDto> getWeeklyTasks()
         {
             return new ObservableCollection<TaskDto>(AllTasks.Where(t => (t.State < 4) && ((t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear+8  && t.DeadlineDate.DayOfYear > DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear+8  && t.ScheduledDate.DayOfYear > DateTime.Now.DayOfYear))).ToList());
 
         }
 
+        // Get tasks with expired deadline or scheduled date
         private ObservableCollection<TaskDto> getExpiredTasks()
         {
             return new ObservableCollection<TaskDto>(AllTasks.Where(t => (t.State<4) && (t.HasDeadlineDate && t.DeadlineDate.DayOfYear < DateTime.Now.DayOfYear) || (t.HasScheduledDate && t.ScheduledDate.DayOfYear < DateTime.Now.DayOfYear)).ToList());
         }
 
+        // Are the days has same year, month and day
         private bool areDaysSame(DateTime date1, DateTime date2)
         {
             return date1.Year == date2.Year && date1.Month == date2.Month && date1.Day == date2.Day;
@@ -157,9 +163,6 @@ namespace AgendaPL.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-
 
     }
 }
