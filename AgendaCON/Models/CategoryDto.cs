@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace AgendaCON.Models
 {
+    // Data Transfer Object for Category
     public class CategoryDto : INotifyPropertyChanged
     {
+        // ID for the category
         private int categoryId;
         public int CategoryId
         {
@@ -20,6 +22,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Name of the category
         private string name;
         public string Name
         {
@@ -31,8 +34,10 @@ namespace AgendaCON.Models
             }
         }
 
+        //Category type can be Checklist, MultiChecklist, Kanban3, Kanban5
         public CategoryTypes CategoryType { get; set; }
 
+        //Category's tasks
         private ObservableCollection<TaskDto> tasks;
         public ObservableCollection<TaskDto> Tasks
         {
@@ -44,6 +49,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Category owner user
         private int parentUserId;
         public int ParentUserId
         {
@@ -55,8 +61,10 @@ namespace AgendaCON.Models
             }
         }
 
+        //Category types in array
         public Array CategoryTypeValues { get; set; }
 
+        //User is renaming the category
         private bool renamingInProgress;
         public bool RenamingInProgress
         {
@@ -86,6 +94,7 @@ namespace AgendaCON.Models
         }
     }
 
+    //Category types can be four different
     public enum CategoryTypes
     {
         Checklist,

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace AgendaCON.Models
 {
+    // Data Transfer Object for Tasks
     public class TaskDto : INotifyPropertyChanged
     {
+        //Id of the task
         private int taskId;
         public int TaskId
         {
@@ -20,6 +22,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Name of the task
         private string name;
         public string Name
         {
@@ -31,6 +34,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Description of the task
         private string description;
         public string Description
         {
@@ -42,6 +46,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //State can be: 0: Backlog, 1: ToDo, 2: InProgress, 3: Testing, 4: Ready
         private int state;
         public int State
         {
@@ -53,6 +58,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Deadline date for the task
         private DateTime deadlineDate;
         public DateTime DeadlineDate
         {
@@ -64,6 +70,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Weather the task has deadline date
         private bool hasDeadlineDate;
         public bool HasDeadlineDate
         {
@@ -75,6 +82,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //The creation date for the task
         private DateTime createdDate;
         public DateTime CreatedDate
         {
@@ -86,6 +94,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Weather the task has schedule date
         private bool hasScheduledDate;
         public bool HasScheduledDate
         {
@@ -97,6 +106,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Schedule date for the task
         private DateTime scheduledDate;
         public DateTime ScheduledDate
         {
@@ -108,6 +118,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Subtasks in multichecklist
         private ObservableCollection<TaskDto> subTasks;
         public ObservableCollection<TaskDto> SubTasks
         {
@@ -119,6 +130,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Is the task subtask
         private bool isSubTask;
         public bool IsSubTask
         {
@@ -130,6 +142,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //If the task is subtask -> id of the parent task
         private int parentTaskId;
         public int ParentTaskId
         {
@@ -141,6 +154,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Owner category id
         private int parentCategoryId;
         public int ParentCategoryId
         {

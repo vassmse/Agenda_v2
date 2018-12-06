@@ -22,6 +22,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET: api/<controller>
+        // Get all tasks
         [HttpGet]
         public IActionResult Get()
         {
@@ -34,6 +35,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET api/<controller>/5
+        // Get a task
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -46,6 +48,7 @@ namespace AgendaDAL.Controllers
         }
 
         // POST api/<controller>
+        // Add new task
         [HttpPost]
         public IActionResult Post([FromBody]TaskDto task)
         {
@@ -61,6 +64,7 @@ namespace AgendaDAL.Controllers
         }
 
         // PUT api/<controller>/5
+        // Update a task
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]TaskDto task)
         {
@@ -76,6 +80,7 @@ namespace AgendaDAL.Controllers
         }
 
         // DELETE api/<controller>/5
+        // Delete a task
         [HttpDelete("{id}")]
         public IActionResult Delete([FromBody] TaskDto task)
         {

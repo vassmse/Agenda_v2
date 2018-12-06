@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace AgendaCON.Models
 {
+    // Data Transfer Object for Users
     public class UserDto : INotifyPropertyChanged
     {
+        //Id of the user
         private int userId;
         public int UserId
         {
@@ -19,6 +21,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Password hash for the user
         private string passwordHash;
         public string PasswordHash
         {
@@ -30,6 +33,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Email address for the user
         private string email;
         public string Email
         {
@@ -41,6 +45,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Token in JWT
         private string token;
         public string Token
         {
@@ -52,6 +57,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Is the user logged in
         private bool isLoggedIn;
         public bool IsLoggedIn
         {
@@ -63,6 +69,7 @@ namespace AgendaCON.Models
             }
         }
 
+        //Categories of the user
         private List<CategoryDto> categories;
         public List<CategoryDto> Categories
         {

@@ -21,19 +21,23 @@ namespace AgendaDAL.Services
         public UserRepository(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
+            // Configurate the mapper
             var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
             DbMapper = new Mapper(config);
         }
 
+        // Authenticate the user
         public UserDto Authenticate(string email, string password)
         {
             try
             {
+                // Get user from DB
                 var user = DbMapper.Map<UserDto>(DbContext.Users.FirstOrDefault(t => t.Email == email && t.PasswordHash == password));
 
                 if (user == null)
                     return null;
 
+                // Create token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes("Security key for Users' password");
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -58,6 +62,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Adding new user to DB
         public bool AddItem(UserDto item)
         {
             try
@@ -81,6 +86,7 @@ namespace AgendaDAL.Services
 
         }
 
+        // Delete a user from DB
         public bool DeleteItem(UserDto item)
         {
             try
@@ -96,6 +102,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Returns all users from DB
         public List<UserDto> GetAllItem()
         {
             try
@@ -108,6 +115,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Get a user from DB
         public UserDto GetItem(int id)
         {
             try
@@ -120,6 +128,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Update a user
         public bool UpdateItem(UserDto item)
         {
             try

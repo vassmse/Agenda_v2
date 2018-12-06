@@ -24,6 +24,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET: api/<controller>
+        // Get all categories
         [HttpGet]
         public IActionResult Get()
         {
@@ -43,6 +44,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET api/<controller>/5
+        // Get a category
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -62,6 +64,7 @@ namespace AgendaDAL.Controllers
         }
 
         // POST api/<controller>
+        // Add new category
         [HttpPost]
         public IActionResult Post([FromBody]CategoryDto category)
         {
@@ -87,6 +90,7 @@ namespace AgendaDAL.Controllers
         }
 
         // PUT api/<controller>/5
+        // Update a category
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]CategoryDto category)
         {
@@ -112,6 +116,7 @@ namespace AgendaDAL.Controllers
         }
 
         // DELETE api/<controller>/5
+        // Delete a category
         [HttpDelete("{id}")]
         public IActionResult Delete([FromBody] CategoryDto category)
         {

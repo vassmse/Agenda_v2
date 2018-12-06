@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace AgendaDAL.Services
 {
+    // IRepsitory interface for repository pattern.
     interface IRepository<T>
     {
         List<T> GetAllItem();

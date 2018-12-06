@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AgendaDAL.Services
 {
+
     public class CategoryRepository : IRepository<CategoryDto>
     {
         private AgendaDbContext DbContext { get; set; }
@@ -16,10 +17,13 @@ namespace AgendaDAL.Services
         public CategoryRepository(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
+
+            // Configure the mapper
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDto>());
             DbMapper = new Mapper(config);
         }
 
+        // Add new category to the database
         public bool AddItem(CategoryDto item)
         {
             try
@@ -34,6 +38,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Delete a category
         public bool DeleteItem(CategoryDto item)
         {
             try
@@ -49,6 +54,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Returns all the categories
         public List<CategoryDto> GetAllItem()
         {
             try
@@ -61,6 +67,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Returns the category
         public CategoryDto GetItem(int id)
         {
             try
@@ -73,6 +80,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Update a category in the database
         public bool UpdateItem(CategoryDto item)
         {
             try

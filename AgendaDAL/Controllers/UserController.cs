@@ -22,6 +22,7 @@ namespace AgendaDAL.Controllers
             Repository = new UserRepository(context);
         }
 
+        // Authenticate the user
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]UserDto user)
         {
@@ -45,6 +46,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET: api/<controller>
+        // Get all users
         [HttpGet]
         public IActionResult Get()
         {
@@ -64,6 +66,7 @@ namespace AgendaDAL.Controllers
         }
 
         // GET api/<controller>/5
+        // Get a user
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -83,6 +86,7 @@ namespace AgendaDAL.Controllers
         }
 
         // POST api/<controller>
+        // Add new user
         [HttpPost]
         public IActionResult Post([FromBody]UserDto item)
         {
@@ -105,6 +109,7 @@ namespace AgendaDAL.Controllers
         }
 
         // PUT api/<controller>/5
+        // Update a user
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]UserDto item)
         {
@@ -127,6 +132,7 @@ namespace AgendaDAL.Controllers
         }
 
         // DELETE api/<controller>/5
+        // Delete a user
         [HttpDelete("{id}")]
         public IActionResult Delete([FromBody] UserDto item)
         {

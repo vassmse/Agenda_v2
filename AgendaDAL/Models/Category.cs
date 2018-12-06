@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgendaDAL.Models
 {
+    // Class for Category table
     public class Category
     {
         [Key]

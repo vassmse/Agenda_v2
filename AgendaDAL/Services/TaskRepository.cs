@@ -17,10 +17,12 @@ namespace AgendaDAL.Services
         public TaskRepository(AgendaDbContext dbContext)
         {
             DbContext = dbContext;
+            // Configurate the mapper
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Task, TaskDto>());
             DbMapper = new Mapper(config);
         }
 
+        // Adding new task to DB
         public bool AddItem(TaskDto item)
         {
             try
@@ -35,6 +37,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Delete task from DB
         public bool DeleteItem(TaskDto item)
         {
             try
@@ -50,6 +53,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Get all tasks from DB
         public List<TaskDto> GetAllItem()
         {
             try
@@ -62,6 +66,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Returns a task from DB
         public TaskDto GetItem(int id)
         {
             try
@@ -74,6 +79,7 @@ namespace AgendaDAL.Services
             }
         }
 
+        // Updating the task
         public bool UpdateItem(TaskDto item)
         {
             try
