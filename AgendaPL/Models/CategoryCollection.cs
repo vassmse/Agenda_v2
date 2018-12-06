@@ -77,6 +77,7 @@ namespace AgendaPL.Models
 
         public void UpdateTask(TaskDto task)
         {
+           // int newState = task.State;
             if (task.IsSubTask)
             {
                 var actualCategory = Categories.Where(c => c.CategoryId == task.ParentCategoryId).First();
@@ -97,8 +98,8 @@ namespace AgendaPL.Models
 
                 var actualTask = actualCategory.Tasks.Where(t => t.TaskId == task.TaskId).First();
                 var taskIdx = Categories[categoryIdx].Tasks.IndexOf(actualTask);
-
                 Categories[categoryIdx].Tasks[taskIdx] = task;
+               // Categories[categoryIdx].Tasks[taskIdx].State = task.State;//TODO
             }
         }
 

@@ -292,7 +292,8 @@ namespace AgendaPL.ViewModels
         {
             var task = CategoryCollection.AllTasks.Where(t => t.TaskId == taskId).First();
             task.State = newState;
-            BusinessLayer.UpdateTask(task);
+            task.State = newState;
+            BusinessLayer.UpdateTaskState(task);
             RaisePropertyChanged(nameof(SelectedCategory));
         }
 

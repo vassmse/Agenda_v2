@@ -122,6 +122,12 @@ namespace AgendaPL.Models
             ViewModel.CategoryCollection.UpdateTask(task);
         }
 
+        public void UpdateTaskState(TaskDto task)
+        {
+            RestClient.UpdateTask(task);
+            //ViewModel.CategoryCollection.UpdateTask(task);
+        }
+
         public void DeleteTask(TaskDto task)
         {
             RestClient.DeleteTask(task);

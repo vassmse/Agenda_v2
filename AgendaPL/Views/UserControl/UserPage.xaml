@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel>
         <Button Content="Logout" Click="LogoutButton_Click"/>
-    </Grid>
+    </StackPanel>
 </Page>
